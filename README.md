@@ -5,3 +5,4 @@ The code encompasses computation of classical Laver tables, Laver-like algebras,
 nilpotent self-distributive algebras, and even Laver table based cryptography.
 
 We make no promise to make the code optimally efficient nor do we promise that the code is not full of bugs and errors. 
+
