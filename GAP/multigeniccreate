@@ -1,3 +1,5 @@
+# makefunction returns a function as the output. The input is the multiplication table for the Laver-like algebra.
+
 makefunction:=function(compressedtable)
 local n,tree;
 n:=Length(compressedtable);
@@ -9,6 +11,8 @@ fi;
 end;
 return tree;
 end;
+
+# critfind returns the set of all critical points of a Laver-like algebra. The input is the multiplication table for the Laver-like algebra.
 
 critfind:=function(table)
 local critlist,i,n,tree;
@@ -374,7 +378,9 @@ fi;
 
 end;
 
-
+# Given a superreduced multigenic Laver table x with 2 generators and n critical points, allextensions will return the set of all superreduced multigenic Laver tables
+# xx with n+1 critical points and 2 generators and where x is a homomorphic image of xx by a homomorphism mapping the generators of xx to the generators of x and where
+# x is a subalgebra of xx.
 
 allextensions:=function(tar,x)
 local ext,list,i,xx,newext,j,full,limit;
@@ -414,6 +420,11 @@ fi;
 return list;
 end;
 
+# Given a superreduced multigenic Laver table x with 2 generators and n critical points, allextensions will return a random superreduced multigenic Laver table
+# xx with n+1 critical points and 2 generators and where x is a homomorphic image of xx by a homomorphism mapping the generators of xx to the generators of x and where
+# x is a subalgebra of xx.
+
+
 randomextension:=function(tar,x)
 local pp,qq,limit,full,ext,tarball,i,j;
 
@@ -443,7 +454,8 @@ return Length(ext[1])+Length(ext[2])+Length(tarball);
 end;
 
 
-#simpleknuthestimate returns an unbiased estimate for the number of superreduced multigenic Laver tables of cardinality at most n.
+#simpleknuthestimate returns an unbiased estimate for the number of superreduced multigenic Laver tables of cardinality at most n. This estimate is an instance of Donald Knuth's
+#algorithm for estimating the number of nodes in a tree or estimating the amount of time a backtracking algorithm will take.
 
 simpleknuthestimate:=function(n)
 local x,list,pp,count,pivot,a;
