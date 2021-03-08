@@ -507,7 +507,7 @@ end;
 # The following code will on a positive input nn, search for an inconsistency in the large cardinal heirarchy. The code will print out the cardinalities of the tables that it
 # is currently searching to extend.
 
-inconsistencysearchtwo:=function(nn) local list,par,ttt; list:=[[1,1,[[1]]]]; while Length(list)>0 do par:=allextensions(true,Remove(list)); 
-for ttt in par do if consistencytesttwo(ttt,nn) then Add(list,ttt); fi; od; SortBy(List(v->-Length(v[3])));  Display(List(list,v->Length(v[3]))); od; 
-while true do Display("Warning: inconsistency found. Large cardinals are inconsistent or code has errors."); od; end;
+ inconsistencysearchtwo:=function(nn) local list,par,ttt; list:=[[1,1,[[1]]]]; while Length(list)>0 do par:=allextensions(true,Remove(list)); 
+ for ttt in par do if consistencytesttwo(ttt,nn) then Add(list,ttt); fi; od; SortBy(list,v->-Length(v[3]));  Display(List(list,v->Length(v[3]))); od; 
+ while true do Display("Warning: inconsistency found. Large cardinals are inconsistent or code has errors."); od; end;
 
