@@ -6,4 +6,4 @@ nilpotent self-distributive algebras, and even Laver table based cryptography.
 
 We make no promise to make the code optimally efficient nor do we promise that the code is not full of bugs and errors. 
 
-Please report any bugs, inefficiencies, or errors to circcash9192020@protonmail.com.
+You may report any bugs, inefficiencies, or errors to circcash9192020@protonmail.com.
