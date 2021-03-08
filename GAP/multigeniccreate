@@ -1,0 +1,513 @@
+makefunction:=function(compressedtable)
+local n,tree;
+n:=Length(compressedtable);
+tree:=function(x,y)
+if Length(compressedtable[x])=n then return compressedtable[x][y];
+else
+return compressedtable[x][compressedtable[Length(compressedtable[x])+1][y]];
+fi;
+end;
+return tree;
+end;
+
+critfind:=function(table)
+local critlist,i,n,tree;
+n:=Length(table);
+critlist:=[];
+tree:=makefunction(table);
+for i in [2..n] do
+if tree(i,i)=1 then Add(critlist,i); fi;
+od;
+Add(critlist,1);
+return critlist;
+end;
+
+
+totalgeneration:=function(limit,zero,one,table)
+local im,n,mv,critlist,superlist,i,j,superlength,supercrit,aa,ii,superfunction,doublesuperfunction,imagezero,imageone,testlistcrit,testlistlength,mzero,mone,tablezero,tableone,
+mastertable,bb,qq,imagespace,card,cardzero,cardone,mm,tablespace,qqq,rrr,jj,kk,testfunction,test,aar,bbr,newtablespace,newimagespace,testlist,ttt,doubletestfunction,quart,is,js,ri,rj,ham;
+
+n:=Length(table);
+
+mv:=makefunction(table);
+critlist:=critfind(table);
+
+superlist:=[];
+for im in [1..n] do
+for j in [1..Length(critlist)] do
+if mv(im,critlist[j])=1 then superlist[im]:=j; break; fi;
+od;
+od;
+
+superlength:=[];
+supercrit:=[];
+
+for im in [2..n] do
+aa:=critlist[1+superlist[im]];
+if aa>1 then superlength[im]:=aa-1; supercrit[im]:=aa;
+else superlength[im]:=n; supercrit[im]:=n+1;
+fi;
+od;
+
+mastertable:=[];
+
+mastertable[1]:=[];
+mastertable[1][1]:=[];
+mastertable[1][1][1]:=[1];
+mastertable[1][1][2]:=[[1..n]];
+
+
+superfunction:=function(x,y)
+if x=1000000000000 or y=1000000000000 then return 1000000000000; fi;
+if x=1 then return y; fi;
+if y>n then return superfunction(x,imagespace[y-n]); fi;
+if x<=n then return mv(x,y); fi;
+if x=n+1 then return y; fi;
+if x<=n+mm then
+qq:=Length(tablespace[x-n])+1;
+return tablespace[x-n][superfunction(qq,y)];
+fi;
+if x=n+mm+1 then 
+if IsBound(testlist[superfunction(testlistcrit,y)]) then return testlist[superfunction(testlistcrit,y)];
+else return 1000000000000; fi;
+fi;
+Print("WARNING:OFF.BY.ONE.ERROR");
+end;
+
+
+doublesuperfunction:=function(x,y)
+if x=1000000000000 or y=1000000000000 then return 1000000000000; fi;
+if x=1 then return y; fi;
+if y>n then
+if y<=n+mzero then return doublesuperfunction(x,imagezero[y-n]);
+elif y<=n+mzero+mone-1 then return doublesuperfunction(x,imageone[y-n-mzero+1]); 
+elif y=n+mzero+mone then return doublesuperfunction(x,ii);
+else Print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE__off.by.one.error");
+fi;
+fi;
+
+if x<=n then return mv(x,y); fi;
+if x=n+1 then return y; fi;
+if x<=n+mzero then
+qq:=Length(tablezero[x-n])+1;
+return tablezero[x-n][doublesuperfunction(qq,y)];
+fi;
+if x<=n+mzero+mone-1 then
+qq:=Length(tableone[x-n-mzero+1])+1;
+ham:=tableone[x-n-mzero+1][doublesuperfunction(qq,y)];
+if ham<=n+1 then return ham;
+else return ham+mzero-1;
+fi;
+
+fi;
+if x=n+mzero+mone then
+if IsBound(testlist[doublesuperfunction(testlistcrit,y)]) then return testlist[doublesuperfunction(testlistcrit,y)]; else
+return 1000000000000; fi;
+fi;
+end;
+
+doubletestfunction:=function()
+
+if IsBound(testlist[doublesuperfunction(testlistcrit,zero)]) then if not testlist[doublesuperfunction(testlistcrit,zero)]=n+mzero then return false; fi; fi;
+testlist[doublesuperfunction(testlistcrit,zero)]:=n+mzero;
+
+if mone>1 then
+
+if IsBound(testlist[doublesuperfunction(testlistcrit,one)]) then if not testlist[doublesuperfunction(testlistcrit,one)]=n+mzero+mone-1 then return false; fi; fi;
+testlist[doublesuperfunction(testlistcrit,one)]:=n+mzero+mone-1;
+
+elif mone=1 then
+
+if IsBound(testlist[doublesuperfunction(testlistcrit,one)]) then if not testlist[doublesuperfunction(testlistcrit,one)]=n+1 then return false; fi; fi;
+testlist[doublesuperfunction(testlistcrit,one)]:=n+1;
+
+else Print("EEEEEEEEEEEE"); fi;
+
+for kk in Reversed([2..testlistlength]) do
+aar:=doublesuperfunction(doublesuperfunction(n+mzero+mone,kk),doublesuperfunction(n+mzero+mone,zero));
+if aar=false then return false; fi;
+if IsBound(testlist[doublesuperfunction(kk,zero)]) and not testlist[doublesuperfunction(kk,zero)]=aar then return false; fi;
+testlist[doublesuperfunction(kk,zero)]:=aar;
+
+bbr:=doublesuperfunction(doublesuperfunction(n+mzero+mone,kk),doublesuperfunction(n+mzero+mone,one));
+if bbr=false then return false; fi;
+if IsBound(testlist[doublesuperfunction(kk,one)]) and not testlist[doublesuperfunction(kk,one)]=bbr then return false; fi;
+testlist[doublesuperfunction(kk,one)]:=bbr;
+
+od;
+
+if not testlist[1]=1 then return false; fi;
+return true;
+end;
+
+
+testfunction:=function()
+
+if ttt=0 then card:=mastertable[aa][jj]; else card:=mastertable[bb][jj-qqq]; fi;
+
+
+if ttt=0 then
+if IsBound(testlist[superfunction(testlistcrit,zero)]) then if not testlist[superfunction(testlistcrit,zero)]=n+mm then 
+#Display([ii,ttt,'a']);
+return false; fi; fi;
+testlist[superfunction(testlistcrit,zero)]:=n+mm;
+
+if IsBound(testlist[superfunction(testlistcrit,one)]) then if not testlist[superfunction(testlistcrit,one)]=mv(ii,one) then 
+return false; fi; fi;
+testlist[superfunction(testlistcrit,one)]:=mv(ii,one);
+else
+
+if IsBound(testlist[superfunction(testlistcrit,zero)]) then if not testlist[superfunction(testlistcrit,zero)]=mv(ii,zero) then 
+return false; fi; fi;
+testlist[superfunction(testlistcrit,zero)]:=mv(ii,zero);
+
+if IsBound(testlist[superfunction(testlistcrit,one)]) then if not testlist[superfunction(testlistcrit,one)]=n+mm then 
+return false; fi; fi;
+testlist[superfunction(testlistcrit,one)]:=n+mm;
+fi;
+
+for kk in Reversed([2..testlistlength]) do
+aar:=superfunction(superfunction(n+mm+1,kk),superfunction(n+mm+1,zero));
+if aar=false then return false; fi;
+if IsBound(testlist[superfunction(kk,zero)]) and not testlist[superfunction(kk,zero)]=aar then 
+ return false; fi;
+testlist[superfunction(kk,zero)]:=aar;
+
+bbr:=superfunction(superfunction(n+mm+1,kk),superfunction(n+mm+1,one));
+if bbr=false then return false; fi;
+if IsBound(testlist[superfunction(kk,one)]) and not testlist[superfunction(kk,one)]=bbr then 
+return false; fi;
+testlist[superfunction(kk,one)]:=bbr;
+
+od;
+
+if not testlist[1]=1 then 
+return false; fi;
+
+
+return true;
+end;
+
+
+for ii in [2..n] do
+
+aa:=mv(ii,zero);
+bb:=mv(ii,one);
+mastertable[ii]:=[];
+
+
+qqq:=Length(mastertable[aa]);
+rrr:=Length(mastertable[bb]);
+
+
+
+for jj in [1..qqq+rrr] do
+if jj<=qqq then ttt:=0; else ttt:=1; fi;
+
+if ttt=0 then card:=mastertable[aa][jj]; else card:=mastertable[bb][jj-qqq]; fi;
+imagespace:=card[1];
+tablespace:=card[2];
+mm:=Length(imagespace);
+
+if mm+1>limit then continue; fi;
+
+testlist:=[];
+testlistlength:=superlength[ii];
+testlistcrit:=supercrit[ii];
+
+test:=testfunction();
+
+if test then
+newimagespace:=ShallowCopy(imagespace);
+newtablespace:=ShallowCopy(tablespace);
+
+
+if superfunction(n+mm+1,critlist[superlist[ii]])=1 then
+while Length(testlist)>=critlist[superlist[ii]] do Remove(testlist); od;
+fi;
+
+Add(newimagespace,ii);
+Add(newtablespace,testlist);
+
+Add(mastertable[ii],[newimagespace,newtablespace]);
+
+fi;
+
+od;
+
+for ri in [1..Length(mastertable[aa])] do
+for rj in [1..Length(mastertable[bb])] do
+
+cardzero:=mastertable[aa][ri];
+cardone:=mastertable[bb][rj];
+
+imagezero:=cardzero[1];
+imageone:=cardone[1];
+
+tablezero:=cardzero[2];
+tableone:=cardone[2];
+
+mzero:=Length(imagezero);
+mone:=Length(imageone);
+
+if mzero+mone>limit then continue; fi;
+
+testlist:=[];
+testlistlength:=superlength[ii];
+testlistcrit:=supercrit[ii];
+
+test:=doubletestfunction();
+
+if test then
+imagespace:=ShallowCopy(imagezero);
+tablespace:=ShallowCopy(tablezero);
+for is in [2..Length(imageone)] do
+Add(imagespace,imageone[is]);
+od;
+for is in [2..Length(tableone)] do
+quart:=ShallowCopy(tableone[is]);
+for js in [1..Length(quart)] do
+if quart[js]>n+1 then
+quart[js]:=quart[js]+mzero-1;
+fi;
+od;
+
+Add(tablespace,quart);
+od;
+
+if doublesuperfunction(n+mzero+mone,critlist[superlist[ii]])=1 then
+while Length(testlist)>=critlist[superlist[ii]] do Remove(testlist); od;
+fi;
+
+Add(imagespace,ii);
+Add(tablespace,testlist);
+
+Add(mastertable[ii],[imagespace,tablespace]);
+fi;
+
+od;
+od;
+
+
+od;
+
+
+
+return [mastertable[zero],mastertable[one]];
+end;
+
+extendtable:=function(type,number,xx,extension)
+local har,n,quack,i,j,mzero,hack,rack,zeroext,oneext;
+
+
+n:=Length(xx[3]);
+
+if type<2 then
+if type=0 then
+Append(xx[3],StructuralCopy(extension[1][number][2]));
+xx[1]:=Length(xx[3]);
+Append(xx[3][n+1],StructuralCopy(extension[1][number][1]));
+for i in [1..n] do
+if Length(xx[3][i])=n then Append(xx[3][i],StructuralCopy(List(extension[1][number][1],v->xx[3][i][v]))); fi;
+od;
+xx[3][1]:=[1..Length(xx[3][1])];
+else
+Append(xx[3],StructuralCopy(extension[2][number][2]));
+xx[2]:=Length(xx[3]);
+Append(xx[3][n+1],StructuralCopy(extension[2][number][1]));
+fi;
+for i in [1..n] do
+if Length(xx[3][i])=n then Append(xx[3][i],StructuralCopy(List(extension[2][number][1],v->xx[3][i][v]))); fi;
+od;
+xx[3][1]:=[1..Length(xx[3][1])];
+else
+
+zeroext:=StructuralCopy(extension[1][number[1]]);
+oneext:=StructuralCopy(extension[2][number[2]]);
+
+Append(xx[3],zeroext[2]);
+xx[1]:=Length(xx[3]);
+
+Append(xx[3][n+1],zeroext[1]);
+
+mzero:=Length(zeroext[2]);
+
+har:=StructuralCopy(oneext[2]);
+
+for i in [2..Length(har)] do
+quack:=har[i];
+for j in [1..Length(quack)] do
+if quack[j]>n+1 then 
+quack[j]:=quack[j]+mzero-1;
+fi;
+od;
+Add(xx[3],quack);
+od;
+
+
+xx[2]:=Length(xx[3]);
+
+if Length(oneext[2])=1 then
+xx[2]:=n+1;
+fi;
+
+
+hack:=StructuralCopy(zeroext[1]);
+
+rack:=StructuralCopy(oneext[1]);
+
+
+for i in [2..Length(rack)] do
+if rack[i]<=n+1 then Add(hack,rack[i]);
+else
+Add(hack,rack[i]+mzero-1);
+fi;
+od;
+
+for i in [1..n] do
+if Length(xx[3][i])=n then Append(xx[3][i],List(hack,v->xx[3][i][v])); fi;
+od;
+xx[3][1]:=[1..Length(xx[3][1])];
+xx[3][n+1]:=Concatenation([1..n],hack);
+
+fi;
+
+end;
+
+
+
+allextensions:=function(tar,x)
+local ext,list,i,xx,newext,j,full,limit;
+
+if not IsInt(tar) then limit:=infinity; else limit:=tar; fi;
+full:=not (tar=false);
+
+ext:=totalgeneration(limit,x[1],x[2],x[3]);
+list:=[];
+
+for i in [1..Length(ext[1])] do
+if Length(ext[1][i][2])>limit then continue; fi;
+
+xx:=StructuralCopy(x);
+extendtable(0,i,xx,ext);
+Add(list,xx);
+od;
+for j in [1..Length(ext[2])] do
+if Length(ext[2][j][2])>limit then continue; fi;
+
+xx:=StructuralCopy(x);
+extendtable(1,j,xx,ext);
+Add(list,xx);
+od;
+
+if full then
+for i in [1..Length(ext[1])] do
+for j in [1..Length(ext[2])] do
+if Length(ext[1][i][2])+Length(ext[2][j][2])-1>limit then continue; fi;
+
+xx:=StructuralCopy(x);
+extendtable(2,[i,j],xx,ext);
+Add(list,xx);
+od;
+od;
+fi;
+return list;
+end;
+
+randomextension:=function(tar,x)
+local pp,qq,limit,full,ext,tarball,i,j;
+
+if not IsInt(tar) then limit:=infinity; else limit:=tar; fi;
+full:=not (tar=false);
+ext:=totalgeneration(limit,x[1],x[2],x[3]);
+if Length(ext[1])+Length(ext[2])=0 then return 0; fi;
+tarball:=[];
+for i in [1..Length(ext[1])] do
+for j in [1..Length(ext[2])] do
+if Length(ext[1][i][2])+Length(ext[2][j][2])-1<=limit then Add(tarball,[i,j]); fi;
+od;
+od;
+pp:=Random([1..Length(ext[1])+Length(ext[2])+Length(tarball)]);
+if pp<=Length(ext[1]) then
+qq:=pp;
+extendtable(0,qq,x,ext);
+elif pp<=Length(ext[1])+Length(ext[2]) then
+qq:=pp-Length(ext[1]);
+extendtable(1,qq,x,ext);
+else
+qq:=pp-Length(ext[1])-Length(ext[2]);
+extendtable(2,tarball[qq],x,ext);
+fi;
+
+return Length(ext[1])+Length(ext[2])+Length(tarball);
+end;
+
+
+#simpleknuthestimate returns an unbiased estimate for the number of superreduced multigenic Laver tables of cardinality at most n.
+
+simpleknuthestimate:=function(n)
+local x,list,pp,count,pivot,a;
+
+x:=[1,1,[[1]]]; list:=[];
+while true do
+pp:=randomextension(n-Length(x[3]),x);
+if pp>0 then Add(list,pp); else break; fi;
+od;
+count:=1; pivot:=1; for a in list do pivot:=pivot*a; count:=count+pivot; od; return count; end;
+
+
+
+
+consistencytesttwo:=function(xxx,mm)
+local zero,one,table,mv,list,nn,teststate,i,kk;
+
+zero:=xxx[1];
+one:=xxx[2];
+table:=xxx[3];
+
+mv:=makefunction(table);
+
+if mv(one,one)>1 then return false; fi;
+
+if not nightmaretest(table) then return false; fi;
+
+list:=[zero];
+
+while list[Length(list)]>1 do Add(list,mv(list[Length(list)],zero)); od;
+
+nn:=LogInt(Length(list),2);
+
+if nn<=mm+1 then return true; fi;
+
+teststate:=[];
+
+for i in [1..2^mm] do
+if mv(list[i],list[2^nn-2^mm])=1 or mv(list[i],list[2^nn-2^mm])=list[2^nn-2^(nn-1)] then continue; fi;
+Add(teststate,list[i]);
+od;
+
+if not Length(Unique(List(teststate,v->mv(v,one))))=Length(teststate) then return false; fi;
+
+for kk in [mm+1..nn-2] do
+
+teststate:=[];
+
+for i in [1..2^kk] do
+if mv(list[i],list[2^nn-2^mm])=list[2^nn-2^kk] then Add(teststate,list[i]); fi;
+od;
+
+if not Length(Unique(List(teststate,v->mv(v,one))))=Length(teststate) then return false; fi;
+
+od;
+
+return true;
+
+end;
+
+# The following code will on a positive input nn, search for an inconsistency in the large cardinal heirarchy. The code will print out the cardinalities of the tables that it
+# is currently searching to extend.
+
+inconsistencysearchtwo:=function(nn) local list,par,ttt; list:=[[1,1,[[1]]]]; while Length(list)>0 do par:=allextensions(true,Remove(list)); 
+for ttt in par do if consistencytesttwo(ttt,nn) then Add(list,ttt); fi; od; SortBy(List(v->-Length(v[3])));  Display(List(list,v->Length(v[3]))); od; 
+while true do Display("Warning: inconsistency found. Large cardinals are inconsistent or code has errors."); od; end;
+
