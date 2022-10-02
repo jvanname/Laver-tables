@@ -1,0 +1,7 @@
+n:=4;
+
+onemodulo:=function(x,y) return RemInt(x-1,y)+1; end;
+
+x:=[]; x[2^n]:=[1..2^n]; for i in Reversed([1..2^n-1]) do x[i]:=[i+1]; for j in [1..2^n-1] do x[i][j+1]:=x[x[i][j]][onemodulo(i+1,Length(x[x[i][j]]))]; 
+if x[i][j+1]=2^n then break; fi; od; od;
+
