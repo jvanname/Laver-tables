@@ -8,13 +8,18 @@ one:=x[2];
 table:=x[3];
 n:=Length(table);
 
-exptable:=StructuralCopy(table);
-exptable[n+1]:=[1..n];
-exptable[1][n+1]:=n+1;
-for i in [2..n+1] do
-exptable[i][n+1]:=1;
+#exptable:=StructuralCopy(table);
+#exptable[n+1]:=[1..n];
+#exptable[1][n+1]:=n+1;
+#for i in [2..n+1] do
+#exptable[i][n+1]:=1;
+#od;
+
+mastertable:=[];
+
+for i in [1..n] do
+
+
 od;
-
-
 
 end;
