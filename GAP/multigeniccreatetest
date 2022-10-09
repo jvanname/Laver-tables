@@ -15,9 +15,18 @@ n:=Length(table);
 #exptable[i][n+1]:=1;
 #od;
 
-mastertable:=[];
+mastertable:=[[]];
+Add(mastertable[1],[]);
+Add(mastertable[1],[[1..n]]);
 
-for i in [1..n] do
+for i in [2..n] do
+mastertable[i]:=[[]];
+
+for aa in mastertable[table[i][zero]] do
+for bb in mastertable[table[i][one]] do
+
+od;
+od;
 
 
 od;
