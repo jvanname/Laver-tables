@@ -1,6 +1,6 @@
 x:=[1,1,[[1]]];
 
-allextensions:=function(x)
+allextensionsslow:=function(x)
 local zero,one,table,n,exptable;
 
 zero:=x[1];
@@ -19,11 +19,15 @@ mastertable:=[[]];
 Add(mastertable[1],[]);
 Add(mastertable[1],[[1..n]]);
 
+superfunction:=function(aa,bb,
+
 for i in [2..n] do
 mastertable[i]:=[[]];
 
 for aa in mastertable[table[i][zero]] do
 for bb in mastertable[table[i][one]] do
+
+
 
 od;
 od;
