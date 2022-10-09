@@ -19,7 +19,6 @@ mastertable:=[[]];
 Add(mastertable[1],[]);
 Add(mastertable[1],[[1..n]]);
 
-superfunction:=function(aa,bb,
 
 for i in [2..n] do
 mastertable[i]:=[[]];
