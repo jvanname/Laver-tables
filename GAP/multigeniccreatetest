@@ -1,0 +1,8 @@
+x:=[[[1]],1,1];
+
+allextensions:=function(x)
+table:=x[1];
+n:=Length(x);
+
+
+
