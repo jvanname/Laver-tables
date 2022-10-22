@@ -1,5 +1,3 @@
-# makefunction returns a function as the output. The input is the multiplication table for the Laver-like algebra.
-
 makefunction:=function(compressedtable)
 local n,tree;
 n:=Length(compressedtable);
@@ -11,8 +9,6 @@ fi;
 end;
 return tree;
 end;
-
-# critfind returns the set of all critical points of a Laver-like algebra. The input is the multiplication table for the Laver-like algebra.
 
 critfind:=function(table)
 local critlist,i,n,tree;
@@ -26,10 +22,12 @@ Add(critlist,1);
 return critlist;
 end;
 
+# The program is taking way too long to run. I therefore need to cut down the number of branches.
 
 totalgeneration:=function(limit,zero,one,table)
 local im,n,mv,critlist,superlist,i,j,superlength,supercrit,aa,ii,superfunction,doublesuperfunction,imagezero,imageone,testlistcrit,testlistlength,mzero,mone,tablezero,tableone,
-mastertable,bb,qq,imagespace,card,cardzero,cardone,mm,tablespace,qqq,rrr,jj,kk,testfunction,test,aar,bbr,newtablespace,newimagespace,testlist,ttt,doubletestfunction,quart,is,js,ri,rj,ham;
+mastertable,bb,qq,imagespace,card,cardzero,cardone,mm,tablespace,qqq,rrr,jj,kk,testfunction,test,aar,bbr,newtablespace,newimagespace,testlist,ttt,doubletestfunction,quart,is,js,ri,rj,ham,
+parkzero,parkone,aaa,b;
 
 n:=Length(table);
 
@@ -141,6 +139,9 @@ testlist[doublesuperfunction(kk,one)]:=bbr;
 od;
 
 if not testlist[1]=1 then return false; fi;
+
+if doublesuperfunction(n+mzero+mone,ii)=1 then return false; fi;
+
 return true;
 end;
 
@@ -152,7 +153,6 @@ if ttt=0 then card:=mastertable[aa][jj]; else card:=mastertable[bb][jj-qqq]; fi;
 
 if ttt=0 then
 if IsBound(testlist[superfunction(testlistcrit,zero)]) then if not testlist[superfunction(testlistcrit,zero)]=n+mm then 
-#Display([ii,ttt,'a']);
 return false; fi; fi;
 testlist[superfunction(testlistcrit,zero)]:=n+mm;
 
@@ -188,6 +188,7 @@ od;
 if not testlist[1]=1 then 
 return false; fi;
 
+if superfunction(n+mm+1,ii)=1 then return false; fi;
 
 return true;
 end;
@@ -199,14 +200,22 @@ aa:=mv(ii,zero);
 bb:=mv(ii,one);
 mastertable[ii]:=[];
 
+if mv(ii,ii)>1 and mv(aa,aa)=1 and mv(bb,bb)=1 then
+imagespace:=[1,ii];
+tablespace:=[[1..n],StructuralCopy(table[ii])];
+
+Add(mastertable[ii],[imagespace,tablespace]);
+fi;
+
 
 qqq:=Length(mastertable[aa]);
 rrr:=Length(mastertable[bb]);
 
-
-
 for jj in [1..qqq+rrr] do
 if jj<=qqq then ttt:=0; else ttt:=1; fi;
+
+if ttt=0 and mv(bb,bb)>1 then continue; fi;
+if ttt=1 and mv(aa,aa)>1 then continue; fi;
 
 if ttt=0 then card:=mastertable[aa][jj]; else card:=mastertable[bb][jj-qqq]; fi;
 imagespace:=card[1];
@@ -261,7 +270,6 @@ testlistlength:=superlength[ii];
 testlistcrit:=supercrit[ii];
 
 test:=doubletestfunction();
-
 if test then
 imagespace:=ShallowCopy(imagezero);
 tablespace:=ShallowCopy(tablezero);
@@ -295,14 +303,42 @@ od;
 
 od;
 
+parkzero:=[];
+parkone:=[];
 
+#Here we have an issue of the table not accepting generators. Sad.
+
+#for card in mastertable[zero] do
+#test:=false;
+#tablespace:=card[2];
+#for aaa in tablespace do
+#if test then break; fi;
+#for b in aaa do
+#if b=n+1 then test:=true; break; fi;
+#od;
+#od;
+#if test or Length(tablespace)=1 then Add(parkzero,card); fi;
+#od;
+#for card in mastertable[one] do
+#test:=false;
+#tablespace:=card[2];
+#for aaa in tablespace do
+#if test then break; fi;
+#for b in aaa do
+#if b=n+1 then test:=true; break; fi;
+#od;
+#od;
+#if test or Length(tablespace)=1 then Add(parkone,card); fi;
+#od;
 
 return [mastertable[zero],mastertable[one]];
+
+#return [parkzero,parkone];
 end;
+
 
 extendtable:=function(type,number,xx,extension)
 local har,n,quack,i,j,mzero,hack,rack,zeroext,oneext;
-
 
 n:=Length(xx[3]);
 
@@ -378,12 +414,14 @@ fi;
 
 end;
 
-# Given a superreduced multigenic Laver table x with 2 generators and n critical points, allextensions will return the set of all superreduced multigenic Laver tables
-# xx with n+1 critical points and 2 generators and where x is a homomorphic image of xx by a homomorphism mapping the generators of xx to the generators of x and where
-# x is a subalgebra of xx.
+
 
 allextensions:=function(tar,x)
-local ext,list,i,xx,newext,j,full,limit;
+local ext,list,i,xx,newext,j,full,limit,n,marchlist,card,test,aaa,b,tablespace;
+
+mv:=makefunction(x[3]);
+
+n:=Length(x[3]);
 
 if not IsInt(tar) then limit:=infinity; else limit:=tar; fi;
 full:=not (tar=false);
@@ -391,15 +429,56 @@ full:=not (tar=false);
 ext:=totalgeneration(limit,x[1],x[2],x[3]);
 list:=[];
 
+marchlist:=[[],[]];
+
+for card in ext[1] do
+test:=false;
+tablespace:=card[2];
+for aaa in tablespace do
+if test then break; fi;
+for b in aaa do
+if b=n+1 then test:=true; break; fi;
+od;
+od;
+if test or Length(tablespace)=1 then Add(marchlist[1],1); 
+else Add(marchlist[1],0); fi;
+od;
+
+for card in ext[2] do
+test:=false;
+tablespace:=card[2];
+for aaa in tablespace do
+if test then break; fi;
+for b in aaa do
+if b=n+1 then test:=true; break; fi;
+od;
+od;
+if test or Length(tablespace)=1 then Add(marchlist[2],1); 
+else Add(marchlist[2],0); fi;
+od;
+
+
+
 for i in [1..Length(ext[1])] do
+if mv(x[2],x[2])>1 then break; fi;
+
 if Length(ext[1][i][2])>limit then continue; fi;
+
+if marchlist[1][i]=0 then continue; fi;
 
 xx:=StructuralCopy(x);
 extendtable(0,i,xx,ext);
+
+
+
 Add(list,xx);
 od;
 for j in [1..Length(ext[2])] do
+if mv(x[1],x[1])>1 then break; fi;
+
 if Length(ext[2][j][2])>limit then continue; fi;
+
+if marchlist[2][j]=0 then continue; fi;
 
 xx:=StructuralCopy(x);
 extendtable(1,j,xx,ext);
@@ -410,6 +489,8 @@ if full then
 for i in [1..Length(ext[1])] do
 for j in [1..Length(ext[2])] do
 if Length(ext[1][i][2])+Length(ext[2][j][2])-1>limit then continue; fi;
+
+if marchlist[1][i]=0 and marchlist[2][j]=0 then continue; fi;
 
 xx:=StructuralCopy(x);
 extendtable(2,[i,j],xx,ext);
