@@ -501,101 +501,58 @@ fi;
 return list;
 end;
 
-# Given a superreduced multigenic Laver table x with 2 generators and n critical points, allextensions will return a random superreduced multigenic Laver table
-# xx with n+1 critical points and 2 generators and where x is a homomorphic image of xx by a homomorphism mapping the generators of xx to the generators of x and where
-# x is a subalgebra of xx.
 
 
-randomextension:=function(tar,x)
-local pp,qq,limit,full,ext,tarball,i,j;
-
-if not IsInt(tar) then limit:=infinity; else limit:=tar; fi;
-full:=not (tar=false);
-ext:=totalgeneration(limit,x[1],x[2],x[3]);
-if Length(ext[1])+Length(ext[2])=0 then return 0; fi;
-tarball:=[];
-for i in [1..Length(ext[1])] do
-for j in [1..Length(ext[2])] do
-if Length(ext[1][i][2])+Length(ext[2][j][2])-1<=limit then Add(tarball,[i,j]); fi;
-od;
-od;
-pp:=Random([1..Length(ext[1])+Length(ext[2])+Length(tarball)]);
-if pp<=Length(ext[1]) then
-qq:=pp;
-extendtable(0,qq,x,ext);
-elif pp<=Length(ext[1])+Length(ext[2]) then
-qq:=pp-Length(ext[1]);
-extendtable(1,qq,x,ext);
-else
-qq:=pp-Length(ext[1])-Length(ext[2]);
-extendtable(2,tarball[qq],x,ext);
-fi;
-
-return Length(ext[1])+Length(ext[2])+Length(tarball);
-end;
+### Given a superreduced multigenic Laver table x with 2 generators and n critical points, allextensions will return a random superreduced multigenic Laver table
+### xx with n+1 critical points and 2 generators and where x is a homomorphic image of xx by a homomorphism mapping the generators of xx to the generators of x and where
+### x is a subalgebra of xx.
 
 
-#simpleknuthestimate returns an unbiased estimate for the number of superreduced multigenic Laver tables of cardinality at most n. This estimate is an instance of Donald Knuth's
-#algorithm for estimating the number of nodes in a tree or estimating the amount of time a backtracking algorithm will take.
+#randomextension:=function(tar,x)
+#local pp,qq,limit,full,ext,tarball,i,j;
 
-simpleknuthestimate:=function(n)
-local x,list,pp,count,pivot,a;
+#if not IsInt(tar) then limit:=infinity; else limit:=tar; fi;
+#full:=not (tar=false);
+#ext:=totalgeneration(limit,x[1],x[2],x[3]);
+#if Length(ext[1])+Length(ext[2])=0 then return 0; fi;
+#tarball:=[];
+#for i in [1..Length(ext[1])] do
+#for j in [1..Length(ext[2])] do
+#if Length(ext[1][i][2])+Length(ext[2][j][2])-1<=limit then Add(tarball,[i,j]); fi;
+#od;
+#od;
+#pp:=Random([1..Length(ext[1])+Length(ext[2])+Length(tarball)]);
+#if pp<=Length(ext[1]) then
+#qq:=pp;
+#extendtable(0,qq,x,ext);
+#elif pp<=Length(ext[1])+Length(ext[2]) then
+#qq:=pp-Length(ext[1]);
+#extendtable(1,qq,x,ext);
+#else
+#qq:=pp-Length(ext[1])-Length(ext[2]);
+#extendtable(2,tarball[qq],x,ext);
+#fi;
 
-x:=[1,1,[[1]]]; list:=[];
-while true do
-pp:=randomextension(n-Length(x[3]),x);
-if pp>0 then Add(list,pp); else break; fi;
-od;
-count:=1; pivot:=1; for a in list do pivot:=pivot*a; count:=count+pivot; od; return count; end;
+#return Length(ext[1])+Length(ext[2])+Length(tarball);
+#end;
+
+
+######simpleknuthestimate returns an unbiased estimate for the number of superreduced multigenic Laver tables of cardinality at most n. This estimate is an instance of Donald Knuth's
+######algorithm for estimating the number of nodes in a tree or estimating the amount of time a backtracking algorithm will take.
+
+#simpleknuthestimate:=function(n)
+#local x,list,pp,count,pivot,a;
+
+#x:=[1,1,[[1]]]; list:=[];
+#while true do
+#pp:=randomextension(n-Length(x[3]),x);
+#if pp>0 then Add(list,pp); else break; fi;
+#od;
+#count:=1; pivot:=1; for a in list do pivot:=pivot*a; count:=count+pivot; od; return count; end;
 
 
 
 
-consistencytesttwo:=function(xxx,mm)
-local zero,one,table,mv,list,nn,teststate,i,kk;
-
-zero:=xxx[1];
-one:=xxx[2];
-table:=xxx[3];
-
-mv:=makefunction(table);
-
-if mv(one,one)>1 then return false; fi;
-
-if not nightmaretest(table) then return false; fi;
-
-list:=[zero];
-
-while list[Length(list)]>1 do Add(list,mv(list[Length(list)],zero)); od;
-
-nn:=LogInt(Length(list),2);
-
-if nn<=mm+1 then return true; fi;
-
-teststate:=[];
-
-for i in [1..2^mm] do
-if mv(list[i],list[2^nn-2^mm])=1 or mv(list[i],list[2^nn-2^mm])=list[2^nn-2^(nn-1)] then continue; fi;
-Add(teststate,list[i]);
-od;
-
-if not Length(Unique(List(teststate,v->mv(v,one))))=Length(teststate) then return false; fi;
-
-for kk in [mm+1..nn-2] do
-
-teststate:=[];
-
-for i in [1..2^kk] do
-if mv(list[i],list[2^nn-2^mm])=list[2^nn-2^kk] then Add(teststate,list[i]); fi;
-od;
-
-if not Length(Unique(List(teststate,v->mv(v,one))))=Length(teststate) then return false; fi;
-
-od;
-
-return true;
-
-end;
 
 # The following code will on a positive input nn, search for an inconsistency in the large cardinal heirarchy. The code will print out the cardinalities of the tables that it
 # is currently searching to extend.
@@ -664,3 +621,10 @@ Display(List(list,v->Length(v[3])));
 od;
 Display("WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE!")
 end;
+
+x:=[1,1,[[1]]];
+
+Display("To get started, the variable x is an array that denotes a quotient of a multigenic Laver table generated by two elements. x[1],x[2] are the generators, and x[3]
+is an array that includes all the information about the multigenic Laver table. 'makefunction(x[3]);' returns a binary operation on the quotient multigenic Laver table.
+If y[3] is a quotient multigenic Laver table generated by y[1],y[2], then 'allextensions(true,[y[1],y[2],y[3]]);' will return an array of all quotient multigenic Laver tables
+up to critical equivalence still generated by 2 elements but which have one more critical point than y and which extend y.");
