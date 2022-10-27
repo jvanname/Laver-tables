@@ -619,7 +619,9 @@ for yy in pan do
 if consistencytest(yy,rr,mm) then Add(list,yy); fi; od;
 Display(List(list,v->Length(v[3])));
 od;
-Display("WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE!")
+for kks in [1..100000] do
+Display("WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE!");
+od;
 end;
 
 x:=[1,1,[[1]]];
