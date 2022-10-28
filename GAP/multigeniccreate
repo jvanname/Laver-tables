@@ -624,6 +624,47 @@ Display("WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE! Please su
 od;
 end;
 
+critequaltest:=function(a,b,table)
+local n,mv,ttt,i,aa,bb,pna,taa,tbb,list,pan;
+n:=Length(table);
+mv:=makefunction(table);
+
+ttt:=[];
+for i in [1..n] do ttt[i]:=[]; od;
+
+list:=[];
+
+for i in [1..n] do 
+aa:=mv(i,a);
+bb:=mv(i,b);
+if not (aa=1)=(bb=1) then return false; fi;
+if not IsBound(ttt[aa][bb]) then 
+ttt[aa][bb]:=true; 
+if aa>1 then Add(list,[aa,bb]); fi;
+fi;
+od;
+
+while Length(list)>0 do
+pan:=Remove(list);
+taa:=pan[1];
+tbb:=pan[2];
+if not Length(table[taa])=Length(table[tbb]) then return false; fi;
+
+for i in [1..Length(table[taa])] do
+aa:=table[taa][i];
+bb:=table[tbb][i];
+if not (aa=1)=(bb=1) then return false; fi;
+if not IsBound(ttt[aa][bb]) then 
+ttt[aa][bb]:=true; 
+if aa>1 then Add(list,[aa,bb]); fi;
+fi;
+od;
+od;
+
+return true;
+end;
+
+
 consistencytesttwo:=function(xx,mm,nn)
 local mv,aa,bb,i;
 
