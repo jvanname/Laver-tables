@@ -707,5 +707,51 @@ Display("WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE! Please su
 end;
 
 
+critmaxcong:=function(table)
+local dic,n,prearray,mm,i,can,axe,mv,finalarray,newdic;
+
+dic:=NewDictionary([],true);
+mv:=makefunction(table);
+n:=Length(table);
+prearray:=[];
+mm:=0;
+for i in [1..n] do
+if Length(table[i])=n then
+prearray[i]:=mm+1;
+else
+
+can:=List(table[i],v->prearray[v]);
+axe:=LookupDictionary(dic,can);
+
+if axe=fail then
+AddDictionary(dic,can,mm+1);
+prearray[i]:=mm+1;
+else 
+prearray[i]:=axe;
+fi;
+fi;
+mm:=Maximum(mm,prearray[i]);
+od;
+
+newdic:=NewDictionary([],true);
+
+finalarray:=[];
+mm:=0;
+for i in [1..n] do
+can:=List([1..n],v->prearray[mv(v,i)]);
+
+axe:=LookupDictionary(newdic,can);
+
+if axe=fail then
+AddDictionary(newdic,can,mm+1);
+finalarray[i]:=mm+1;
+else
+finalarray[i]:=axe;
+fi;
+mm:=Maximum(mm,finalarray[i]);
+od;
+
+return finalarray;
+end;
 
 
