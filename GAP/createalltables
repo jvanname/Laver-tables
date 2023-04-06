@@ -55,6 +55,13 @@ else superlength[im]:=n; supercrit[im]:=n+1;
 fi;
 od;
 
+mastertable:=[];
+
+mastertable[1]:=[];
+mastertable[1][1]:=[];
+mastertable[1][1][1]:=[1];
+mastertable[1][1][2]:=[[1..n]];
+
 
 
 end;
