@@ -154,6 +154,7 @@ for ii in [2..n] do
 
 mastertable[ii]:=[];
 
+# Why are testlist,testlistlength,testlistcrit listed twice?
 testlist:=[];
 testlistlength:=superlength[ii];
 testlistcrit:=supercrit[ii];
