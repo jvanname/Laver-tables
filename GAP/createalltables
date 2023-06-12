@@ -198,12 +198,14 @@ test:=testfunction();
 
 if test then
 
+#I am confused as to why we have a shallow copy and not a structural copy.
 imagespace:=ShallowCopy(imagearray[1]);
 for kz in [2..gg] do
 for is in [2..Length(imagearray[kz])] do
 Add(imagespace,imagearray[kz][is]);
 od;
 od;
+
 
 tablespace:=ShallowCopy(tablearray[1]);
 
