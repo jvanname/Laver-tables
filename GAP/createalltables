@@ -62,7 +62,9 @@ local ik,qq,ham;
 
 if x=1000000000000 or y=1000000000000 then return 1000000000000; fi;
 if x=1 then return y; fi;
-if y=1 then return 1; fi;
+if y=1 then return 1; 
+# I am not sure that this line of code is even necessary.
+fi;
 
 if y>n then
 for ik in [1..gg] do
