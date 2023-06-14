@@ -154,10 +154,10 @@ for ii in [2..n] do
 
 mastertable[ii]:=[];
 
-# Why are testlist,testlistlength,testlistcrit listed twice?
-testlist:=[];
-testlistlength:=superlength[ii];
-testlistcrit:=supercrit[ii];
+# Why are testlist,testlistlength,testlistcrit listed twice? These are commented and set for deletion.
+#testlist:=[];
+#testlistlength:=superlength[ii];
+#testlistcrit:=supercrit[ii];
 
 
 aa:=[];
