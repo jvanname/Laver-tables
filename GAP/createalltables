@@ -259,7 +259,7 @@ od;
 
 # By returning this, we are also returning tables that add nothing interesting.
 #return List(generators,v->mastertable[v]); 
-car=car;
+car:=car;
 end;
 
 
