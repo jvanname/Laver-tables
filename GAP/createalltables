@@ -156,15 +156,12 @@ mastertable[1][2][2]:=[[1..n]];
 mastertable[1][2][3]:=1;
 
 
+
+
 for ii in [2..n] do
 
 mastertable[ii]:=[];
-
-# Why are testlist,testlistlength,testlistcrit listed twice? These are commented and set for deletion.
-#testlist:=[];
-#testlistlength:=superlength[ii];
-#testlistcrit:=supercrit[ii];
-
+mastertable[ii][1]:=[[1],[1..n],1];
 
 aa:=[];
 for jj in [1..gg] do
