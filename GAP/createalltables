@@ -94,6 +94,20 @@ fi;
 Print("WARNING:ERROR. PLEASE FIX CODE.");
 end;
 
+sanitycheck:=function()
+local a,b,c,nnq;
+nnq:=sumlist[Length(sumlist)];
+for a in [1..nnq] do
+for b in [1..nnq] do
+for c in [1..nnq] do
+if not superfunction(a,superfunction(b,c))=superfunction(superfunction(a,b),superfunction(a,c)) then
+while true Display("Warning: self-distributive failure. Error in code."); od;
+fi;
+od;
+od;
+od;
+end;
+
 # In the testfunction, we need to verify that the square roots of the identity are in a one-to-one correspondence with the critical points.
 testfunction:=function()
 local aar,li,kk;
