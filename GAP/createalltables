@@ -240,6 +240,7 @@ fi;
 od;
 od;
 
+# By returning this, we are also returning tables that add nothing interesting.
 return List(generators,v->mastertable[v]); 
 
 end;
