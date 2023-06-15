@@ -31,7 +31,7 @@ end;
 
 multigeneration:=function(generators,table)
 local n,mv,critlist,gg,superlist,im,j,superlength,supercrit,mastertable,ii,aa,cart,superfunction,sumlist,testlist,tablespace,imagespace,quart,js,mlist,testlistlength,
-testlistcrit,tablearray,cardarray,imagearray,pointarray,ik,tuple,jj,testfunction,test,li,kk,iz,ham,qq,aar,kz,is;
+testlistcrit,tablearray,cardarray,imagearray,pointarray,ik,tuple,jj,testfunction,test,li,kk,iz,ham,qq,aar,kz,is,sanitycheck;
 
 n:=Length(table);
 mv:=makefunction(table);
