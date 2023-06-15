@@ -94,6 +94,7 @@ fi;
 Print("WARNING:ERROR. PLEASE FIX CODE.");
 end;
 
+# In the testfunction, we need to verify that the square roots of the identity are in a one-to-one correspondence with the critical points.
 testfunction:=function()
 local aar,li,kk;
 
