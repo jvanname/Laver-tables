@@ -106,6 +106,8 @@ testlist[superfunction(testlistcrit,generators[li])]:=sumlist[li+1];
 
 elif mlist[li]=1 then
 
+# I do not think this is right either. What if the new algebra does not add anything at all?
+
 if pointarray[li]=0 then
 if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=n+1 then Display("B"); return false; fi;
 testlist[superfunction(testlistcrit,generators[li])]:=n+1;
