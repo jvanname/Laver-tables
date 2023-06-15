@@ -213,6 +213,7 @@ testlist:=[];
 testlistlength:=superlength[ii];
 testlistcrit:=supercrit[ii];
 
+sanitycheck();
 test:=testfunction();
 
 if test then
