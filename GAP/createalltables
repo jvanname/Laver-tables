@@ -141,7 +141,7 @@ for kk in Reversed([2..testlistlength]) do
 for li in [1..gg] do
 
 aar:=superfunction(superfunction(sumlist[Length(sumlist)]+1,kk),superfunction(sumlist[Length(sumlist)]+1,generators[li]));
-if aar=false then return false; fi;
+if aar=false then Display("Q"); return false; fi;
 
 # COMPUTATIONAL EVIDENCE SUGGESTS THAT THE FOLLOWING LINE OF CODE MAY NOT BE COMPLETELY CORRECT.
 
