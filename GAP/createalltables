@@ -187,15 +187,22 @@ mastertable[ii]:=[];
 mastertable[ii][1]:=[[1],[[1..n]],1];
 
 aa:=[];
+doubleaa:=[];
+beginaa:=[];
 for jj in [1..gg] do
 aa[jj]:=mv(ii,generators[jj]);
+doubleaa[jj]:=mv(aa[jj],aa[jj]);
+if doubleaa[jj]>1 then
+beginaa[jj]:=1;
+else
+beginaa[jj]:=2;
+fi;
 od;
 
-#Um. What if everything is above?
 
-
-
-cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
+#cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
+# THE ABOVE LINE IS WHAT IT WAS. NOW IS WHAT IT IS.
+cart:=Cartesian(List([1..gg],v->[beginaa[v]..Length(mastertable[aa[v]])]));
 
 Display(Length(cart));
 
