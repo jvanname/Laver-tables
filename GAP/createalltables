@@ -138,7 +138,6 @@ elif aa[li]>1 then
 
 if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=mv(ii,generators[li]) then
 Display("Cd"); return false; fi;
-fi;
 testlist[superfunction(testlistcrit,generators[li])]:=mv(ii,generators[li]);
 fi;
 fi;
