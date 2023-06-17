@@ -115,7 +115,6 @@ local aar,li,kk;
 for li in [1..gg] do
 if mlist[li]>1 then
 if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=sumlist[li+1] then 
-Display("A");
 return false; fi;
 testlist[superfunction(testlistcrit,generators[li])]:=sumlist[li+1];
 
@@ -125,19 +124,19 @@ elif mlist[li]=1 then
 # I do not think I covered the case when mlist[li]=1 but when generators[li] is not 1. I think there are several problems here.
 if aa[li]=1 then
 if pointarray[li]=0 then
-if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=n+1 then Display("B"); return false; fi;
+if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=n+1 then return false; fi;
 testlist[superfunction(testlistcrit,generators[li])]:=n+1;
 
 elif pointarray[li]=1 then
 
-if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=1 then Display("C"); return false; fi;
+if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=1 then return false; fi;
 testlist[superfunction(testlistcrit,generators[li])]:=1;
 
 fi;
 elif aa[li]>1 then
 
 if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=mv(ii,generators[li]) then
-Display("Cd"); return false; fi;
+ return false; fi;
 testlist[superfunction(testlistcrit,generators[li])]:=mv(ii,generators[li]);
 fi;
 fi;
@@ -148,19 +147,19 @@ for kk in Reversed([2..testlistlength]) do
 for li in [1..gg] do
 
 aar:=superfunction(superfunction(sumlist[Length(sumlist)]+1,kk),superfunction(sumlist[Length(sumlist)]+1,generators[li]));
-if aar=false then Display("Q"); return false; fi;
+if aar=false then return false; fi;
 
 # COMPUTATIONAL EVIDENCE SUGGESTS THAT THE FOLLOWING LINE OF CODE MAY NOT BE COMPLETELY CORRECT.
 
-if IsBound(testlist[superfunction(kk,generators[li])]) and not testlist[superfunction(kk,generators[li])]=aar then Display("D"); return false; fi;
+if IsBound(testlist[superfunction(kk,generators[li])]) and not testlist[superfunction(kk,generators[li])]=aar then return false; fi;
 testlist[superfunction(kk,generators[li])]:=aar;
 od;
 od;
 
-if not testlist[1]=1 then Display("E"); return false; fi;
+if not testlist[1]=1 then return false; fi;
 
 #if doublesuperfunction(n+mzero+mone,ii)=1 then return false; fi;
-if superfunction(sumlist[Length(sumlist)]+1,ii)=1 then Display("F"); return false; fi;
+if superfunction(sumlist[Length(sumlist)]+1,ii)=1 then return false; fi;
 
 return true;
 end;
@@ -184,27 +183,27 @@ mastertable[1][2][3]:=1;
 for ii in [2..n] do
 
 mastertable[ii]:=[];
+if mv(ii,ii)=1 then
 mastertable[ii][1]:=[[1],[[1..n]],1];
+fi;
 
 aa:=[];
-doubleaa:=[];
-beginaa:=[];
+#doubleaa:=[];
+#beginaa:=[];
 for jj in [1..gg] do
 aa[jj]:=mv(ii,generators[jj]);
-doubleaa[jj]:=mv(aa[jj],aa[jj]);
-if doubleaa[jj]>1 then
-beginaa[jj]:=2;
-else
-beginaa[jj]:=1;
-fi;
+#doubleaa[jj]:=mv(aa[jj],aa[jj]);
+#if doubleaa[jj]>1 then
+#beginaa[jj]:=2;
+#else
+#beginaa[jj]:=1;
+#fi;
 od;
 
 
-#cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
+cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
 # THE ABOVE LINE IS WHAT IT WAS. NOW IS WHAT IT IS.
-cart:=Cartesian(List([1..gg],v->[beginaa[v]..Length(mastertable[aa[v]])]));
-
-Display(Length(cart));
+#cart:=Cartesian(List([1..gg],v->[beginaa[v]..Length(mastertable[aa[v]])]));
 
 for tuple in cart do
 
@@ -227,7 +226,7 @@ testlist:=[];
 testlistlength:=superlength[ii];
 testlistcrit:=supercrit[ii];
 
-sanitycheck();
+#sanitycheck();
 test:=testfunction();
 
 if test then
@@ -272,7 +271,7 @@ od;
 od;
 
 # By returning this, we are also returning tables that add nothing interesting.
-#return List(generators,v->mastertable[v]); 
+return List([1..n],v->mastertable[v]); 
 end;
 
 
