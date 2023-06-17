@@ -193,9 +193,9 @@ for jj in [1..gg] do
 aa[jj]:=mv(ii,generators[jj]);
 doubleaa[jj]:=mv(aa[jj],aa[jj]);
 if doubleaa[jj]>1 then
-beginaa[jj]:=1;
-else
 beginaa[jj]:=2;
+else
+beginaa[jj]:=1;
 fi;
 od;
 
