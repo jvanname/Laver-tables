@@ -302,7 +302,7 @@ Add(newtable[a],newtable[a][b]);
 od;
 fi;
 od;
-Add(newtable[1],[n+1..Length(imagespace)]);
+Add(newtable[1],[n+1..n+Length(imagespace)]);
 
 tablespace:=ShallowCopy(tablearray[1]);
 for kz in [2..gg] do
@@ -316,9 +316,6 @@ od;
 Add(tablespace,quart);
 od;
 od;
-
-Append(newtable[1],imagespace);
-
 
 # I should add a line here that puts all the imagearrays into a single row.
 
