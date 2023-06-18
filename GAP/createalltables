@@ -347,9 +347,16 @@ return [newgenerators,newtable];
 end;
 
 allmultiextensions:=function(generators,table)
-local ext;
+local ext,cart,tuple,output;
+output:=[];
 ext:=multigeneration(generators,table);
+cart:=Cartesian(List(ext,Length));
 
+for tuple in cart do
+Add(output,multiextendtable(tuple,generators,table,ext));
+od;
+
+return output;
 end;
 
 ############END NEW###############################################################################################################
