@@ -350,7 +350,7 @@ allmultiextensions:=function(generators,table)
 local ext,cart,tuple,output;
 output:=[];
 ext:=multigeneration(generators,table);
-cart:=Cartesian(List(ext,Length));
+cart:=Cartesian(List(ext,v->[1..Length(v)]));
 
 for tuple in cart do
 Add(output,multiextendtable(tuple,generators,table,ext));
