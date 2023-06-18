@@ -261,9 +261,43 @@ newtable:=StructuralCopy(table);
 mv:=makefunction(table);
 newgenerators:=[];
 
-for i in [1..gg] do
-
+aa:=[];
+for jj in [1..gg] do
+aa[jj]:=mv(ii,generators[jj]);
 od;
+
+cardarray:=List([1..gg],v->extension[v][type[v]]);
+#cardarray:=List([1..gg],v->mastertable[aa[v]][tuple[v]]);
+imagearray:=List(cardarray,v->v[1]);
+tablearray:=List(cardarray,v->v[2]);
+pointarray:=List(cardarray,v->v[3]);
+mlist:=List([1..gg],v->Length(imagearray[v]));
+sumlist:=[n+1];
+for iz in [1..gg] do
+sumlist[iz+1]:=sumlist[iz]+mlist[iz]-1;
+od;
+
+imagespace:=ShallowCopy(imagearray[1]);
+for kz in [2..gg] do
+for is in [2..Length(imagearray[kz])] do
+Add(imagespace,imagearray[kz][is]);
+od;
+od;
+
+tablespace:=ShallowCopy(tablearray[1]);
+for kz in [2..gg] do
+for is in [2..Length(tablearray[kz])] do
+quart:=ShallowCopy(tablearray[kz][is]);
+for js in [1..Length(quart)] do
+if quart[js]>n+1 then
+quart[js]:=quart[js]+sumlist[kz]-n-1;
+fi;
+od;
+Add(tablespace,quart);
+od;
+od;
+
+# I should add a line here that puts all the imagearrays into a single row.
 
 newfunction:=makefunction(newtable);
 for a in [1..Length(newtable)] do
