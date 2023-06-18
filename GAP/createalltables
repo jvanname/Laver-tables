@@ -268,11 +268,6 @@ Add(finalcritlist,n+1);
 mv:=makefunction(table);
 newgenerators:=[];
 
-aa:=[];
-for jj in [1..gg] do
-aa[jj]:=mv(ii,generators[jj]);
-od;
-
 cardarray:=List([1..gg],v->extension[v][type[v]]);
 #cardarray:=List([1..gg],v->mastertable[aa[v]][tuple[v]]);
 imagearray:=List(cardarray,v->v[1]);
