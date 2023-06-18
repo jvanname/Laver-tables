@@ -283,14 +283,21 @@ mv:=makefunction(table);
 newgenerators:=[];
 for i in [1..gg] do
 
-
 od;
+
+newfunction:=makefunction(newtable);
+for a in [1..Length(newtable)] do
+for b in [1..Length(newtable)] do
+for c in [1..Length(newtable)] do
+if not newfunction(a,newfunction(b,c))=newfunction(newfunction(a,b),newfunction(a,c)) then while true do Display("E"); od; fi;
+od; od; od;
 return [newgenerators,newtable];
 end;
 
 allmultiextensions:=function(generators,table)
 local ext;
-ext:=multigeneration(generators,table)
+ext:=multigeneration(generators,table);
+
 end;
 
 ############END NEW##############################################
