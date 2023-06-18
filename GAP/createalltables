@@ -254,7 +254,7 @@ return List([1..n],v->mastertable[v]);
 end;
 
 multiextendtable:=function(type,generators,table,extension)
-local mix,newtable,mv,newgenerators,i;
+local mix,newtable,mv,newgenerators,i,a,b,c,imagespace,tablespace,quart,newfunction,n,kz,sumlist,js,tablearray,gg;
 
 n:=Length(table);
 mix:=[];
@@ -301,11 +301,11 @@ Append(newtable,tablespace);
 for a in finalcritlist do
 if a>1 then
 for b in imagespace do
-push!(newtable[a],newtable[a][b]);
+Add(newtable[a],newtable[a][b]);
 od;
 fi;
 od;
-push!(newtable[1],[n+1..Length(imagespace)]);
+Add(newtable[1],[n+1..Length(imagespace)]);
 
 tablespace:=ShallowCopy(tablearray[1]);
 for kz in [2..gg] do
