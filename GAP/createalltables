@@ -72,7 +72,6 @@ if x=n+1 then return y; fi;
 for ik in [1..gg] do
 if x<=sumlist[ik+1] then
 qq:=Length(tablearray[ik][x-sumlist[ik]+1])+1;
-# Around this line of code is problematic. I need to investigate.
 ham:=tablearray[ik][x-sumlist[ik]+1][superfunction(qq,y)];
 if ham<=n+1 then return ham; else
 return ham+sumlist[ik]-n-1;
