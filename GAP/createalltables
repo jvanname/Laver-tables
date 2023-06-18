@@ -255,7 +255,7 @@ end;
 
 multiextendtable:=function(type,generators,table,extension)
 local mix,newtable,mv,newgenerators,i,a,b,c,imagespace,tablespace,quart,newfunction
-,n,kz,sumlist,js,tablearray,gg,is,imagearray,finalcritlist,mlist,aa,ii,jj,iz;
+,n,kz,sumlist,js,tablearray,gg,is,imagearray,finalcritlist,mlist,aa,ii,jj,iz,cardarray,pointarray;
 
 n:=Length(table);
 mix:=[];
