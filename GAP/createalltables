@@ -256,9 +256,13 @@ end;
 multiextendtable:=function(type,generators,table,extension)
 local mix,newtable,mv,newgenerators,i;
 
+n:=Length(table);
 mix:=[];
 newtable:=StructuralCopy(table);
-critlist:=critfind(table);
+finalcritlist:=critfind(table);
+
+Add(finalcritlist,n+1);
+
 mv:=makefunction(table);
 newgenerators:=[];
 
@@ -284,6 +288,16 @@ for is in [2..Length(imagearray[kz])] do
 Add(imagespace,imagearray[kz][is]);
 od;
 od;
+
+
+for a in finalcritlist do
+if a>1 then
+for b in imagespace do
+push!(newtable[a],newtable[a][b]);
+od;
+fi;
+od;
+push!(newtable[1],[n+1..Length(imagespace)]);
 
 tablespace:=ShallowCopy(tablearray[1]);
 for kz in [2..gg] do
