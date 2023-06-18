@@ -274,7 +274,7 @@ imagearray:=List(cardarray,v->v[1]);
 tablearray:=List(cardarray,v->v[2]);
 pointarray:=List(cardarray,v->v[3]);
 mlist:=List([1..gg],v->Length(imagearray[v]));
-sumlist:=[n+1];
+sumlist:=[n+1]; 
 for iz in [1..gg] do
 sumlist[iz+1]:=sumlist[iz]+mlist[iz]-1;
 od;
