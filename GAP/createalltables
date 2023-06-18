@@ -254,7 +254,7 @@ return List([1..n],v->mastertable[v]);
 end;
 
 multiextendtable:=function(type,generators,table,extension)
-local mix,newtable,mv,newgenerators,i,a,b,c,imagespace,tablespace,quart,newfunction,n,kz,sumlist,js,tablearray,gg;
+local mix,newtable,mv,newgenerators,i,a,b,c,imagespace,tablespace,quart,newfunction,n,kz,sumlist,js,tablearray,gg,is;
 
 n:=Length(table);
 mix:=[];
