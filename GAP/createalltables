@@ -27,8 +27,6 @@ Add(critlist,1);
 return critlist;
 end;
 
-#I am calling it wide generation, since we could have more than 2 generators.
-
 multigeneration:=function(generators,table)
 local n,mv,critlist,gg,superlist,im,j,superlength,supercrit,mastertable,ii,aa,cart,superfunction,sumlist,testlist,tablespace,imagespace,quart,js,mlist,testlistlength,
 testlistcrit,tablearray,cardarray,imagearray,pointarray,ik,tuple,jj,testfunction,test,li,kk,iz,ham,qq,aar,kz,is,sanitycheck;
@@ -55,16 +53,11 @@ else superlength[im]:=n; supercrit[im]:=n+1;
 fi;
 od;
 
-# There is something wrong with superfunction.
-
 superfunction:=function(x,y)
 local ik,qq,ham;
 
 if x=1000000000000 or y=1000000000000 then return 1000000000000; fi;
 if x=1 then return y; fi;
-#if y=1 then return 1; 
-# I am not sure that this line of code is even necessary, so I am commenting it just in case.
-#fi;
 
 if y>n then
 for ik in [1..gg] do
@@ -108,7 +101,6 @@ od;
 od;
 end;
 
-# In the testfunction, we need to verify that the square roots of the identity are in a one-to-one correspondence with the critical points.
 testfunction:=function()
 local aar,li,kk;
 
@@ -120,8 +112,6 @@ testlist[superfunction(testlistcrit,generators[li])]:=sumlist[li+1];
 
 elif mlist[li]=1 then
 
-# I do not think this is right either. What if the new algebra does not add anything at all?
-# I do not think I covered the case when mlist[li]=1 but when generators[li] is not 1. I think there are several problems here.
 if aa[li]=1 then
 if pointarray[li]=0 then
 if IsBound(testlist[superfunction(testlistcrit,generators[li])]) and not testlist[superfunction(testlistcrit,generators[li])]=n+1 then return false; fi;
@@ -149,8 +139,6 @@ for li in [1..gg] do
 aar:=superfunction(superfunction(sumlist[Length(sumlist)]+1,kk),superfunction(sumlist[Length(sumlist)]+1,generators[li]));
 if aar=false then return false; fi;
 
-# COMPUTATIONAL EVIDENCE SUGGESTS THAT THE FOLLOWING LINE OF CODE MAY NOT BE COMPLETELY CORRECT.
-
 if IsBound(testlist[superfunction(kk,generators[li])]) and not testlist[superfunction(kk,generators[li])]=aar then return false; fi;
 testlist[superfunction(kk,generators[li])]:=aar;
 od;
@@ -158,7 +146,6 @@ od;
 
 if not testlist[1]=1 then return false; fi;
 
-#if doublesuperfunction(n+mzero+mone,ii)=1 then return false; fi;
 if superfunction(sumlist[Length(sumlist)]+1,ii)=1 then return false; fi;
 
 return true;
@@ -202,12 +189,9 @@ od;
 
 
 cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
-# THE ABOVE LINE IS WHAT IT WAS. NOW IS WHAT IT IS.
 #cart:=Cartesian(List([1..gg],v->[beginaa[v]..Length(mastertable[aa[v]])]));
 
 for tuple in cart do
-
-# I NEED TO DOUBLE CHECK CARDARRAY.
 
 cardarray:=List([1..gg],v->mastertable[aa[v]][tuple[v]]);
 imagearray:=List(cardarray,v->v[1]);
@@ -226,12 +210,10 @@ testlist:=[];
 testlistlength:=superlength[ii];
 testlistcrit:=supercrit[ii];
 
-#sanitycheck();
 test:=testfunction();
 
 if test then
 
-#I am confused as to why we have a shallow copy and not a structural copy.
 imagespace:=ShallowCopy(imagearray[1]);
 for kz in [2..gg] do
 for is in [2..Length(imagearray[kz])] do
@@ -245,7 +227,6 @@ tablespace:=ShallowCopy(tablearray[1]);
 for kz in [2..gg] do
 for is in [2..Length(tablearray[kz])] do
 quart:=ShallowCopy(tablearray[kz][is]);
-# YEAH. THE OD'S ARE IN THE WRONG SPOT!!!
 for js in [1..Length(quart)] do
 if quart[js]>n+1 then
 quart[js]:=quart[js]+sumlist[kz]-n-1;
@@ -270,7 +251,6 @@ fi;
 od;
 od;
 
-# By returning this, we are also returning tables that add nothing interesting.
 return List([1..n],v->mastertable[v]); 
 end;
 
@@ -281,6 +261,7 @@ mix:=[];
 newtable:=StructuralCopy(table);
 mv:=makefunction(table);
 newgenerators:=[];
+
 for i in [1..gg] do
 
 od;
