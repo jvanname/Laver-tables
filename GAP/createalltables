@@ -286,10 +286,11 @@ Add(imagespace,imagearray[kz][is]);
 od;
 od;
 
-tablespace:=ShallowCopy(tablearray[1]);
+# Here structural copy works, but there may be something better I can use.
+tablespace:=StructuralCopy(tablearray[1]);
 
 for kz in [2..gg] do for is in [2..Length(tablearray[kz])] do 
-quart:=ShallowCopy(tablearray[kz][is]); 
+quart:=ShallowCopy(tablearray[kz][is]);
 for js in [1..Length(quart)] do if quart[js]>n+1 then quart[js]:=quart[js]+sumlist[kz]-n-1; fi; od; Add(tablespace,quart);
 od; od;
 
