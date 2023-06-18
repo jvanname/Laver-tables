@@ -304,18 +304,18 @@ fi;
 od;
 Append(newtable[1],[n+1..n+Length(imagespace)]);
 
-tablespace:=ShallowCopy(tablearray[1]);
-for kz in [2..gg] do
-for is in [2..Length(tablearray[kz])] do
-quart:=ShallowCopy(tablearray[kz][is]);
-for js in [1..Length(quart)] do
-if quart[js]>n+1 then
-quart[js]:=quart[js]+sumlist[kz]-n-1;
-fi;
-od;
-Add(tablespace,quart);
-od;
-od;
+#tablespace:=ShallowCopy(tablearray[1]);
+#for kz in [2..gg] do
+#for is in [2..Length(tablearray[kz])] do
+#quart:=ShallowCopy(tablearray[kz][is]);
+#for js in [1..Length(quart)] do
+#if quart[js]>n+1 then
+#quart[js]:=quart[js]+sumlist[kz]-n-1;
+#di;
+#od;
+#Add(tablespace,quart);
+#od;
+#od;
 
 # I should add a line here that puts all the imagearrays into a single row.
 
