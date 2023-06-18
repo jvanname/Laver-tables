@@ -274,8 +274,18 @@ od;
 return List([1..n],v->mastertable[v]); 
 end;
 
-multiextendtable:=function(type,generators,table,xx)
+multiextendtable:=function(type,generators,table,extension)
+local mix,newtable,mv,newgenerators,i;
 
+mix:=[];
+newtable:=StructuralCopy(table);
+mv:=makefunction(table);
+newgenerators:=[];
+for i in [1..gg] do
+
+
+od;
+return [newgenerators,newtable];
 end;
 
 allmultiextensions:=function(generators,table)
