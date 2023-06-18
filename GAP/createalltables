@@ -261,6 +261,7 @@ n:=Length(table);
 mix:=[];
 newtable:=StructuralCopy(table);
 finalcritlist:=critfind(table);
+gg:=Length(generators);
 
 Add(finalcritlist,n+1);
 
