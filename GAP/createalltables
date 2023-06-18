@@ -304,6 +304,20 @@ fi;
 od;
 Append(newtable[1],[n+1..n+Length(imagespace)]);
 
+for i in [1..gg] do
+if mlist[i]>1 then
+newgenerators[i]:=sumlist[i+1];
+else
+if generators[i]>1 then newgenerators[i]:=generators[i]; else
+if pointarray[i]=0 then
+newgenerators[i]:=n+1;
+elif pointarray[i]=1 then
+newgenerators[i]:=1;
+fi;
+fi;
+fi;
+od;
+
 #tablespace:=ShallowCopy(tablearray[1]);
 #for kz in [2..gg] do
 #for is in [2..Length(tablearray[kz])] do
@@ -320,11 +334,14 @@ Append(newtable[1],[n+1..n+Length(imagespace)]);
 # I should add a line here that puts all the imagearrays into a single row.
 
 newfunction:=makefunction(newtable);
-for a in [1..Length(newtable)] do
-for b in [1..Length(newtable)] do
-for c in [1..Length(newtable)] do
-if not newfunction(a,newfunction(b,c))=newfunction(newfunction(a,b),newfunction(a,c)) then while true do Display("E"); od; fi;
-od; od; od;
+#for a in [1..Length(newtable)] do
+#for b in [1..Length(newtable)] do
+#for c in [1..Length(newtable)] do
+#if not newfunction(a,newfunction(b,c))=newfunction(newfunction(a,b),newfunction(a,c)) then while true do Display("E"); od; fi;
+#od; od; od;
+
+
+
 return [newgenerators,newtable];
 end;
 
