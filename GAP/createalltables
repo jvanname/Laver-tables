@@ -258,6 +258,7 @@ local mix,newtable,mv,newgenerators,i;
 
 mix:=[];
 newtable:=StructuralCopy(table);
+critlist:=critfind(table);
 mv:=makefunction(table);
 newgenerators:=[];
 
@@ -296,6 +297,9 @@ od;
 Add(tablespace,quart);
 od;
 od;
+
+Append(newtable[1],imagespace);
+
 
 # I should add a line here that puts all the imagearrays into a single row.
 
