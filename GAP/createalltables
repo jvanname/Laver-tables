@@ -347,7 +347,7 @@ return [newgenerators,newtable];
 end;
 
 allmultiextensions:=function(generators,table)
-local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg;
+local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe;
 output:=[];
 n:=Length(table);
 gg:=Length(generators);
@@ -380,11 +380,15 @@ if cont then continue; fi;
 Add(improper,j); break;
 od;
 od;
-
+safe:=false;
 for tuple in cart do
-if tuple=improper then continue; fi;
+if tuple=improper then safe:=true; continue; fi;
 Add(output,multiextendtable(tuple,generators,table,ext));
 od;
+
+if not safe then
+while true do Print("E"); od;
+fi;
 
 return output;
 end;
