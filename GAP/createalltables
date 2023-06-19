@@ -373,9 +373,6 @@ od;
 
 if generators[i]=1 and pointcheck=0 then cont:=true; fi;
 
-
-
-
 if cont then continue; fi;
 
 # Now we need a condition here where we 
