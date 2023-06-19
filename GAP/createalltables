@@ -347,17 +347,22 @@ return [newgenerators,newtable];
 end;
 
 allmultiextensions:=function(generators,table)
-local ext,cart,tuple,output;
+local ext,cart,tuple,output,improper;
 output:=[];
 ext:=multigeneration(generators,table);
 cart:=Cartesian(List(ext,v->[1..Length(v)]));
 
+#improper:=[];
+
 for tuple in cart do
+if tuple=improper then continue; fi;
+# I need to put something here where I skip the improper tuple.
 Add(output,multiextendtable(tuple,generators,table,ext));
 od;
 
 return output;
 end;
+
 
 ############END NEW###############################################################################################################
 ##################################################################################################################################
