@@ -352,11 +352,16 @@ output:=[];
 ext:=multigeneration(generators,table);
 cart:=Cartesian(List(ext,v->[1..Length(v)]));
 
-#improper:=[];
+improper:=[];
+
+for i in [1..Length(ext)] do
+for j in [1..Length(ext[i])] do
+
+od;
+od;
 
 for tuple in cart do
 if tuple=improper then continue; fi;
-# I need to put something here where I skip the improper tuple.
 Add(output,multiextendtable(tuple,generators,table,ext));
 od;
 
