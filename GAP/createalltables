@@ -351,7 +351,7 @@ local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n
 output:=[];
 n:=Length(table);
 gg:=Length(generators);
-mv:=makefuntion(table);
+mv:=makefunction(table);
 ext:=multigeneration(generators,table);
 cart:=Cartesian(List(ext,v->[1..Length(v)]));
 
