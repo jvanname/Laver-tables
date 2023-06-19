@@ -347,7 +347,7 @@ return [newgenerators,newtable];
 end;
 
 allmultiextensions:=function(generators,table)
-local ext,cart,tuple,output,improper;
+local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck;
 output:=[];
 ext:=multigeneration(generators,table);
 cart:=Cartesian(List(ext,v->[1..Length(v)]));
@@ -355,8 +355,22 @@ cart:=Cartesian(List(ext,v->[1..Length(v)]));
 improper:=[];
 
 for i in [1..Length(ext)] do
+
 for j in [1..Length(ext[i])] do
 
+imagecheck:=ext[i][j][1];
+tablecheck:=ext[i][j][2];
+pointcheck:=ext[i][j][3];
+
+cont:=false;
+
+
+
+if cont then continue; fi;
+
+# Now we need a condition here where we 
+
+Add(improper,j); break;
 od;
 od;
 
