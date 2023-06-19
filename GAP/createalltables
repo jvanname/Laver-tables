@@ -347,9 +347,11 @@ return [newgenerators,newtable];
 end;
 
 allmultiextensions:=function(generators,table)
-local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz;
+local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg;
 output:=[];
 n:=Length(table);
+gg:=Length(generators);
+mv:=makefuntion(table);
 ext:=multigeneration(generators,table);
 cart:=Cartesian(List(ext,v->[1..Length(v)]));
 
@@ -368,6 +370,11 @@ cont:=false;
 for iz in [2..Length(tablecheck)] do
 if n+1 in tablecheck[iz] then cont:=true; fi;
 od;
+
+if generators[i]=1 and pointcheck=0 then cont:=true; fi;
+
+
+
 
 if cont then continue; fi;
 
