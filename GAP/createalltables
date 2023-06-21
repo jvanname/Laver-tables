@@ -466,7 +466,7 @@ for i in [1..gg] do
 if genpower[i]%2=0 then Add(evencrits,crit(mv,generators[i])); fi;
 od;
 for i in [1..Length(evencrits)-1] do
-if mv(evencrits[i],evencrits[i+1])=1 and evencrits[i]>1 then return false; fi;
+if mv(evencrits[i+1],evencrits[i])=1 and evencrits[i]>1 then return false; fi;
 od;
 
 mv:=makefunction(table);
