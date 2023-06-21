@@ -459,6 +459,7 @@ consistencytest:=function(xx,genpower)
 local generators,table,gg,mv,aa,i,j,evencrits;
 generators:=xx[1];
 table:=xx[2];
+mv:=makefunction(table);
 gg:=Length(generators);
 
 evencrits:=[];
