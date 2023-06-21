@@ -477,7 +477,7 @@ while Length(list)>0 do
 SortBy(list,v->-Length(v[2]));
 pan:=allmultiextensions(true,Remove(list));
 for yy in pan do 
-amm:=consistencytesttwo(yy,genpower);
+amm:=consistencytest(yy,genpower);
 if amm then Add(list,yy); fi; od;
 Display(List(list,v->Length(v[2])));
 od;
