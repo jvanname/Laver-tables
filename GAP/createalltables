@@ -445,11 +445,29 @@ od;
 return true;
 end;
 
+crit:=function(mv,a)
+local newa;
+while true do
+newa:=mv(mv(a,a),a);
+if a=newa then return a; fi;
+a:=newa;
+od;
+end;
+
+
 consistencytest:=function(xx,genpower)
-local generators,table,gg,mv,aa,i,j;
+local generators,table,gg,mv,aa,i,j,evencrits;
 generators:=xx[1];
 table:=xx[2];
 gg:=Length(generators);
+
+evencrits:=[];
+for i in [1..gg] do
+if genpower[i]%2=0 then Add(evencrits,crit(mv,generators[i])); fi;
+od;
+for i in [1..Length(evencrits)-1] do
+if mv(evencrits[i],evencrits[i+1])=1 and evencrits[i]>1 then return false; fi;
+od;
 
 mv:=makefunction(table);
 aa:=[];
