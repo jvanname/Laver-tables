@@ -469,7 +469,7 @@ end;
 
 inconsistencysearch:=function(genpower)
 local gg,list,pan,yy,amm;
-gg:=Length(genpower)
+gg:=Length(genpower);
 
 list:=[[List([1..gg],v->1),[[1]]]];
 
