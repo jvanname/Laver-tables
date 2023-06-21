@@ -468,14 +468,15 @@ return true;
 end;
 
 inconsistencysearch:=function(genpower)
-local gg,list,pan,yy,amm;
+local gg,list,pan,yy,amm,xv;
 gg:=Length(genpower);
 
 list:=[[List([1..gg],v->1),[[1]]]];
 
 while Length(list)>0 do
 SortBy(list,v->-Length(v[2]));
-pan:=allmultiextensions(true,Remove(list));
+xv:=Remove(list);
+pan:=allmultiextensions(xv[1],xv[2]);
 for yy in pan do 
 amm:=consistencytest(yy,genpower);
 if amm then Add(list,yy); fi; od;
