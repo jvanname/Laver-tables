@@ -514,6 +514,70 @@ od;
 return true;
 end;
 
+##The two consistency tests should be exactly the same thing!!!
+alternateconsistencytest:=function(xx,genpower)
+local generators,table,gg,mv,aa,i,j,evencrits,evengen,nn,mark,eaq,tan,tips,baq,k,kk,evengens,aam,bbm,vec;
+generators:=xx[1];
+table:=xx[2];
+nn:=Length(table);
+mv:=makefunction(table);
+gg:=Length(generators);
+if not nightmaretest(table) then return false; fi;
+
+mark:=1;
+for i in [1..genpower[1]] do
+mark:=mv(mark,generators[1]);
+od;
+mark:=crit(mv,mark);
+
+evengen:=[];
+evencrits:=[];
+for i in [1..gg] do
+if RemInt(genpower[i],2)=0 then Add(evengen,generators[i]); Add(evencrits,crit(mv,generators[i])); fi;
+od;
+
+for i in [2..Length(evencrits)] do
+# Here, we need for evencrits to have a higher critical point!
+vec:=[1..nn]*0;
+
+vec[1]:=1;
+tips:=[];
+for j in [1..i-1] do
+Add(tips,evengen[j]);
+vec[evengen[j]]:=1;
+od;
+while Length(tips)>0 do
+aam:=Remove(tips);
+for j in [1..i-1] do
+bbm:=mv(aam,evengen[j]);
+if vec[bbm]=0 then
+vec[bbm]:=1; Add(tips,bbm);
+fi;
+od;
+od;
+for k in [1..nn] do
+if vec[k]=0 then continue; fi;
+kk:=crit(mv,k);
+if mv(mark,kk)=1 then continue; fi;
+if mv(evengen[i],kk)=1 then return false; fi;
+od;
+
+od;
+
+
+aa:=[];
+for i in [1..gg] do
+aa[i]:=1;
+for j in [1..genpower[i]] do
+aa[i]:=mv(aa[i],generators[i]);
+od;
+od;
+
+for i in [1..gg-1] do
+if not critequaltest(aa[i],aa[i+1],table) then return false; fi;
+od;
+return true;
+end;
 
 
 
