@@ -493,7 +493,7 @@ for k in [1..nn] do
 if tan[k]=0 then continue; fi;
 kk:=crit(mv,k);
 if mv(mark,kk)=1 then continue; fi;
-if mv(evencrits[j],kk)=1 then return false; fi;
+if mv(evencrits[i],kk)=1 then return false; fi;
 od;
 od;
 od;
