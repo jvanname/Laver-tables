@@ -552,6 +552,15 @@ od;
 return true;
 end;
 
+inconsistencysearchtwo:=function(pairs)
+local discriminator;
+discriminator:=function(xx)
+return consistencytesttwo(xx,pairs);
+end;
+inconsistencysearchtemplate(discriminator);
+end;
+
+
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
 #gg:=Length(genpower);
