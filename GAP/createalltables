@@ -584,7 +584,7 @@ return true;
 end;
 
 inconsistencysearchtwo:=function(pairs)
-local discriminator;
+local discriminator,gg;
 gg:=Length(pairs)+1;
 discriminator:=function(xx)
 return consistencytesttwo(xx,pairs);
