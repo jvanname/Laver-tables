@@ -512,7 +512,7 @@ end;
 inconsistencysearchtemplate(discriminator);
 end;
 
-inconsistencytesttwo:=function(xx,pairs)
+consistencytesttwo:=function(xx,pairs)
 local generators,table,gg,critlist,mv,i,list,nn,am,rr,mm,kk,cc;
 
 generators:=xx[1];
