@@ -456,18 +456,46 @@ end;
 
 
 consistencytest:=function(xx,genpower)
-local generators,table,gg,mv,aa,i,j,evencrits;
+local generators,table,gg,mv,aa,i,j,evencrits,nn,mark,eaq,tan,tips,baq,k,kk;
 generators:=xx[1];
 table:=xx[2];
+nn:=Length(table);
 mv:=makefunction(table);
 gg:=Length(generators);
+
+mark:=1;
+for i in [1..Length(genpower[1])] do
+mark:=mv(mark,generators[1]);
+od;
+mark:=crit(mv,mark);
 
 evencrits:=[];
 for i in [1..gg] do
 if RemInt(genpower[i],2)=0 then Add(evencrits,crit(mv,generators[i])); fi;
 od;
-for i in [1..Length(evencrits)-1] do
-if mv(evencrits[i+1],evencrits[i])=1 and evencrits[i]>1 then return false; fi;
+for i in [2..Length(evencrits)] do
+tan:=[1..nn]*0;
+tips:=[];
+tips[1]:=1;
+for j in [1..i-1] do
+Add(tips,evencrits[j]);
+tan[evencrits[j]]:=1;
+od;
+while Length(tips)>0 do
+eaq:=Remove(tips);
+for j in [1..i-1] do
+baq:=mv(eaq,evencrits[j]);
+if tan[baq]=0 then
+tan[baq]:=1; Add(tips,baq);
+fi;
+od;
+for k in [1..nn] do
+if tan[k]=0 then continue; fi;
+kk:=crit(mv,k);
+if mv(mark,kk)=1 then continue; fi;
+if mv(evencrits[j],kk)=1 then return false; fi;
+od;
+od;
 od;
 
 mv:=makefunction(table);
@@ -485,6 +513,9 @@ if not critequaltest(aa[i],aa[i+1],table) then return false; fi;
 od;
 return true;
 end;
+
+
+
 
 inconsistencysearchtemplate:=function(gg,discriminator)
 local list,pan,yy,amm,xv;
