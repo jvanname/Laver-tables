@@ -464,7 +464,7 @@ mv:=makefunction(table);
 gg:=Length(generators);
 
 mark:=1;
-for i in [1..Length(genpower[1])] do
+for i in [1..genpower[1]] do
 mark:=mv(mark,generators[1]);
 od;
 mark:=crit(mv,mark);
