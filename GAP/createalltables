@@ -486,9 +486,8 @@ od;
 return true;
 end;
 
-inconsistencysearchtemplate:=function(discriminator)
+inconsistencysearchtemplate:=function(gg,discriminator)
 local gg,list,pan,yy,amm,xv;
-gg:=Length(genpower);
 
 list:=[[List([1..gg],v->1),[[1]]]];
 
@@ -505,11 +504,12 @@ Display("WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE! Please su
 end;
 
 inconsistencysearch:=function(genpower)
-local discriminator;
+local discriminator,gg;
+gg:=Length(genpower);
 discriminator:=function(xx)
 return consistencytest(xx,genpower);
 end;
-inconsistencysearchtemplate(discriminator);
+inconsistencysearchtemplate(gg,discriminator);
 end;
 
 consistencytesttwo:=function(xx,pairs)
@@ -554,10 +554,11 @@ end;
 
 inconsistencysearchtwo:=function(pairs)
 local discriminator;
+gg:=Length(pairs)+1;
 discriminator:=function(xx)
 return consistencytesttwo(xx,pairs);
 end;
-inconsistencysearchtemplate(discriminator);
+inconsistencysearchtemplate(gg,discriminator);
 end;
 
 
