@@ -505,9 +505,56 @@ Display("WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE! Please su
 end;
 
 inconsistencysearch:=function(genpower)
+local discriminator;
 discriminator:=function(xx)
 return consistencytest(xx,genpower);
 end;
+inconsistencysearchtemplate(discriminator);
+end;
+
+inconsistencytesttwo:=function(xx,pairs)
+
+generators:=xx[1];
+table:=xx[2];
+gg:=Length(generators);
+critlist:=critfind(table);
+mv:=makefunction(table);
+
+for i in [2..gg] do
+if mv(generators[i],generators[i])>1 then return false; fi;
+od;
+
+list:=[generators[1]];
+while list[Length(list)]>1 do Add(list,mv(list[Length(list)],generators[1])); od;
+nn:=Log(Length(list),2);
+
+for i in [2..gg] do
+am:=pairs[i-1];
+rr:=am[1];
+mm:=am[2];
+
+if nn<=mm+1 then return true; fi;
+
+if not mv(generators[i],list[2^nn-2^mm])=1 then return false; fi;
+
+for kk in list do
+for cc in critlist do
+if mv(kk,generators[i])=1 then continue; fi;
+if mv(kk,list[2^nn-2^mm])=1 then continue; fi;
+if not (mv(mv(kk,generators[i]),cc)=1)=(mv(mv(kk,list[2^nn-2^mm]),mv(mv(kk,list[rr]),cc))=1) then return false; fi;
+od;
+od;
+
+
+
+od;
+
+
+end;
+
+
+
+
 
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
