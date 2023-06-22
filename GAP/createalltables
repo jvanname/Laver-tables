@@ -521,6 +521,7 @@ gg:=Length(generators);
 critlist:=critfind(table);
 mv:=makefunction(table);
 
+if not nightmaretest(table) then return false; fi;
 for i in [2..gg] do
 if mv(generators[i],generators[i])>1 then return false; fi;
 od;
@@ -546,16 +547,10 @@ if not (mv(mv(kk,generators[i]),cc)=1)=(mv(mv(kk,list[2^nn-2^mm]),mv(mv(kk,list[
 od;
 od;
 
-
-
 od;
 
-
+return true;
 end;
-
-
-
-
 
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
