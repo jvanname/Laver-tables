@@ -656,7 +656,7 @@ end;
 inconsistencysearchtemplate(gg,discriminator);
 end;
 
-function onemodulo(x,y) return RemInt(x-1,y)+1; end;
+onemodulo:=function(x,y) return RemInt(x-1,y)+1; end;
 
 consistencytestthree:=function(xx,mm)
 local zero,one,table,mv,list,expmm,expnn,nn,minexp,bucket,ll,img,ii,i;
