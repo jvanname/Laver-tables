@@ -684,7 +684,7 @@ expmm:=2^mm;
 
 minexp:=Minimum(expnn,expmm);
 
-if nn>mm and one=1 then return false; fi;
+if nn>mm and mv(list[2^nn-2^mm],one)=1 then return false; fi;
 
 bucket:=List([1..Length(table)],v->0);
 
