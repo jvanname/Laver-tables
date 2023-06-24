@@ -656,6 +656,55 @@ end;
 inconsistencysearchtemplate(gg,discriminator);
 end;
 
+function onemodulo(x,y) return RemInt(x-1,y)+1; end;
+
+consistencytestthree:=function(xx,mm)
+local zero,one,table,mv,list,expmm,expnn,nn,minexp,bucket,ll,img,ii,i;
+
+# Here, we are only using 2 generators. One is an elementary embedding and the other one is a very
+# special ordinal that is capable of distinguishing elementary embeddings.
+
+zero:=xx[1][1];
+one:=xx[1][2];
+table:=xx[2];
+mv:=makefunction(table);
+
+if mv(one,one)>1 then return false; fi;
+
+if not nightmaretest(table) then return false; fi;
+
+
+list:=[zero];
+while list[Length(list)]>1 do
+Add(list,mv(list[Length(list)],zero));
+od;
+expnn:=Length(list);
+nn:=LogInt(expnn,2);
+expmm:=2^mm;
+
+minexp:=Minimum(expnn,expmm);
+
+bucket:=List([1..Length(table)],v->0);
+
+ll:=Length(list);
+for i in [1..expnn] do
+img:=mv(list[i],one);
+if img=1 then continue; fi;
+ii:=onemodulo(i,minexp);
+if bucket[img]>0 and not bucket[img]=ii then return false; fi;
+bucket[img]:=ii;
+od;
+return true;
+end;
+
+inconsistencysearchthree:=function(mm)
+local discriminator,gg;
+discriminator:=function(xx)
+return consistencytestthree(xx,mm);
+end;
+inconsistencysearchtemplate(2,discriminator);
+end;
+
 
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
