@@ -658,28 +658,27 @@ end;
 
 onemodulo:=function(x,y) return RemInt(x-1,y)+1; end;
 
-consistencytestthree:=function(xx,mm)
+consistencytestthree:=function(xx,mmlist)
 local zero,one,table,mv,list,expmm,expnn,nn,minexp,bucket,ll,img,ii,i;
 
 # Here, we are only using 2 generators. One is an elementary embedding and the other one is a very
 # special ordinal that is capable of distinguishing elementary embeddings.
 
-zero:=xx[1][1];
-one:=xx[1][2];
 table:=xx[2];
 mv:=makefunction(table);
-
-if mv(one,one)>1 then return false; fi;
-
 if not nightmaretest(table) then return false; fi;
-
-
+zero:=xx[1][Length(mmlist)+1];
 list:=[zero];
 while list[Length(list)]>1 do
 Add(list,mv(list[Length(list)],zero));
 od;
 expnn:=Length(list);
 nn:=LogInt(expnn,2);
+
+for ij in [1..Length(mmlist)] do
+one:=xx[1][ij];
+if mv(one,one)>1 then return false; fi;
+mm:=mmlist[ij];
 expmm:=2^mm;
 
 minexp:=Minimum(expnn,expmm);
@@ -696,6 +695,9 @@ ii:=onemodulo(i,minexp);
 if bucket[img]>0 and not bucket[img]=ii then return false; fi;
 bucket[img]:=ii;
 od;
+
+od;
+
 return true;
 end;
 
@@ -704,7 +706,7 @@ local discriminator,gg;
 discriminator:=function(xx)
 return consistencytestthree(xx,mm);
 end;
-inconsistencysearchtemplate(2,discriminator);
+inconsistencysearchtemplate(Length(mm)+1,discriminator);
 end;
 
 
