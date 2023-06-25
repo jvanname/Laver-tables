@@ -5,8 +5,7 @@
 #WARNING: Discovering an inconsistency in the large cardinal hierarchy is very dangerous. While nothing bad has happened when Kunen showed that the existence of Reinhardt cardinals, we cannot guarantee that
 # it is possible to safely discover that rank-into-rank cardinals are inconsistent.
 # By using this code to search for an inconsistency in the large cardinal hierarchy, you agree to hold Joseph Van Name harmless in case upon discovering such an inconsistency your CPU bursts into flames
-# or fails in some other way, you are sucked into a black hole or sinkhole, or that you use your CPU to mine cryptocurrencies instead of finding an inconsistency in the large cardinal hierarchy and then
-# you become really sad because you did not get rich.
+# or fails in some other way or you are sucked into a black hole or sinkhole.
 
 makefunction:=function(compressedtable)
 local n,tree;
