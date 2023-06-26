@@ -350,15 +350,10 @@ newfunction:=makefunction(newtable);
 return [newgenerators,newtable];
 end;
 
-allmultiextensions:=function(generators,table)
-local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe;
-output:=[];
-n:=Length(table);
-gg:=Length(generators);
-mv:=makefunction(table);
-ext:=multigeneration(generators,table);
-cart:=Cartesian(List(ext,v->[1..Length(v)]));
+findimproper:=function(generators,table,ext)
+local improper,i,j,imagecheck,tablecheck,pointcheck,cont,iz,n;
 
+n:=Length(table);
 improper:=[];
 
 for i in [1..Length(ext)] do
@@ -384,18 +379,54 @@ if cont then continue; fi;
 Add(improper,j); break;
 od;
 od;
-safe:=false;
+return improper;
+end;
+
+allmultiextensions:=function(generators,table)
+local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe;
+output:=[];
+n:=Length(table);
+gg:=Length(generators);
+mv:=makefunction(table);
+ext:=multigeneration(generators,table);
+cart:=Cartesian(List(ext,v->[1..Length(v)]));
+improper:=findimproper(generators,table,ext);
+
 for tuple in cart do
-if tuple=improper then safe:=true; continue; fi;
 Add(output,multiextendtable(tuple,generators,table,ext));
 od;
 
-if not safe then
-while true do Print("E"); od;
-fi;
-
 return output;
 end;
+
+guaranteedmultiextensions:=function(generators,table)
+local ext,cart,tuple,preoutput,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe,proposal;
+output:=[];
+n:=Length(table);
+gg:=Length(generators);
+mv:=makefunction(table);
+ext:=multigeneration(generators,table);
+improper:=findimproper(generators,table,ext);
+
+preoutput:=[];
+for i in [1..Length(ext)] do
+preoutput[i]:=[];
+tuple:=StructuralCopy(improper);
+for j in [1..Length(ext[i])] do
+if improper[i]=j then continue; fi;
+tuple[i]:=j;
+proposal:=multiextendtable(tuple,generators,table,ext);
+if not nightmaretest(proposal[2]) then continue; fi;
+Add(preoutput[i],proposal);
+if Length(preoutput[i])>=2 then break; fi;
+od;
+if Length(preoutput[i])>1 then preoutput[i]:=[]; fi;
+od;
+
+return Concatenation(preoutput);
+end;
+
+
 
 nightmaretest:=function(x)
 local critlist,i,k,mv;
