@@ -746,6 +746,52 @@ inconsistencysearchtemplate(Length(mm)+1,discriminator);
 end;
 
 
+polysequence:=function(generators,table,matrixlist)
+local critlist,ii,jj,list,mv,newzero,newone,output,pp,qq,cc,kk,nn,newgenerators;
+
+mv:=makefunction(table);
+gg:=Length(generators);
+nn:=Length(table);
+critlist:=critfind(table);
+output:=[];
+
+list:=List([1..Length(table)],v->0*generators[1]);
+
+for ii in [1..Length(critlist)-1] do
+newgenerators:=List(generators,v->mv(critlist[ii+1],v));
+for jj in [1..gg] do
+if newgenerators[jj]>=critlist[ii] then list[newgenerators[jj]]:=list[newgenerators[jj]]+matrixlist[jj];
+fi;
+od;
+
+if ii=Length(critlist)-1 then cc:=nn; else cc:=critlist[ii+1]-1; fi;
+
+for jj in Reversed([critlist[ii]+1..cc]) do
+for kk in [1..gg] do
+pp:=mv(jj,generators[kk]);
+if pp>=critlist[ii] then list[pp]:=list[pp]+list[jj]*matrixlist[kk]; fi;
+od;
+od;
+output[ii]:=list[critlist[ii]];
+od;
+return output;
+end;
+
+hash:=function(generators,table)
+local matrixtable,gg,i;
+gg:=Length(generators);
+matrixtable:=List([1..gg],u->List([1..3],v->List([1..3],w->(u+2*v+3*w+5*u^2+7*v^2+11*w^2+13*u*v+17*u*w+19*v*w)*Z(73))));
+for i in [1..gg-1] do
+matrixtable[i+1]:=matrixtable[i+1]+13*matrixtable[i]+matrixtable[i]^2;
+od;
+for i in Reversed([2..gg]) do
+matrixtable[i-1]:=matrixtable[i-1]+13*matrixtable[i]+matrixtable[i]^2;
+od;
+return polysequence(generators,table,matrixtable); end;
+
+
+
+
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
 #gg:=Length(genpower);
