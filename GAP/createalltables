@@ -393,6 +393,7 @@ cart:=Cartesian(List(ext,v->[1..Length(v)]));
 improper:=findimproper(generators,table,ext);
 
 for tuple in cart do
+if tuple=improper then continue; fi;
 Add(output,multiextendtable(tuple,generators,table,ext));
 od;
 
