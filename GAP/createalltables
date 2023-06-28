@@ -777,9 +777,35 @@ od;
 return output;
 end;
 
-hash:=function(generators,table)
-local matrixtable,gg,i;
+polyfinal:=function(generators,table,matrixlist)
+local mv,gg,nn,critlist,maxcrit,list,jj,kk,pp;
+
+mv:=makefunction(table);
 gg:=Length(generators);
+nn:=Length(table);
+critlist:=critfind(table);
+maxcrit:=Maximum(critlist);
+
+list:=List([maxcrit..nn],v->0*matrixlist[1]);
+
+for jj in [1..gg] do
+if generators[jj]>=maxcrit then list[generators[jj]-maxcrit+1]:=list[generators[jj]-maxcrit+1]+matrixlist[jj];
+fi;
+od;
+
+for jj in Reversed([maxcrit+1..nn]) do
+for kk in [1..gg] do
+pp:=mv(jj,generators[kk]);
+if pp>=maxcrit then list[pp-maxcrit+1]:=list[pp-maxcrit+1]+list[jj-maxcrit+1]*matrixlist[kk]; fi;
+od;
+od;
+return list[1];
+end;
+
+
+
+hashgen:=function(gg)
+local matrixtable,i;
 matrixtable:=List([1..gg],u->List([1..3],v->List([1..3],w->(u+2*v+3*w+5*u^2+7*v^2+11*w^2+13*u*v+17*u*w+19*v*w)*Z(73))));
 for i in [1..gg-1] do
 matrixtable[i+1]:=matrixtable[i+1]+13*matrixtable[i]+matrixtable[i]^2;
@@ -787,8 +813,13 @@ od;
 for i in Reversed([2..gg]) do
 matrixtable[i-1]:=matrixtable[i-1]+13*matrixtable[i]+matrixtable[i]^2;
 od;
-return polysequence(generators,table,matrixtable); end;
+end;
 
+hash:=function(generators,table)
+return polysequence(generators,table,hashgen(Length(generators))); end;
+
+hashfinal:=function(generators,table)
+return polyfinal(generators,table,hashgen(Length(generators))); end;
 
 
 
