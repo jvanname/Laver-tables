@@ -826,10 +826,28 @@ reducedhash:=function(generators,table)
 local ha,output,a;
 ha:=hash(generators,table);
 output:=[];
-for a in ha do if not ha=ha*0 then Add(output,a); fi; od;
-return a;
+for a in ha do if not a=a*0 then Add(output,a); fi; od;
+return output;
 end;
 
+rebuildtable:=function(generators,table)
+local target,gg,x,i,amp,lm,dir,j;
+target:=reducedhash(generators,table);
+gg:=Length(generators);
+x:=[List([1..gg],v->1),[[1]]];
+
+for i in [1..Length(target)] do
+amp:=allmultiextensions(x[1],x[2]);
+lm:=Length(amp);
+dir:=[];
+for j in [1..lm] do
+if target[i]=hashfinal(x[1],x[2]) then Add(dir,i); fi;
+od;
+if not Length(dir)=1 then while true do Display("E"); od; fi;
+x:=amp[dir[1]];
+od;
+return x;
+end;
 
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
