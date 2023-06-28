@@ -755,7 +755,7 @@ nn:=Length(table);
 critlist:=critfind(table);
 output:=[];
 
-list:=List([1..Length(table)],v->0*generators[1]);
+list:=List([1..Length(table)],v->0*matrixlist[1]);
 
 for ii in [1..Length(critlist)-1] do
 newgenerators:=List(generators,v->mv(critlist[ii+1],v));
