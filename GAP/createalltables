@@ -383,7 +383,7 @@ return improper;
 end;
 
 allmultiextensions:=function(generators,table)
-local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe;
+local ext,cart,tuple,output,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe,mv;
 output:=[];
 n:=Length(table);
 gg:=Length(generators);
@@ -401,7 +401,7 @@ return output;
 end;
 
 guaranteedmultiextensions:=function(generators,table)
-local ext,cart,tuple,preoutput,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe,proposal;
+local ext,cart,tuple,preoutput,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe,proposal,output,mv;
 output:=[];
 n:=Length(table);
 gg:=Length(generators);
@@ -695,7 +695,7 @@ end;
 onemodulo:=function(x,y) return RemInt(x-1,y)+1; end;
 
 consistencytestthree:=function(xx,mmlist)
-local zero,one,table,mv,list,expmm,expnn,nn,minexp,bucket,ll,img,ii,i;
+local zero,one,table,mv,list,expmm,expnn,nn,minexp,bucket,ll,img,ii,i,ij,mm;
 
 # Here, we are only using 2 generators. One is an elementary embedding and the other one is a very
 # special ordinal that is capable of distinguishing elementary embeddings.
@@ -747,7 +747,7 @@ end;
 
 
 polysequence:=function(generators,table,matrixlist)
-local critlist,ii,jj,list,mv,newzero,newone,output,pp,qq,cc,kk,nn,newgenerators;
+local critlist,ii,jj,list,mv,newzero,newone,output,pp,qq,cc,kk,nn,newgenerators,gg;
 
 mv:=makefunction(table);
 gg:=Length(generators);
