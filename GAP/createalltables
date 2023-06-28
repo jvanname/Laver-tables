@@ -826,10 +826,8 @@ for a in ha do if not a=a*0 then Add(output,a); fi; od;
 return output;
 end;
 
-rebuildtable:=function(generators,table)
-local target,gg,x,i,amp,lm,dir,j;
-target:=reducedhash(generators,table);
-gg:=Length(generators);
+inverthashtable:=function(gg,target)
+local x,i,amp,lm,dir,j;
 x:=[List([1..gg],v->1),[[1]]];
 
 for i in [1..Length(target)] do
@@ -844,6 +842,10 @@ if Length(dir)=0 then while true do Display("Warning:Table not found. Error in c
 x:=amp[dir[1]];
 od;
 return x;
+end;
+
+rebuildtable:=function(generators,table)
+return inverthashtable(Length(generators),reducedhash(generators,table));
 end;
 
 #inconsistencysearch:=function(genpower)
