@@ -841,7 +841,7 @@ amp:=allmultiextensions(x[1],x[2]);
 lm:=Length(amp);
 dir:=[];
 for j in [1..lm] do
-if target[i]=hashfinal(x[1],x[2]) then Add(dir,i); fi;
+if target[i]=hashfinal(amp[j][1],amp[j][2]) then Add(dir,i); fi;
 od;
 if Length(dir)>1 then while true do Display("Warning:Collision detected. Please modify hash function."); od; fi;
 if Length(dir)=0 then while true do Display("Warning:Table not found. Error in code."); od; fi;
