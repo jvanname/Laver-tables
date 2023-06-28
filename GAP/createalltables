@@ -822,6 +822,13 @@ return polysequence(generators,table,hashgen(Length(generators))); end;
 hashfinal:=function(generators,table)
 return polyfinal(generators,table,hashgen(Length(generators))); end;
 
+reducedhash:=function(generators,table)
+local ha,output,a;
+ha:=hash(generators,table);
+output:=[];
+for a in ha do if not ha=ha*0 then Add(output,a); fi; od;
+return a;
+end;
 
 
 #inconsistencysearch:=function(genpower)
