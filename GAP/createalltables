@@ -813,6 +813,7 @@ od;
 for i in Reversed([2..gg]) do
 matrixtable[i-1]:=matrixtable[i-1]+13*matrixtable[i]+matrixtable[i]^2;
 od;
+return matrixtable;
 end;
 
 hash:=function(generators,table)
