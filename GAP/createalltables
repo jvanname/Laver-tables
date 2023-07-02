@@ -546,6 +546,30 @@ od;
 return true;
 end;
 
+
+generatesubalgebra:=function(generators,table)
+local nn,mv,list,ends,a,b,c,i,output;
+
+nn:=Length(table);
+mv:=makefunction(table);
+list:=[1..nn]*0;
+ends:=StructuralCopy(generators);
+for a in ends do list[a]:=1;  od;
+while Length(ends)>0 do
+a:=Remove(ends);
+for b in generators do
+c:=mv(a,b);
+if list[c]=0 then list[c]:=1; Add(ends,c); fi;
+od;
+od;
+output:=[];
+for i in [1..nn] do
+if list[i]=1 then Add(output,i); fi;
+od;
+return output;
+end;
+
+
 ##The two consistency tests should be exactly the same thing!!!
 consistencytest:=function(xx,genpower)
 local generators,table,gg,mv,aa,i,j,evencrits,evengen,nn,mark,eaq,tan,tips,baq,k,kk,evengens,aam,bbm,vec;
