@@ -877,76 +877,58 @@ od;
 return a;
 end;
 
-consistencytestfour:=function(xx,stringpairs)
-local generators,table,nn,mv,i,ll,kk,app,bpp,att,btt,emaa,j,v,alpha,axecrit,vec,tips,critlist,aam,bbm,atp;
+pow:=function(mv,string)
+local a,b;
+a:=1;
+for b in string do
+a:=mv(a,b);
+od;
+return a;
+end;
+
+
+
+consistencytestfour:=function(xx,pairstrings)
+local generators,table,mv,iz,power,target,tarcrits,genlist,gencrit,a,alpha,tarcrit,ah;
+
 generators:=xx[1];
 table:=xx[2];
+
 if not nightmaretest(table) then return false; fi;
-nn:=Length(table);
 mv:=makefunction(table);
-critlist:=critfind(table);
+for iz in [1..Length(pairstrings)] do
+power:=pairstrings[iz][2];
 
+target:=pow(mv,List(pairstrings[iz][1],v->generators[v]));
 
-for i in [1..Length(stringpairs)] do
+tarcrit:=crit(mv,target);
 
-ll:=pow(mv,List(stringpairs[i][1],v->generators[v]));
-kk:=pow(mv,List(stringpairs[i][2],v->generators[v]));
+if not critequaltest(target,pow(mv,List([1..power],v->generators[iz+1])),table) then return false; fi;
 
-app:=Concatenation(List([1..i],v->mv(ll,generators[v])),[kk]);
-bpp:=List([1..i+1],v->generators[v]);
+if RemInt(power,2)=0 then
+genlist:=generatesubalgebra(List([1..iz],v->generators[v]),table);
+gencrit:=[];
+for ah in genlist do if mv(ah,ah)=1 then Add(gencrit,ah); fi; od;
 
-att:=reducedhash(app,table);
-btt:=reducedhash(bpp,table);
-
-emaa:=Minimum(Length(att),Length(btt));
-
-for j in [1..emaa] do
-if not att[j]=btt[j] then return false; fi;
+for alpha in gencrit do
+if mv(tarcrit,alpha)>1 and mv(crit(mv,generators[iz+1]),alpha)=1 then return false; fi;
 od;
-if kk>1 then
 
-# Here, we define axecrit.
-vec:=[1..nn]*0;
-vec[1]:=1;
-tips:=[];
-for j in [1..i] do
-Add(tips,generators[j]);
-vec[generators[j]]:=1;
-od;
-while Length(tips)>0 do
-aam:=Remove(tips);
-for j in [1..i] do
-bbm:=mv(aam,generators[j]);
-if vec[bbm]=0 then
-vec[bbm]:=1; Add(tips,bbm);
 fi;
 od;
-od;
-axecrit:=[];
-for atp in critlist do
-if vec[atp]=1 then Add(axecrit,atp); fi;
-od;
-
-for alpha in axecrit do
-if mv(mv(ll,alpha),kk)=1 and mv(alpha,generators[i+1])>1 then return false; fi;
-od;
-fi;
-
-od;
-
 return true;
 end;
 
-inconsistencysearchfour:=function(stringpairs)
+inconsistencysearchfour:=function(pairstrings)
 local discriminator,gg;
-gg:=Length(stringpairs)+1;
-# I need to put something here.
+
+
+gg:=Length(pairstrings)+1;
 discriminator:=function(xx)
-return consistencytestfour(xx,stringpairs);
+return consistencytestfour(xx,pairstrings);
 end;
 inconsistencysearchtemplate(gg,discriminator);
 end;
-
 
 
 #inconsistencysearch:=function(genpower)
