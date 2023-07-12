@@ -396,7 +396,7 @@ od;
 return output;
 end;
 
-ssgextensions:=function(generators,table)
+ssgextensions:=function(position,generators,table)
 local ext,cart,tuple,preoutput,improper,i,j,cont,imagecheck,tablecheck,pointcheck,n,iz,gg,safe,proposal,output,mv;
 output:=[];
 n:=Length(table);
@@ -406,17 +406,14 @@ ext:=multigeneration(generators,table);
 improper:=findimproper(generators,table,ext);
 
 output:=[];
-for i in [1..Length(ext)] do
+for j in [1..Length(ext[position])] do
 tuple:=StructuralCopy(improper);
-for j in [1..Length(ext[i])] do
-if improper[i]=j then continue; fi;
-tuple[i]:=j;
+if j=improper[position] then continue; fi;
+tuple[position]:=j;
 proposal:=multiextendtable(tuple,generators,table,ext);
 if not nightmaretest(proposal[2]) then continue; fi;
 Add(output,proposal);
 od;
-od;
-
 return output;
 end;
 
