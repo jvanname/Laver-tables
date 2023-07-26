@@ -632,6 +632,8 @@ end;
 
 
 
+message:="WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE! Please submit an issue or report this possible inconsistency to the Circcash development team at circcash9192020 AT protonmail.com."
+
 inconsistencysearchtemplate:=function(gg,discriminator)
 local list,pan,yy,amm,xv;
 
@@ -646,7 +648,7 @@ amm:=discriminator(yy);
 if amm then Add(list,yy); fi; od;
 Display(List(list,v->Length(v[2])));
 od;
-Display("WARNING: LARGE CARDINAL INCONSIST0ENCY FOUND OR ERROR IN CODE! Please submit an issue or report this possible inconsistency to the Circcash development team at circcash9192020 AT protonmail.com.");
+Display(message);
 end;
 
 inconsistencysearch:=function(genpower)
@@ -928,6 +930,50 @@ return consistencytestfour(xx,pairstrings);
 end;
 inconsistencysearchtemplate(gg,discriminator);
 end;
+
+addroottest:=function(yy,xx,tarsequence,power)
+local gg,amm,bmm,mn,i,mv,tarcrit,target,genlist,gencrit,ah,alpha;
+
+gg:=Length(xx[1]);
+if not nightmaretest(yy[2]) then return false; fi;
+amm:=hash(xx[1],xx[2]);
+bmm:=reducedhash(List([1..gg],v->yy[1][v]),yy[2]);
+
+mn:=Minimum(Length(amm),Length(bmm));
+for i in [1..mn] do
+if not amm[i]=bmm[i] then return false; fi;
+od;
+
+mv:=makefunction(yy[2]);
+target:=pow(mv,List(tarsequence,v->yy[1][v]));
+
+tarcrit:=crit(mv,target);
+
+if not critequaltest(target,pow(mv,List([1..power],v->yy[1][gg+1])),yy[2]) then return false; fi;
+
+if RemInt(power,2)=0 then
+genlist:=generatesubalgebra(List([1..gg],v->yy[1][v]),yy[2]);
+gencrit:=[];
+for ah in genlist do if mv(ah,ah)=1 then Add(gencrit,ah); fi; od;
+
+for alpha in gencrit do
+if mv(tarcrit,alpha)>1 and mv(crit(mv,yy[1][gg+1]),alpha)=1 then return false; fi;
+od;
+fi;
+
+return true;
+end;
+
+rootconsistency:=function(xx,tarsequence,power)
+local discriminator,gg;
+message:="Notice: The input algebra xx cannot be obtained from large cardinal embeddings."
+gg:=Length(xx[1])+1;
+discriminator:=function(yy)
+return addroottest(yy,xx,tarsequence,power);
+end;
+inconsistencysearchtemplate(gg,discriminator);
+end;
+
 
 
 #inconsistencysearch:=function(genpower)
