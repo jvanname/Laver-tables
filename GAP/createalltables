@@ -1021,6 +1021,60 @@ od;
 return finalarray;
 end;
 
+ordinaltest:=function(yy,level)
+local mv,ord,critlist,cc,lim,partcong,gen,dic,lu,a;
+mv:=makefunction(yy[2]);
+ord:=yy[1][Length(yy[1])];
+if mv(ord,ord)>1 then return false; fi;
+if not nightmaretest(yy[2]) then return false; fi;
+
+critlist:=critfind(yy[2]);
+if Length(critlist)<=level then
+return ord=1;
+fi;
+
+if not ord=critlist[level] then return false; fi;
+
+cc:=critlist[level+1];
+
+if cc=1 then lim:=Length(yy[2]); else
+lim:=cc-1;
+fi;
+
+partcong:=partialcritmaxcong(yy[2],lim);
+
+gen:=generatesubalgebra(List([1..Length(yy[1])-1],v->yy[1][v]),yy[2]);
+
+dic:=NewDictionary(0,true);
+
+for a in gen do
+if mv(a,ord)=1 then continue; fi;
+lu:=LookupDictionary(dic,mv(a,ord));
+if lu=fail then AddDictionary(dic,mv(a,ord),partcong[mv(cc,a)]); 
+else
+if not partcong[mv(cc,a)]=lu then return false;
+fi;
+fi;
+od;
+return true;
+end;
+
+addordinalgenerator:=function(yy,xx,level)
+local mv,gg,aam,bbm,mm,i;
+mv:=makefunction(yy[2]);
+gg:=Length(xx[1]);
+
+aam:=hash(xx[1],xx[2]);
+bbm:=reducedhash(List([1..gg],v->yy[1][v]),yy[2]);
+
+mm:=Minimum(Length(aam),Length(bbm));
+for i in [1..mm] do
+if not aam[i]=bbm[i] then return false; fi;
+od;
+
+return ordinaltest(yy,level);
+end;
+
 
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
