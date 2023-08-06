@@ -3,6 +3,8 @@
 ### Much of this code is dedicated to searching for an inconsistency in the large cardinal hierarchy. No inconsistency has been found, but I have observed plenty of near misses.
 ### The ability for the search for an inconsistency to result in an endless supply of near misses without any actual inconsistencies seems to indicate that 
 ### rank-into-rank cardinals actually exist, but by Godel's incompleteness theorem, we cannot have a formal mathematical proof of the consistency of rank-into-rank cardinals.
+### I do not expect to find any inconsistency, but I do not think I will try much harder to obtain an inconsistency.
+
 
 makefunction:=function(compressedtable)
 local n,tree;
