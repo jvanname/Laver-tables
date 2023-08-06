@@ -632,7 +632,7 @@ end;
 
 
 
-message:="WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE! Please submit an issue or report this possible inconsistency to the Circcash development team at circcash9192020 AT protonmail.com."
+message:="WARNING: LARGE CARDINAL INCONSISTENCY FOUND OR ERROR IN CODE! Please submit an issue or report this possible inconsistency to the Circcash development team at circcash9192020 AT protonmail.com.";
 
 inconsistencysearchtemplate:=function(gg,discriminator)
 local list,pan,yy,amm,xv;
