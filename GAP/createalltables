@@ -1078,6 +1078,59 @@ od;
 return ordinaltest(yy,level);
 end;
 
+#least ordinal beta with j(beta)>alpha.
+
+galoisinversetest:=function(yy,string,level)
+local mv,beta,jj,a,gen,critlist,gencrit,i,kk,cc,alpha;
+
+mv:=makefunction(yy[2]);
+beta:=yy[1][Length(yy[1])];
+if mv(beta,beta)>1 then return false; fi;
+if not nightmaretest(yy[2]) then return false; fi;
+
+jj:=1;
+for a in string do
+jj:=mv(jj,yy[1][a]);
+od;
+
+gen:=generatesubalgebra(List([1..Length(yy[1])-1],v->yy[1][v]),yy[2]);
+critlist:=critfind(yy[2]);
+
+gencrit:=[];
+for i in [2..Length(gen)] do
+if mv(i,i)=1 then Add(gencrit,i); fi;
+od;
+Add(gencrit,1);
+
+alpha:=gencrit[Minimum(Length(gencrit),level)];
+
+for kk in [1..Length(yy[2])] do
+if mv(kk,alpha)=1 then continue; fi;
+for cc in critlist do
+if not (mv(mv(mv(kk,jj),cc),mv(kk,alpha))=1)=(mv(mv(kk,beta),cc)>1) then return false; fi;
+od;
+od;
+return true;
+end;
+
+addgaloisinverseordinal:=function(yy,xx,string,level)
+local mv,gg,aam,bbm,mm,i;
+mv:=makefunction(yy[2]);
+gg:=Length(xx[1]);
+
+aam:=hash(xx[1],xx[2]);
+bbm:=reducedhash(List([1..gg],v->yy[1][v]),yy[2]);
+
+mm:=Minimum(Length(aam),Length(bbm));
+for i in [1..mm] do
+if not aam[i]=bbm[i] then return false; fi;
+od;
+
+return galoisinversetest(yy,string,level);
+end;
+
+
+
 
 #inconsistencysearch:=function(genpower)
 #local gg,list,pan,yy,amm,xv;
