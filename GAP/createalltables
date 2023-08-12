@@ -1130,6 +1130,60 @@ return galoisinversetest(yy,string,level);
 end;
 
 
+firstinequality:=function(yy,strzero,strone)
+local mv,pointzero,pointone,a,b,uu,ll,critlist,ord,test;
+if not nightmaretest(yy[2]) then return false; fi;
+mv:=makefunction(yy[2]);
+ord:=yy[1][Length(yy[1])];
+if not mv(ord,ord)=1 then return false; fi;
+pointzero:=1;
+pointone:=1;
+for a in strzero do
+pointzero:=mv(pointzero,yy[1][a]);
+od;
+for b in strone do
+pointone:=mv(pointone,yy[1][b]);
+od;
+# We want pointone*ord>pointzero*ord.
+
+critlist:=critfind(yy[2]);
+
+test:=false;
+for a in critlist do
+if mv(mv(pointone,a),mv(pointzero,a))>1 then test:=true; break; fi;
+od;
+if not test then return true; fi;
+
+if mv(pointone,ord)=1 then return true; fi;
+
+if mv(mv(pointone,ord),mv(pointzero,ord))=1 then return false; fi;
+
+for ll in [1..Length(yy[2])] do
+for uu in critlist do
+if mv(mv(ll,ord),uu)=1 then break; fi;
+if not mv(mv(ll,pointzero),uu)=mv(mv(ll,pointone),uu) then return false; fi;
+od;
+od;
+return true;
+end;
+
+addfirstinequalitygenerator:=function(yy,xx,strzero,strone)
+local mv,gg,aam,bbm,mm,i;
+mv:=makefunction(yy[2]);
+gg:=Length(xx[1]);
+
+aam:=hash(xx[1],xx[2]);
+bbm:=reducedhash(List([1..gg],v->yy[1][v]),yy[2]);
+
+mm:=Minimum(Length(aam),Length(bbm));
+for i in [1..mm] do
+if not aam[i]=bbm[i] then return false; fi;
+od;
+
+return firstinequality(yy,strzero,strone);
+end;
+
+
 
 
 #inconsistencysearch:=function(genpower)
