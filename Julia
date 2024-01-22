@@ -180,7 +180,7 @@ multigeneration(generators, table) = begin
             push!(aa,mv(ii, generators[jj]));
         end
         
-        cart = cartesian([aa[v] for v in 1:gg])
+        cart =  collect(Iterators.product([aa[v] for v in 1:gg]...))
         
         for tuple in cart
             cardarray = [mastertable[aa[v]][tuple[v]] for v in 1:gg]
