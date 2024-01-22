@@ -1,0 +1,24 @@
+function makefunction(compressedtable)
+    n = length(compressedtable)
+    function tree(x, y)
+        if length(compressedtable[x]) == n
+            return compressedtable[x][y]
+        else
+            return compressedtable[x][compressedtable[length(compressedtable[x]) + 1][y]]
+        end
+    end
+    return tree
+end
+
+function critfind(table)
+    n = length(table)
+    critlist = []
+    tree = makefunction(table)
+    for i in 2:n
+        if tree(i, i) == 1
+            push!(critlist, i)
+        end
+    end
+    push!(critlist, 1)
+    return critlist
+end
