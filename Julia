@@ -194,9 +194,13 @@ end
             display("M0");
 
         for tuple in cart
+            display("bc")
             cardarray = [mastertable[aa[v]][tuple[v]] for v in 1:gg]
+            display("ci")
             imagearray = [v[1] for v in cardarray]
+            display("it")
             tablearray = [v[2] for v in cardarray]
+            display("tp")
             pointarray = [v[3] for v in cardarray]
             display("M1");
             mlist = [length(imagearray[v]) for v in 1:gg]
