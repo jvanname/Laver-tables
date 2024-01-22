@@ -169,7 +169,7 @@ multigeneration(generators, table) = begin
         return true
     end
     
-    mastertable =[ [ [ [ 1 ], [ [ 1 : n ] ], 0 ], [ [ 1 ], [ [ 1 : n ] ], 1 ] ] ]
+    mastertable =[ [ [ [ 1 ], [ 1 : n ], 0 ], [ [ 1 ], [ 1 : n ], 1 ] ] ]
         
     for ii in 2:n
         push!(mastertable,[]);
