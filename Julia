@@ -206,6 +206,7 @@ end
             end
             zeroafter=[];
             testlist = testlistarray[ii]
+            display(sum(testlist));
             testlistlength = superlength[ii]
             testlistcrit = supercrit[ii]
             
