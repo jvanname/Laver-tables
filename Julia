@@ -39,18 +39,18 @@ multigeneration(generators, table) = begin
             end
         end
     end
-    
-    superlength = []
-    supercrit = []
+    # I need to remember that superlength and supercrit are defined this way.
+    superlength = [0]
+    supercrit = [0]
     
     for im in 2:n
         aa = critlist[1 + superlist[im]]
         if aa > 1
-            superlength[im] = aa - 1
-            supercrit[im] = aa
+            push!(superlength,aa - 1);
+            push!(supercrit,aa);
         else
-            superlength[im] = n
-            supercrit[im] = n + 1
+            push!(superlength, n);
+            push!(supercrit, n + 1);
         end
     end
     
