@@ -189,7 +189,7 @@ end
         for jj in 1:gg
             push!(aa,mv(ii, generators[jj]));
         end
-        cart =  collect(Iterators.product([aa[v] for v in 1:gg]...))
+        cart =  collect(Iterators.product([1:aa[v] for v in 1:gg]...))
 
             display("M0");
 
