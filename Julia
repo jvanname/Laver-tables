@@ -246,7 +246,7 @@ function multiextendtable(type, generators, table, extension)
     newtable = copy(table)
     finalcritlist = critfind(table)
     gg = length(generators)
-    add!(finalcritlist, n+1)
+    push!(finalcritlist, n+1)
     mv = makefunction(table)
     newgenerators = []
 
