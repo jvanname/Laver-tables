@@ -245,7 +245,7 @@ end
 function multiextendtable(type, generators, table, extension)
     n = length(table)
     mix = []
-    newtable = copy(table)
+    newtable = deepcopy(table)
     finalcritlist = critfind(table)
     gg = length(generators)
     push!(finalcritlist, n+1)
@@ -281,7 +281,6 @@ function multiextendtable(type, generators, table, extension)
             push!(tablespace, quart)
         end
     end
-# THERE IS AN ERROR IN THE TRANSLATION HERE.
     append!(newtable, tablespace)
 
     for a in finalcritlist
