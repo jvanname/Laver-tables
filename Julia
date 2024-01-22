@@ -1,3 +1,5 @@
+#Translated from GAP to Julia
+
 function makefunction(compressedtable)
     n = length(compressedtable)
     function tree(x, y)
