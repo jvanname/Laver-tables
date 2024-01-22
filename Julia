@@ -291,7 +291,7 @@ function multiextendtable(type, generators, table, extension)
             end
         end
     end
-    push!(newtable[1], n+1:n+length(imagespace))
+    append!(newtable[1], n+1:n+length(imagespace))
 
     for i in 1:gg
         if mlist[i] > 1
