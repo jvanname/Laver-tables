@@ -200,7 +200,7 @@ end
                 push!(sumlist,sumlist[iz] + mlist[iz] - 1);
             end
             
-            testlist = []
+            testlist = testlistarray[ii]
             testlistlength = superlength[ii]
             testlistcrit = supercrit[ii]
             
