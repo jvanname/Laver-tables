@@ -340,7 +340,7 @@ function findimproper(generators, table, ext)
         end
     end
 
-    return improper
+    return Tuple(improper);
 end
 
 function allmultiextensions(generators, table)
