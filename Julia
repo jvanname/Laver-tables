@@ -282,7 +282,7 @@ function multiextendtable(type, generators, table, extension)
         end
     end
 # THERE IS AN ERROR IN THE TRANSLATION HERE.
-    push!(newtable, tablespace)
+    append!(newtable, tablespace)
 
     for a in finalcritlist
         if a > 1
