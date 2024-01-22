@@ -167,18 +167,8 @@ multigeneration(generators, table) = begin
         return true
     end
     
-    mastertable = []
-    
-    mastertable[1] = []
-    mastertable[1][1] = []
-    mastertable[1][1][1] = [1]
-    mastertable[1][1][2] = [[1:n]]
-    mastertable[1][1][3] = 0
-    mastertable[1][2] = []
-    mastertable[1][2][1] = [1]
-    mastertable[1][2][2] = [[1:n]]
-    mastertable[1][2][3] = 1
-    
+    mastertable =[ [ [ [ 1 ], [ [ 1 : 6 ] ], 0 ], [ [ 1 ], [ [ 1 : 6 ] ], 1 ] ] ]
+        
     for ii in 2:n
         push!(mastertable,[]);
         if mv(ii, ii) == 1
