@@ -295,21 +295,19 @@ function multiextendtable(type, generators, table, extension)
 
     for i in 1:gg
         if mlist[i] > 1
-            newgenerators[i] = sumlist[i+1]
+            push!(newgenerators,sumlist[i+1]);
         else
             if generators[i] > 1
-                newgenerators[i] = generators[i]
+                push!(newgenerators,generators[i]);
             else
                 if pointarray[i] == 0
-                    newgenerators[i] = n+1
+                    push!(newgenerators,n+1);
                 elseif pointarray[i] == 1
-                    newgenerators[i] = 1
+                    push!(newgenerators,1);
                 end
             end
         end
     end
-
-    newfunction = makefunction(newtable)
 
     return [newgenerators, newtable]
 end
