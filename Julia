@@ -42,7 +42,8 @@ multigeneration(generators, table) = begin
     # I need to remember that superlength and supercrit are defined this way.
     superlength = [0]
     supercrit = [0]
-    
+    testlistarray=[[]];
+
     for im in 2:n
         aa = critlist[1 + superlist[im]]
         if aa > 1
@@ -52,7 +53,8 @@ multigeneration(generators, table) = begin
             push!(superlength, n);
             push!(supercrit, n + 1);
         end
-    end
+       push!(testlistarray,zeros(superlength[im]));
+end
     
     superfunction(x, y) = begin
         if x == 1000000000000 || y == 1000000000000
