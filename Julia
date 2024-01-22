@@ -242,8 +242,10 @@ end
                 push!(imagespace, ii)
                 push!(tablespace, deepcopy(testlist))
                 push!(mastertable[ii], [imagespace, tablespace, 0])
+                testlistarray[ii]=zeros(Int64,superlength[ii]);
                 # we need to restore testlist reservoir.
             else
+            for aa in zeroafter testlist[aa]=0; end;
             # we need to zero out the mess we have made.
             end
         end
