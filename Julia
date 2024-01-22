@@ -257,7 +257,7 @@ function multiextendtable(type, generators, table, extension)
     mlist = [length(imagearray[v]) for v in 1:gg]
     sumlist = [n+1]
     for iz in 1:gg
-        sumlist[iz+1] = sumlist[iz] + mlist[iz] - 1
+        push!(sumlist,sumlist[iz] + mlist[iz] - 1);
     end
 
     imagespace = copy(imagearray[1])
