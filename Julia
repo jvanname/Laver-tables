@@ -189,8 +189,9 @@ end
         for jj in 1:gg
             push!(aa,mv(ii, generators[jj]));
         end
-        
+        display("markzero");
         cart =  collect(Iterators.product([aa[v] for v in 1:gg]...))
+        display("markone");
         
         for tuple in cart
             cardarray = [mastertable[aa[v]][tuple[v]] for v in 1:gg]
