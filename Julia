@@ -124,24 +124,28 @@ end
                 if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == sumlist[li + 1])
                     return false
                 end
-                testlist[superfunction(testlistcrit, generators[li])] = sumlist[li + 1]
+                push!(zeroafter,superfunction(testlistcrit, generators[li]));
+                testlist[superfunction(testlistcrit, generators[li])] = sumlist[li + 1];
             elseif mlist[li] == 1
                 if aa[li] == 1
                     if pointarray[li] == 0
                         if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == n + 1)
                             return false
                         end
+                        push!(zeroafter,superfunction(testlistcrit, generators[li]));
                         testlist[superfunction(testlistcrit, generators[li])] = n + 1
                     elseif pointarray[li] == 1
                         if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == 1)
                             return false
                         end
+                        push!(zeroafter,superfunction(testlistcrit, generators[li]));
                         testlist[superfunction(testlistcrit, generators[li])] = 1
                     end
                 elseif aa[li] > 1
                     if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == mv(ii, generators[li]))
                         return false
                     end
+                    push!(zeroafter,superfunction(testlistcrit, generators[li]));
                     testlist[superfunction(testlistcrit, generators[li])] = mv(ii, generators[li])
                 end
             end
@@ -156,6 +160,7 @@ end
                 if testlist[superfunction(kk, generators[li])]>0 && !(testlist[superfunction(kk, generators[li])] == aar)
                     return false
                 end
+                push!(zeroafter,superfunction(kk, generators[li]));
                 testlist[superfunction(kk, generators[li])] = aar
             end
         end
@@ -199,7 +204,7 @@ end
             for iz in 1:gg
                 push!(sumlist,sumlist[iz] + mlist[iz] - 1);
             end
-            
+            zeroafter=[];
             testlist = testlistarray[ii]
             testlistlength = superlength[ii]
             testlistcrit = supercrit[ii]
