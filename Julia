@@ -190,12 +190,15 @@ end
             push!(aa,mv(ii, generators[jj]));
         end
         cart =  collect(Iterators.product([aa[v] for v in 1:gg]...))
+
+            display("M0");
+
         for tuple in cart
             cardarray = [mastertable[aa[v]][tuple[v]] for v in 1:gg]
             imagearray = [v[1] for v in cardarray]
             tablearray = [v[2] for v in cardarray]
             pointarray = [v[3] for v in cardarray]
-            display("M0");
+            display("M1");
             mlist = [length(imagearray[v]) for v in 1:gg]
             
             sumlist = [n + 1]
