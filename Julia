@@ -240,8 +240,11 @@ end
                 end
                 
                 push!(imagespace, ii)
-                push!(tablespace, testlist)
+                push!(tablespace, deepcopy(testlist))
                 push!(mastertable[ii], [imagespace, tablespace, 0])
+                # we need to restore testlist reservoir.
+            else
+            # we need to zero out the mess we have made.
             end
         end
     end
