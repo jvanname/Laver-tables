@@ -180,14 +180,14 @@ multigeneration(generators, table) = begin
     mastertable[1][2][3] = 1
     
     for ii in 2:n
-        mastertable[ii] = []
+        push!(mastertable,[]);
         if mv(ii, ii) == 1
-            mastertable[ii][1] = [[1], [[1:n]], 1]
+            push!(mastertable[ii],[[1], [[1:n]], 1]);
         end
         
         aa = []
         for jj in 1:gg
-            aa[jj] = mv(ii, generators[jj])
+            push!(aa,mv(ii, generators[jj]));
         end
         
         cart = cartesian([aa[v] for v in 1:gg])
