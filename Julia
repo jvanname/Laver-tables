@@ -33,7 +33,8 @@ multigeneration(generators, table) = begin
     mv = makefunction(table)
     critlist = critfind(table)
     gg = length(generators)
-    
+    mlist=[];
+
     superlist = []
     for imt in 1:n
         for j in 1:length(critlist)
