@@ -258,6 +258,8 @@ end
                 # we need to restore testlist reservoir.
             else
             for aa in zeroafter testlist[aa]=0; end;
+            display("We are displaying the sum of the testlist. It should be zero on the next line. This message is annoying so that we know to delete it once the code is running.");
+            display(sum(testlist[aa]));
             # we need to zero out the mess we have made.
             end
         end
