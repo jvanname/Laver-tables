@@ -164,7 +164,7 @@ end
                 if testlist[superfunction(kk, generators[li])]>0 && !(testlist[superfunction(kk, generators[li])] == aar)
                     return false
                 end
-                push!(,superfunction(kk, generators[li]));
+                push!(superfunction(kk, generators[li]));
                 testlist[superfunction(kk, generators[li])] = aar
             end
         end
