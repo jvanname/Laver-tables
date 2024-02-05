@@ -28,7 +28,6 @@ end
 
 
 ### UndefVarError: mlist not defined
-### I am getting an error where the array is not of type 'any'. This means that I cannot push 1:n to this list.
 multigeneration(generators, table) = begin
     n = length(table)
     mv = makefunction(table)
