@@ -196,9 +196,9 @@ end
 
             display("M0");
 
-        for tuple in cart
+        for tup in cart
             display("bc")
-            cardarray = [mastertable[aa[v]][tuple[v]] for v in 1:gg]
+            cardarray = [mastertable[aa[v]][tup[v]] for v in 1:gg]
             display("ci")
             imagearray = [v[1] for v in cardarray]
             display("it")
@@ -369,11 +369,11 @@ function allmultiextensions(generators, table)
     improper = findimproper(generators, table, ext)
     output = []
 
-    for tuple in cart
-        if tuple == improper
+    for tup in cart
+        if tup == improper
             continue
         end
-        push!(output, multiextendtable(tuple, generators, table, ext))
+        push!(output, multiextendtable(tup, generators, table, ext))
     end
 
     return output
