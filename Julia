@@ -331,7 +331,6 @@ function multiextendtable(type, generators, table, extension)
     return [newgenerators, newtable]
 end
 
-#The following function is not returning the right outputs.
 function findimproper(generators, table, ext)
     n = length(table)
     improper = []
