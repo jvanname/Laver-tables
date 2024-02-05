@@ -1,5 +1,5 @@
 #Translated from GAP to Julia
-#The code is all messed up. I need to fix it. It is not producing all the tables even though it is translated from good code.
+#The code is all messed up. I need to fix it. It is not producing all the tables even though it is translated from working code.
 
 function makefunction(compressedtable)
     n = length(compressedtable)
