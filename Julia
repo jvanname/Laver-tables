@@ -35,9 +35,9 @@ multigeneration(generators, table) = begin
     gg = length(generators)
     
     superlist = []
-    for im in 1:n
+    for imt in 1:n
         for j in 1:length(critlist)
-            if mv(im, critlist[j]) == 1
+            if mv(imt, critlist[j]) == 1
                 push!(superlist,j);
                 break
             end
@@ -48,8 +48,8 @@ multigeneration(generators, table) = begin
     supercrit = [0]
     testlistarray=[[]];
 
-    for im in 2:n
-        aa = critlist[1 + superlist[im]]
+    for imt in 2:n
+        aa = critlist[1 + superlist[imt]]
         if aa > 1
             push!(superlength,aa - 1);
             push!(supercrit,aa);
@@ -57,7 +57,7 @@ multigeneration(generators, table) = begin
             push!(superlength, n);
             push!(supercrit, n + 1);
         end
-       push!(testlistarray,zeros(Int64,superlength[im]));
+       push!(testlistarray,zeros(Int64,superlength[imt]));
 end
     
     superfunction(x, y) = begin
