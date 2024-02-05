@@ -27,7 +27,6 @@ function critfind(table)
 end
 
 ### It looks like there is another error where we are zeroing out good information.
-### UndefVarError: mlist not defined
 multigeneration(generators, table) = begin
     local mlist,aa,pointarray,testlistcrit;
     n = length(table)
