@@ -25,6 +25,8 @@ function critfind(table)
     push!(critlist, 1)
     return critlist
 end
+
+### UndefVarError: mlist not defined
 multigeneration(generators, table) = begin
     n = length(table)
     mv = makefunction(table)
