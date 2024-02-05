@@ -252,6 +252,7 @@ end
                 end
                 
                 push!(imagespace, ii)
+                #  MethodError: Cannot `convert` an object of type Vector{Any} to an object of type UnitRange{Int64}
                 push!(tablespace, deepcopy(testlist))
                 push!(mastertable[ii], [imagespace, tablespace, 0])
                 testlistarray[ii]=zeros(Int64,superlength[ii]);
