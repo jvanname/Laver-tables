@@ -353,13 +353,12 @@ function findimproper(generators, table, ext)
                 cont = true
             end
 
-            if cont
+            if cont continue; end;
+
                 push!(improper, j)
                 break
             end
         end
-    end
-
     return Tuple(improper);
 end
 
