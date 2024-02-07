@@ -308,7 +308,7 @@ function multiextendtable(type, generators, table, extension)
         end
     end
     append!(newtable, tablespace)
-
+# THERE IS AN ERROR HERE. I CANNOT PUSH.
     for a in finalcritlist
         if a > 1
             for b in imagespace
