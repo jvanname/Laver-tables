@@ -123,7 +123,7 @@ end
         end
     end
     
-    testfunction() = begin
+   function testfunction()
         for li in 1:gg
             if mlist[li] > 1
                 if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == sumlist[li + 1])
