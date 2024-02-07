@@ -34,6 +34,7 @@ multigeneration(generators, table) = begin
     critlist = critfind(table)
     gg = length(generators)
     # I need to produce mlist and aa before I can use these quantities.
+    ii=0;
     superlist = []
     for imt in 1:n
         for j in 1:length(critlist)
