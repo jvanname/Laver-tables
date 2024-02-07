@@ -219,9 +219,9 @@ end
             display(sum(testlist));
             testlistlength = superlength[ii]
             testlistcrit = supercrit[ii]
-            
+            display("Quar")
             test = testfunction()
-            
+            display("Quas")            
             if test
                 imagespace = copy(imagearray[1])
                 for kz in 2:gg
