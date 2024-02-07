@@ -183,7 +183,7 @@ end
     mastertable =[ [ [ [ 1 ], Any[ 1 : n ], 0 ], [ [ 1 ], Any[ 1 : n ], 1 ] ] ]
         
     for ii in 2:n
-        local ii;
+        global ii;
         display(["ii=",ii]);
         push!(mastertable,[]);
         if mv(ii, ii) == 1
