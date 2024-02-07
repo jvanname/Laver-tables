@@ -180,7 +180,7 @@ end
         
         return true
     end
-    
+    # I need to edit the following line. I cannot push anything onto Any[1:n]. I need something pushable. 
     mastertable =[ [ [ [ 1 ], Any[ 1 : n ], 0 ], [ [ 1 ], Any[ 1 : n ], 1 ] ] ]
         
     for ii in 2:n
