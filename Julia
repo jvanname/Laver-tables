@@ -182,7 +182,8 @@ end
     # I need to edit the following line. I cannot push anything onto Any[1:n]. I need something pushable. 
     mastertable =[ [ [ [ 1 ], Any[collect(1 : n)], 0 ], [ [ 1 ], Any[collect(1 : n)], 1 ] ] ]
         
-    for ii in 2:n
+    for iii in 2:n
+        ii=iii;
         display(["ii=",ii]);
         push!(mastertable,[]);
         if mv(ii, ii) == 1
