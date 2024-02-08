@@ -195,6 +195,7 @@ end
         for jj in 1:gg
             push!(aa,mv(ii, generators[jj]));
         end
+        # SHOULD BE. I THINK THERE IS AN ERROR HERE. cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
         cart =  collect(Iterators.product([1:aa[v] for v in 1:gg]...))
 
             display("M0");
