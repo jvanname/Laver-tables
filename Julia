@@ -202,6 +202,9 @@ end
         for tup in cart
             display("bc")
             display(ii);
+            display(aa);
+            display(mastertable);
+            display(tup);
             cardarray = [mastertable[aa[v]][tup[v]] for v in 1:gg]
             display("ci")
             imagearray = [v[1] for v in cardarray]
