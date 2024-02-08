@@ -28,7 +28,7 @@ end
 
 ### It looks like there is another error where we are zeroing out good information.
 multigeneration(generators, table) = begin
-    local mlist,aa,pointarray,testlistcrit,testlist,zeroafter,testlistlength,sumlist,imagearray,ii;
+    local mlist,aa,pointarray,testlistcrit,testlist,zeroafter,testlistlength,sumlist,imagearray,ii,tablearray;
     n = length(table)
     mv = makefunction(table)
     critlist = critfind(table)
