@@ -183,6 +183,7 @@ end
     mastertable =[ [ [ [ 1 ], Any[collect(1 : n)], 0 ], [ [ 1 ], Any[collect(1 : n)], 1 ] ] ]
         
     for iii in 2:n
+# This is the wrong way to solve the problem, but I am too tired trying to figure out the correct way to do this so that ii can be accessed within testfunction()
         ii=iii;
         display(["ii=",ii]);
         push!(mastertable,[]);
