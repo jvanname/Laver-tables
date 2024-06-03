@@ -295,17 +295,17 @@ function multiextendtable(type, generators, table, extension)
         push!(sumlist,sumlist[iz] + mlist[iz] - 1);
     end
 
-    imagespace = copy(imagearray[1])
+    imagespace = deepcopy(imagearray[1])
     for kz in 2:gg
         for is in 2:length(imagearray[kz])
             push!(imagespace, imagearray[kz][is])
         end
     end
 
-    tablespace = copy(tablearray[1])
+    tablespace = deepcopy(tablearray[1])
     for kz in 2:gg
         for is in 2:length(tablearray[kz])
-            quart = copy(tablearray[kz][is])
+            quart = deepcopy(tablearray[kz][is])
             for js in 1:length(quart)
                 if quart[js] > n+1
                     quart[js] = quart[js] + sumlist[kz] - n - 1
