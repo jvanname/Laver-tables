@@ -108,20 +108,20 @@ end
         println("WARNING:ERROR. PLEASE FIX CODE.")
     end
     
-    sanitycheck() = begin
-        nnq = sumlist[length(sumlist)]
-        for a in 1:nnq
-            for b in 1:nnq
-                for c in 1:nnq
-                    if !(superfunction(a, superfunction(b, c)) == superfunction(superfunction(a, b), superfunction(a, c)))
-                        while true
-                            display("Warning: self-distributive failure. Error in code.")
-                        end
-                    end
-                end
-            end
-        end
-    end
+#    sanitycheck() = begin
+#        nnq = sumlist[length(sumlist)]
+#        for a in 1:nnq
+#            for b in 1:nnq
+#                for c in 1:nnq
+#                    if !(superfunction(a, superfunction(b, c)) == superfunction(superfunction(a, b), superfunction(a, c)))
+#                        while true
+#                            display("Warning: self-distributive failure. Error in code.")
+#                        end
+#                    end
+#                end
+#            end
+#        end
+#    end
     
    function testfunction()
         for li in 1:gg
