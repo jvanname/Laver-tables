@@ -186,7 +186,6 @@ end
     for iii in 2:n
 # This is the wrong way to solve the problem, but I am too tired trying to figure out the correct way to do this so that ii can be accessed within testfunction()
         ii=iii;
-        display(["ii=",ii]);
         push!(mastertable,[]);
         if mv(ii, ii) == 1
             push!(mastertable[ii],[[1], Any[collect(1:n)], 1]);
@@ -244,7 +243,6 @@ end
                 end
                 
                 push!(imagespace, ii)
-                #  MethodError: Cannot `convert` an object of type Vector{Any} to an object of type UnitRange{Int64}
                 push!(tablespace, deepcopy(testlist))
                 push!(mastertable[ii], [imagespace, tablespace, 0])
                 testlistarray[ii]=zeros(Int64,superlength[ii]);
