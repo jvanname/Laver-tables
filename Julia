@@ -198,23 +198,11 @@ end
         end
         # SHOULD BE. I THINK THERE IS AN ERROR HERE. cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
         cart =  collect(Iterators.product([1:length(mastertable[aa[v]]) for v in 1:gg]...))
-
-            display("M0");
-
         for tup in cart
-            display("bc")
-            display(ii);
-            display(aa);
-            display(mastertable);
-            display(tup);
             cardarray = [mastertable[aa[v]][tup[v]] for v in 1:gg]
-            display("ci")
             imagearray = [v[1] for v in cardarray]
-            display("it")
             tablearray = [v[2] for v in cardarray]
-            display("tp")
             pointarray = [v[3] for v in cardarray]
-            display("M1");
             mlist = [length(imagearray[v]) for v in 1:gg]
             
             sumlist = [n + 1]
@@ -224,12 +212,9 @@ end
             end
             zeroafter=[];
             testlist = testlistarray[ii]
-            display(sum(testlist));
             testlistlength = superlength[ii]
             testlistcrit = supercrit[ii]
-            display("Quar")
             test = testfunction()
-            display("Quas")            
             if test
                 imagespace = copy(imagearray[1])
                 for kz in 2:gg
