@@ -266,7 +266,7 @@ end
                 # we need to restore testlist reservoir.
             else
             for aa in zeroafter testlist[aa]=0; end;
-if sum(testlist))>0 while true display("E"); end; end;
+if sum(testlist)>0 while true display("E"); end; end;
             # we need to zero out the mess we have made.
             end
         end
