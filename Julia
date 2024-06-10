@@ -1,5 +1,3 @@
-#Translated from GAP to Julia
-#The code is all messed up. I need to fix it. It is not producing all the tables even though it is translated from working code.
 # I probably have a few deepcopys when I just need copy, but that is fine for now.
 
 function makefunction(compressedtable)
