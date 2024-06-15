@@ -439,7 +439,7 @@ output=[];
 for i in 1:length(ext)
 push!(output,[]);
 for j in 1:length(ext[i])
-tuple=deepcopy(improper);
+tuple=collect(deepcopy(improper));
 if j==improper[i] continue; end;
 tuple[i]=j;
 proposal=multiextendtable(tuple,generators,table,ext);
