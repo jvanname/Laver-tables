@@ -440,12 +440,12 @@ for i in 1:Length(ext)
 push!(output,[]);
 for j in 1:length(ext[i])
 tuple=deepcopy(improper);
-if j==improper[i] continue; fi;
+if j==improper[i] continue; end;
 tuple[i]=j;
 proposal=multiextendtable(tuple,generators,table,ext);
-if !nightmaretest(proposal[2]) then continue; fi;
+if !nightmaretest(proposal[2]) continue; end;
 push!(output[i],proposal);
-od;
+end;
 od;
 return output;
 end;
