@@ -428,3 +428,25 @@ end;
 return true;
 end;
 
+function ssgextensions(generators,table)
+output=[];
+n=length(table);
+gg=length(generators);
+mvv=makefunction(table);
+ext=multigeneration(generators,table);
+imprope:=findimproper(generators,table,ext);
+output:=[];
+for i in 1:Length(ext)
+push!(output,[]);
+for j in 1:length(ext[i])
+tuple=deepcopy(improper);
+if j==improper[i] continue; fi;
+tuple[i]=j;
+proposal=multiextendtable(tuple,generators,table,ext);
+if !nightmaretest(proposal[2]) then continue; fi;
+push!(output[i],proposal);
+od;
+od;
+return output;
+end;
+
