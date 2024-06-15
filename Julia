@@ -436,7 +436,7 @@ mvv=makefunction(table);
 ext=multigeneration(generators,table);
 improper=findimproper(generators,table,ext);
 output=[];
-for i in 1:Length(ext)
+for i in 1:length(ext)
 push!(output,[]);
 for j in 1:length(ext[i])
 tuple=deepcopy(improper);
