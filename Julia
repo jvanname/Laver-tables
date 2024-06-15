@@ -422,7 +422,7 @@ critlist=critfind(x);
 mvv=makefunction(x);
 for i in 1:length(x)
 for k in critlist
-if mvv(mvv(i,i),k)==1 && ! mvv(i,k)==1 return false; end;
+if mvv(mvv(i,i),k)==1 && !(mvv(i,k)==1) return false; end;
 end;
 end;
 return true;
