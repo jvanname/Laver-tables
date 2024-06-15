@@ -422,7 +422,7 @@ critlist=critfind(x);
 mvv=makefunction(x);
 for i in 1:length(x)
 for k in critlist
-if mvv(mvv(i,i),k)==1 && ! mvv(i,k)=1 return false; end;
+if mvv(mvv(i,i),k)==1 && ! mvv(i,k)==1 return false; end;
 end;
 end;
 return true;
@@ -434,8 +434,8 @@ n=length(table);
 gg=length(generators);
 mvv=makefunction(table);
 ext=multigeneration(generators,table);
-imprope:=findimproper(generators,table,ext);
-output:=[];
+improper=findimproper(generators,table,ext);
+output=[];
 for i in 1:Length(ext)
 push!(output,[]);
 for j in 1:length(ext[i])
@@ -446,7 +446,7 @@ proposal=multiextendtable(tuple,generators,table,ext);
 if !nightmaretest(proposal[2]) continue; end;
 push!(output[i],proposal);
 end;
-od;
+end;
 return output;
 end;
 
