@@ -450,3 +450,54 @@ end;
 return output;
 end;
 
+function makematrices(generators,table)
+dic=Dict();
+critlist=critfind(table);
+cc=critlist[length(critlist)-1];
+mvv=makefunction(table);
+n=length(table);
+prearray=zeros(Int64,cc);
+prearray[cc]=1;
+mm=1;
+for i in cc+1:n
+can=map(v->prearray[mvv(i,v)],generators);
+if sum(can)==0 
+push!(prearray,0); continue;
+end;
+if haskey(dic,can);
+axe=dic[can];
+else axe=false; end;
+if axe==false 
+dic[can]=mm+1;
+push!(prearray,mm+1);
+else 
+push!(prearray,axe);
+end;
+mm=max(mm,prearray[i]);
+end;
+invarray=zeros(Int64,mm);
+for i in 1:n
+if prearray[i]>0
+invarray[prearray[i]]=i;
+end;
+end;
+A=[];
+for g in generators
+mat=spzeros(mm,mm);
+q=prearray[g];
+if q>0
+mat[1,q]+=1;
+end;
+for i in 2:mm
+q=prearray[mvv(invarray[i],g)]
+if q>0
+mat[i,q]+=1;
+end;
+end;
+push!(A,mat);
+end;
+return A;
+end;
+
+
+
