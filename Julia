@@ -620,14 +620,12 @@ function enlargetable(xxx, sequencemode)
 end
 
 function ultratest(power, limit, zero, one, tablefunction, sequencemode)
-    # Initialize variables
     beef = []
     
-    n = maximum([zero, one])
+    n = max(zero, one)
     
     counter = 0
     
-    # Build critlist
     critlist = []
     for i in 2:n
         if tablefunction(i, i) == 1
@@ -636,8 +634,7 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
     end
     push!(critlist, 1)
     
-    # Build superlist
-    superlist = Vector{Union{Int,Nothing}}(nothing, n)
+    superlist = Vector{Int}(undef, n)
     for i in 1:n
         for j in 1:length(critlist)
             if tablefunction(i, critlist[j]) == 1
@@ -647,7 +644,6 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
         end
     end
     
-    # Initialize orangezero and orangeone
     orangezero = [Int[] for _ in 1:n]
     orangeone = [Int[] for _ in 1:n]
     
@@ -656,24 +652,21 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
         push!(orangeone[tablefunction(i, one)], i)
     end
     
-    # Initialize sequence and related variables
     sequence = Int[]
     startpoint = 1
     
-    extender = [Int[]]
-    extendtable = [Dict{Int,Int}()]
-    extendcrit = [Int[]]
-    extendlength = [Int[]]
+    extender = [[]]
+    extendtable = [[]]
+    extendcrit = [[]]
+    extendlength = [[]]
     
-    # Handle sequencemode if it's a list
-    if isa(sequencemode, Vector)
+    if isa(sequencemode, AbstractArray)
         pathsequence = reverse(sequencemode)
         if pathsequence[1] == 0
             pathextender = [zero]
         else
             pathextender = [one]
         end
-        
         for i in 2:length(pathsequence)
             if pathsequence[i] == 0
                 push!(pathextender, tablefunction(pathextender[i-1], zero))
@@ -684,11 +677,10 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
         pathextender = reverse(pathextender)
     end
     
-    # Define testfunction
     function testfunction()
         counter += 1
         
-        if isa(sequencemode, Vector)
+        if isa(sequencemode, AbstractArray)
             if length(sequence) + 1 > length(pathextender)
                 return false
             end
@@ -713,9 +705,8 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
         if startpoint > 1
             iii = length(extender)
             
-            push!(extendtable, Dict{Int,Int}())
+            push!(extendtable, Dict{Int, Int}())
             aa = critlist[1 + superlist[startpoint]]
-            
             if aa > 1
                 push!(extendlength, aa - 1)
                 push!(extendcrit, aa)
@@ -726,46 +717,34 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
             
             if sequence[iii-1] == 0
                 key1 = superproduct(extendcrit[iii], zero)
-                if key1 !== false && haskey(extendtable[iii], key1)
+                if haskey(extendtable[iii], key1)
                     if extendtable[iii][key1] != n + iii - 1
                         return false
                     end
                 end
-                
                 key2 = superproduct(extendcrit[iii], one)
-                if key2 !== false && haskey(extendtable[iii], key2)
+                if haskey(extendtable[iii], key2)
                     if extendtable[iii][key2] != tablefunction(extender[iii], one)
                         return false
                     end
                 end
-                
-                if key1 !== false
-                    extendtable[iii][key1] = n + iii - 1
-                end
-                if key2 !== false
-                    extendtable[iii][key2] = tablefunction(extender[iii], one)
-                end
+                extendtable[iii][key1] = n + iii - 1
+                extendtable[iii][key2] = tablefunction(extender[iii], one)
             else
                 key1 = superproduct(extendcrit[iii], zero)
-                if key1 !== false && haskey(extendtable[iii], key1)
+                if haskey(extendtable[iii], key1)
                     if extendtable[iii][key1] != tablefunction(extender[iii], zero)
                         return false
                     end
                 end
-                
                 key2 = superproduct(extendcrit[iii], one)
-                if key2 !== false && haskey(extendtable[iii], key2)
+                if haskey(extendtable[iii], key2)
                     if extendtable[iii][key2] != n + iii - 1
                         return false
                     end
                 end
-                
-                if key1 !== false
-                    extendtable[iii][key1] = tablefunction(extender[iii], zero)
-                end
-                if key2 !== false
-                    extendtable[iii][key2] = n + iii - 1
-                end
+                extendtable[iii][key1] = tablefunction(extender[iii], zero)
+                extendtable[iii][key2] = n + iii - 1
             end
             
             for j in reverse(2:extendlength[iii])
@@ -773,30 +752,24 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
                 if a === false
                     return false
                 end
-                
-                key = superproduct(j, zero)
-                if key !== false
-                    if haskey(extendtable[iii], key) && extendtable[iii][key] != a
-                        return false
-                    end
-                    extendtable[iii][key] = a
+                key_a = superproduct(j, zero)
+                if haskey(extendtable[iii], key_a) && extendtable[iii][key_a] != a
+                    return false
                 end
+                extendtable[iii][key_a] = a
                 
                 b = superproduct(superproduct(n + iii, j), superproduct(n + iii, one))
                 if b === false
                     return false
                 end
-                
-                key = superproduct(j, one)
-                if key !== false
-                    if haskey(extendtable[iii], key) && extendtable[iii][key] != b
-                        return false
-                    end
-                    extendtable[iii][key] = b
+                key_b = superproduct(j, one)
+                if haskey(extendtable[iii], key_b) && extendtable[iii][key_b] != b
+                    return false
                 end
+                extendtable[iii][key_b] = b
             end
             
-            if !haskey(extendtable[iii], 1) || extendtable[iii][1] != 1
+            if extendtable[iii][1] != 1
                 return false
             end
         end
@@ -804,7 +777,6 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
         return true
     end
     
-    # Define superproduct
     function superproduct(x, y)
         if x === false || y === false
             return false
@@ -816,25 +788,25 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
             return tablefunction(x, y)
         elseif x == n + 1
             return y
-        elseif haskey(extendtable[x - n], superproduct(extendcrit[x - n], y))
-            return extendtable[x - n][superproduct(extendcrit[x - n], y)]
         else
-            return false
+            key = superproduct(extendcrit[x - n], y)
+            if haskey(extendtable[x - n], key)
+                return extendtable[x - n][key]
+            else
+                return false
+            end
         end
     end
     
-    # Main loop
     output = []
+    
     coin = true
     moo = zeros(Int, n + 1)
     
-    # Define position function
-    function position(item, list)
-        return findfirst(==(item), list)
-    end
-    
     while (length(sequence) > 0 || coin) && length(output) < limit
         push!(beef, deepcopy([sequence, extender, extendtable]))
+        fart = get(Main, :fart, 0) + 1
+        Main.fart = fart
         moo[length(sequence) + 1] += 1
         test = testfunction()
         
@@ -847,7 +819,7 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
             push!(output, vcat(sequence, [1]))
         end
         
-        if length(output) > 0 && isa(sequencemode, Vector)
+        if length(output) > 0 && isa(sequencemode, AbstractArray)
             return [critlist, superlist, extender, extendcrit, extendlength, extendtable]
         end
         
@@ -869,31 +841,32 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
                 end
                 
                 if cat == 0
-                    pos = position(startpoint, orangezero[newpoint])
+                    pos = findfirst(==(startpoint), orangezero[newpoint])
                 else
-                    pos = position(startpoint, orangeone[newpoint])
+                    pos = findfirst(==(startpoint), orangeone[newpoint])
                 end
                 
-                if cat == 0 && !isnothing(pos) && pos < length(orangezero[newpoint])
+                if pos === nothing
+                    pos = 0
+                end
+                
+                if cat == 0 && pos < length(orangezero[newpoint])
                     startpoint = orangezero[newpoint][pos + 1]
                     push!(sequence, cat)
                     break
                 end
-                
-                if cat == 1 && !isnothing(pos) && pos < length(orangeone[newpoint])
+                if cat == 1 && pos < length(orangeone[newpoint])
                     startpoint = orangeone[newpoint][pos + 1]
                     push!(sequence, cat)
                     break
                 end
-                
-                if cat == 0 && !isnothing(pos) && pos == length(orangezero[newpoint]) && length(orangeone[newpoint]) > 0
+                if cat == 0 && pos == length(orangezero[newpoint]) && length(orangeone[newpoint]) > 0
                     startpoint = orangeone[newpoint][1]
                     push!(sequence, 1)
                     break
                 end
-                
-                if (cat == 0 && !isnothing(pos) && pos == length(orangezero[newpoint]) && length(orangeone[newpoint]) == 0) || 
-                   (cat == 1 && !isnothing(pos) && pos == length(orangeone[newpoint]))
+                if (cat == 0 && pos == length(orangezero[newpoint]) && length(orangeone[newpoint]) == 0) || 
+                   (cat == 1 && pos == length(orangeone[newpoint]))
                     startpoint = newpoint
                 end
             end
@@ -902,4 +875,3 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
     
     return output
 end
-
