@@ -619,5 +619,287 @@ function enlargetable(xxx, sequencemode)
     end
 end
 
-
+function ultratest(power, limit, zero, one, tablefunction, sequencemode)
+    # Initialize variables
+    beef = []
+    
+    n = maximum([zero, one])
+    
+    counter = 0
+    
+    # Build critlist
+    critlist = []
+    for i in 2:n
+        if tablefunction(i, i) == 1
+            push!(critlist, i)
+        end
+    end
+    push!(critlist, 1)
+    
+    # Build superlist
+    superlist = Vector{Union{Int,Nothing}}(nothing, n)
+    for i in 1:n
+        for j in 1:length(critlist)
+            if tablefunction(i, critlist[j]) == 1
+                superlist[i] = j
+                break
+            end
+        end
+    end
+    
+    # Initialize orangezero and orangeone
+    orangezero = [Int[] for _ in 1:n]
+    orangeone = [Int[] for _ in 1:n]
+    
+    for i in 2:n
+        push!(orangezero[tablefunction(i, zero)], i)
+        push!(orangeone[tablefunction(i, one)], i)
+    end
+    
+    # Initialize sequence and related variables
+    sequence = Int[]
+    startpoint = 1
+    
+    extender = [Int[]]
+    extendtable = [Dict{Int,Int}()]
+    extendcrit = [Int[]]
+    extendlength = [Int[]]
+    
+    # Handle sequencemode if it's a list
+    if isa(sequencemode, Vector)
+        pathsequence = reverse(sequencemode)
+        if pathsequence[1] == 0
+            pathextender = [zero]
+        else
+            pathextender = [one]
+        end
+        
+        for i in 2:length(pathsequence)
+            if pathsequence[i] == 0
+                push!(pathextender, tablefunction(pathextender[i-1], zero))
+            else
+                push!(pathextender, tablefunction(pathextender[i-1], one))
+            end
+        end
+        pathextender = reverse(pathextender)
+    end
+    
+    # Define testfunction
+    function testfunction()
+        counter += 1
+        
+        if isa(sequencemode, Vector)
+            if length(sequence) + 1 > length(pathextender)
+                return false
+            end
+            if startpoint != pathextender[length(sequence) + 1]
+                return false
+            end
+        end
+        
+        if length(sequence) >= power
+            return false
+        end
+        
+        while length(extender) > length(sequence)
+            pop!(extender)
+            pop!(extendtable)
+            pop!(extendcrit)
+            pop!(extendlength)
+        end
+        
+        push!(extender, startpoint)
+        
+        if startpoint > 1
+            iii = length(extender)
+            
+            push!(extendtable, Dict{Int,Int}())
+            aa = critlist[1 + superlist[startpoint]]
+            
+            if aa > 1
+                push!(extendlength, aa - 1)
+                push!(extendcrit, aa)
+            else
+                push!(extendlength, n)
+                push!(extendcrit, n + 1)
+            end
+            
+            if sequence[iii-1] == 0
+                key1 = superproduct(extendcrit[iii], zero)
+                if key1 !== false && haskey(extendtable[iii], key1)
+                    if extendtable[iii][key1] != n + iii - 1
+                        return false
+                    end
+                end
+                
+                key2 = superproduct(extendcrit[iii], one)
+                if key2 !== false && haskey(extendtable[iii], key2)
+                    if extendtable[iii][key2] != tablefunction(extender[iii], one)
+                        return false
+                    end
+                end
+                
+                if key1 !== false
+                    extendtable[iii][key1] = n + iii - 1
+                end
+                if key2 !== false
+                    extendtable[iii][key2] = tablefunction(extender[iii], one)
+                end
+            else
+                key1 = superproduct(extendcrit[iii], zero)
+                if key1 !== false && haskey(extendtable[iii], key1)
+                    if extendtable[iii][key1] != tablefunction(extender[iii], zero)
+                        return false
+                    end
+                end
+                
+                key2 = superproduct(extendcrit[iii], one)
+                if key2 !== false && haskey(extendtable[iii], key2)
+                    if extendtable[iii][key2] != n + iii - 1
+                        return false
+                    end
+                end
+                
+                if key1 !== false
+                    extendtable[iii][key1] = tablefunction(extender[iii], zero)
+                end
+                if key2 !== false
+                    extendtable[iii][key2] = n + iii - 1
+                end
+            end
+            
+            for j in reverse(2:extendlength[iii])
+                a = superproduct(superproduct(n + iii, j), superproduct(n + iii, zero))
+                if a === false
+                    return false
+                end
+                
+                key = superproduct(j, zero)
+                if key !== false
+                    if haskey(extendtable[iii], key) && extendtable[iii][key] != a
+                        return false
+                    end
+                    extendtable[iii][key] = a
+                end
+                
+                b = superproduct(superproduct(n + iii, j), superproduct(n + iii, one))
+                if b === false
+                    return false
+                end
+                
+                key = superproduct(j, one)
+                if key !== false
+                    if haskey(extendtable[iii], key) && extendtable[iii][key] != b
+                        return false
+                    end
+                    extendtable[iii][key] = b
+                end
+            end
+            
+            if !haskey(extendtable[iii], 1) || extendtable[iii][1] != 1
+                return false
+            end
+        end
+        
+        return true
+    end
+    
+    # Define superproduct
+    function superproduct(x, y)
+        if x === false || y === false
+            return false
+        elseif x == 1
+            return y
+        elseif y > n
+            return superproduct(x, extender[y - n])
+        elseif x <= n
+            return tablefunction(x, y)
+        elseif x == n + 1
+            return y
+        elseif haskey(extendtable[x - n], superproduct(extendcrit[x - n], y))
+            return extendtable[x - n][superproduct(extendcrit[x - n], y)]
+        else
+            return false
+        end
+    end
+    
+    # Main loop
+    output = []
+    coin = true
+    moo = zeros(Int, n + 1)
+    
+    # Define position function
+    function position(item, list)
+        return findfirst(==(item), list)
+    end
+    
+    while (length(sequence) > 0 || coin) && length(output) < limit
+        push!(beef, deepcopy([sequence, extender, extendtable]))
+        moo[length(sequence) + 1] += 1
+        test = testfunction()
+        
+        push!(beef, test)
+        
+        if test && startpoint == zero
+            push!(output, vcat(sequence, [0]))
+        end
+        if test && startpoint == one
+            push!(output, vcat(sequence, [1]))
+        end
+        
+        if length(output) > 0 && isa(sequencemode, Vector)
+            return [critlist, superlist, extender, extendcrit, extendlength, extendtable]
+        end
+        
+        coin = false
+        if length(orangezero[startpoint]) > 0 && test
+            push!(sequence, 0)
+            startpoint = orangezero[startpoint][1]
+        elseif length(orangeone[startpoint]) > 0 && test
+            push!(sequence, 1)
+            startpoint = orangeone[startpoint][1]
+        else
+            while length(sequence) > 0
+                cat = pop!(sequence)
+                
+                if cat == 0
+                    newpoint = tablefunction(startpoint, zero)
+                else
+                    newpoint = tablefunction(startpoint, one)
+                end
+                
+                if cat == 0
+                    pos = position(startpoint, orangezero[newpoint])
+                else
+                    pos = position(startpoint, orangeone[newpoint])
+                end
+                
+                if cat == 0 && !isnothing(pos) && pos < length(orangezero[newpoint])
+                    startpoint = orangezero[newpoint][pos + 1]
+                    push!(sequence, cat)
+                    break
+                end
+                
+                if cat == 1 && !isnothing(pos) && pos < length(orangeone[newpoint])
+                    startpoint = orangeone[newpoint][pos + 1]
+                    push!(sequence, cat)
+                    break
+                end
+                
+                if cat == 0 && !isnothing(pos) && pos == length(orangezero[newpoint]) && length(orangeone[newpoint]) > 0
+                    startpoint = orangeone[newpoint][1]
+                    push!(sequence, 1)
+                    break
+                end
+                
+                if (cat == 0 && !isnothing(pos) && pos == length(orangezero[newpoint]) && length(orangeone[newpoint]) == 0) || 
+                   (cat == 1 && !isnothing(pos) && pos == length(orangeone[newpoint]))
+                    startpoint = newpoint
+                end
+            end
+        end
+    end
+    
+    return output
+end
 
