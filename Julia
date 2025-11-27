@@ -624,8 +624,6 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
     
     n = max(zero, one)
     
-    counter = 0
-    
     critlist = []
     for i in 2:n
         if tablefunction(i, i) == 1
@@ -678,7 +676,6 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
     end
     
     function testfunction()
-        counter += 1
         
         if isa(sequencemode, AbstractArray)
             if length(sequence) + 1 > length(pathextender)
