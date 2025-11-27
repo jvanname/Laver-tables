@@ -839,9 +839,9 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
                 end
                 
                 if cat == 0
-                    pos = findfirst(==(startpoint), orangezero[newpoint])
+                    pos = position(startpoint, orangezero[newpoint])
                 else
-                    pos = findfirst(==(startpoint), orangeone[newpoint])
+                    pos = position(startpoint, orangeone[newpoint])
                 end
                 
                 if pos === nothing
