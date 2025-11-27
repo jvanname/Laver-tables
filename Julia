@@ -805,7 +805,6 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
     
     while (length(sequence) > 0 || coin) && length(output) < limit
         push!(beef, deepcopy([sequence, extender, extendtable]))
-        fart += 1
         moo[length(sequence) + 1] += 1
         test = testfunction()
         
