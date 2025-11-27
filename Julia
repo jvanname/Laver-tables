@@ -653,11 +653,11 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
     sequence = Int[]
     startpoint = 1
     
-    extender = [[]]
-    extendtable = [[]]
-    extendcrit = [[]]
-    extendlength = [[]]
-    
+    extender = Any[[]]
+    extendtable = Any[[]]
+    extendcrit = Any[[]]
+    extendlength = Any[[]]
+
     if isa(sequencemode, AbstractArray)
         pathsequence = reverse(sequencemode)
         if pathsequence[1] == 0
