@@ -511,5 +511,113 @@ end;
 return A;
 end;
 
+###################################
+
+function position(n, list)
+    m = length(list)
+    if m == 0
+        return 0
+    end
+    r = floor(Int, log2(m))
+    p = 0
+    if list[1] <= list[end]
+        for i in reverse(0:r)
+            if p + 2^i <= m
+                if list[p + 2^i] <= n
+                    p += 2^i
+                end
+            end
+        end
+        if p == 0
+            return 0
+        end
+        return list[p] == n ? p : 0
+    else
+        for i in reverse(0:r)
+            if p + 2^i <= m
+                if list[p + 2^i] >= n
+                    p += 2^i
+                end
+            end
+        end
+        if p == 0
+            return 0
+        end
+        return list[p] == n ? p : 0
+    end
+end
+
+function makefunction(compressedtable)
+    n = length(compressedtable)
+    tree = function(x, y)
+        if length(compressedtable[x]) == n
+            return compressedtable[x][y]
+        else
+            return compressedtable[x][compressedtable[end][y]]
+        end
+    end
+    return tree
+end
+
+function megatest(power, limit, zero, one, table)
+    return ultratest(power, limit, zero, one, makefunction(table), false)
+end
+
+function enlargetable(xxx, sequencemode)
+    zero = xxx[1]
+    one = xxx[2]
+    table = xxx[3]
+    n = length(table)
+    m = length(sequencemode)
+
+    if sequencemode[end] == 0
+        xxx[1] = n + m
+    else
+        xxx[2] = n + m
+    end
+
+    tuple = ultratest(Inf, Inf, zero, one, makefunction(table), sequencemode)
+
+    critlist = tuple[1]
+    superlist = tuple[2]
+    extender = tuple[3]
+    extendcrit = tuple[4]
+    extendlength = tuple[5]
+    extendtable = tuple[6]
+
+    # Extend table with new entry
+    push!(table, vcat(1:n, extender))
+
+    # Append to table[1]
+    append!(table[1], (n+1):(n+m))
+
+    for i in 1:(length(critlist)-1)
+        for v in extender
+            push!(table[critlist[i]], table[critlist[i]][v])
+        end
+    end
+
+    for i in 2:m
+        if extendtable[i][critlist[superlist[extender[i]]]] == 1
+            table[n + i] = []
+            for j in 1:(critlist[superlist[extender[i]]] - 1)
+                if length(table) < n + i
+                    push!(table, [])
+                end
+                if length(table[n + i]) < j
+                    push!(table[n + i], extendtable[i][j])
+                else
+                    table[n + i][j] = extendtable[i][j]
+                end
+            end
+        else
+            if length(table) < n + i
+                push!(table, [])
+            end
+            table[n + i] = extendtable[i]
+        end
+    end
+end
+
 
 
