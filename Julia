@@ -596,26 +596,16 @@ function enlargetable(xxx, sequencemode)
             push!(table[critlist[i]], table[critlist[i]][v])
         end
     end
-
+# I NEED TO REWORK THIS.
     for i in 2:m
         if extendtable[i][critlist[superlist[extender[i]]]] == 1
-            table[n + i] = []
+            push!(table,[])
             for j in 1:(critlist[superlist[extender[i]]] - 1)
-                if length(table) < n + i
-                    push!(table, [])
-                end
-                if length(table[n + i]) < j
                     push!(table[n + i], extendtable[i][j])
-                else
-                    table[n + i][j] = extendtable[i][j]
-                end
             end
         else
-            if length(table) < n + i
-                push!(table, [])
-            end
-            table[n + i] = extendtable[i]
-        end
+                push!(table, extendtable[i]);
+end
     end
 end
 
