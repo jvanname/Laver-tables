@@ -707,13 +707,13 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
 #if aa>1 then extendlength[iii]:=aa-1; extendcrit[iii]:=aa;
 #else extendlength[iii]:=n; extendcrit[iii]:=n+1;
 #fi;
-if length(extendcrit)<iii-1
+while length(extendcrit)<iii-1
 push!(extendcrit,false);
 end;
-if length(extendtable)<iii-1
+while length(extendtable)<iii-1
 push!(extendtable,false);
 end;
-if length(extendlength)<iii-1
+while length(extendlength)<iii-1
 push!(extendlength,false);
 end;
             
