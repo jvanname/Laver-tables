@@ -776,7 +776,7 @@ end;
                 return false
             end
         end
-        while extendtable[end][end]==0 pop!(extendtable[end]); end;
+#        while extendtable[end][end]==0 pop!(extendtable[end]); end;
         return true
     end
     
