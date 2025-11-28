@@ -702,6 +702,20 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
         if startpoint > 1
             iii = length(extender)
     # We should not use dictionaries.
+#extendtable[iii]:=[];
+#aa:=critlist[1+superlist[startpoint]];
+#if aa>1 then extendlength[iii]:=aa-1; extendcrit[iii]:=aa;
+#else extendlength[iii]:=n; extendcrit[iii]:=n+1;
+#fi;
+if length(extendcrit)<iii-1
+push!(extendcrit,false);
+end;
+if length(extendtable)<iii-1
+push!(extendtable,false);
+end;
+if length(extendlength)<iii-1
+push!(extendlength,false);
+end;
             
             aa = critlist[1 + superlist[startpoint]]
             if aa > 1
