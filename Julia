@@ -776,7 +776,7 @@ end;
                 return false
             end
         end
-        
+        while extendtable[iii][end]==0 pop!(extendtable[iii]); end;
         return true
     end
     
