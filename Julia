@@ -703,25 +703,26 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
             iii = length(extender)
     # We should not use dictionaries.
             
-            push!(extendtable, Dict{Int, Int}())
             aa = critlist[1 + superlist[startpoint]]
             if aa > 1
                 push!(extendlength, aa - 1)
                 push!(extendcrit, aa)
+                push!(extendtable, zeros(Int,aa))
             else
                 push!(extendlength, n)
                 push!(extendcrit, n + 1)
+                            push!(extendtable, zeros(Int,n))
             end
             
             if sequence[iii-1] == 0
                 key1 = superproduct(extendcrit[iii], zero)
-                if haskey(extendtable[iii], key1)
+                if extendtable[iii][key1]>0
                     if extendtable[iii][key1] != n + iii - 1
                         return false
                     end
                 end
                 key2 = superproduct(extendcrit[iii], one)
-                if haskey(extendtable[iii], key2)
+                if extendtable[iii][key2]>0
                     if extendtable[iii][key2] != tablefunction(extender[iii], one)
                         return false
                     end
@@ -730,13 +731,13 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
                 extendtable[iii][key2] = tablefunction(extender[iii], one)
             else
                 key1 = superproduct(extendcrit[iii], zero)
-                if haskey(extendtable[iii], key1)
+                if extendtable[iii][key1]>0
                     if extendtable[iii][key1] != tablefunction(extender[iii], zero)
                         return false
                     end
                 end
                 key2 = superproduct(extendcrit[iii], one)
-                if haskey(extendtable[iii], key2)
+                if extendtable[iii][key2]>0
                     if extendtable[iii][key2] != n + iii - 1
                         return false
                     end
@@ -751,7 +752,7 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
                     return false
                 end
                 key_a = superproduct(j, zero)
-                if haskey(extendtable[iii], key_a) && extendtable[iii][key_a] != a
+                if extendtable[iii][key_a]>0 && extendtable[iii][key_a] != a
                     return false
                 end
                 extendtable[iii][key_a] = a
@@ -761,7 +762,7 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
                     return false
                 end
                 key_b = superproduct(j, one)
-                if haskey(extendtable[iii], key_b) && extendtable[iii][key_b] != b
+                if extendtable[iii][key_b]>0 && extendtable[iii][key_b] != b
                     return false
                 end
                 extendtable[iii][key_b] = b
@@ -788,7 +789,7 @@ function ultratest(power, limit, zero, one, tablefunction, sequencemode)
             return y
         else
             key = superproduct(extendcrit[x - n], y)
-            if haskey(extendtable[x - n], key)
+            if extendtable[x - n][key]>0
                 return extendtable[x - n][key]
             else
                 return false
