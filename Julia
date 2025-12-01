@@ -711,7 +711,7 @@ end;
             if aa > 1
                 push!(extendlength, aa - 1)
                 push!(extendcrit, aa)
-                push!(extendtable, zeros(Int,aa))
+                push!(extendtable, zeros(Int,aa-1))
             else
                 push!(extendlength, n)
                 push!(extendcrit, n + 1)
