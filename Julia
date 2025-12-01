@@ -553,7 +553,7 @@ function makefunction(compressedtable)
         if length(compressedtable[x]) == n
             return compressedtable[x][y]
         else
-            return compressedtable[x][compressedtable[end][y]]
+            return compressedtable[x][compressedtable[length(compressedtable[x])+1][y]]
         end
     end
     return tree
