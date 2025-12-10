@@ -876,3 +876,74 @@ end;
     
     return output
 end
+
+#############################################################################
+
+function shorten(moo)
+for i in 1:length(moo)
+for j in reverse(1:length(moo[i]))
+org=[]; 
+for k in j:length(moo[i]) push!(org,moo[i][k]); end; 
+for k in 1:i-1
+if moo[k]==org while length(moo[i])>=j pop!(moo[i]); end; push!(moo[i],k); end;
+end;
+end;
+end;
+end;
+
+function makeimage(x)
+table=x[3];
+zero=x[1];
+one=x[2];
+n=length(table); 
+tablefunction=makefunction(table);
+
+if zero==length(table) ultralist=[[0]];
+else ultralist=[[1]]; end;
+
+for i in reverse(3:n) if tablefunction(i,i)==1 push!(ultralist,[]); end; if (tablefunction(i,zero)==i-1) && !(tablefunction(i,one)==i-1) push!(ultralist[length(ultralist)],0); elseif !(tablefunction(i,zero)==i-1) && tablefunction(i,one)==i-1 
+push!(ultralist[length(ultralist)],1); end; end;
+
+return ultralist;
+end;
+
+
+function makefactortree(zer,onn,table)
+tf=makefunction(table);
+revimage=reverse(makeimage([zer,onn,table]));
+critlist=critfind(table);
+sz=length(table);
+critloc=zeros(Int,sz);
+for i in 1:length(critlist)
+critloc[critlist[i]]=i;
+end;
+output=[];
+nn=length(revimage);
+for i in 1:nn
+ppp=1;
+coin=[];
+for j in 1:length(revimage[i])
+if revimage[i][j]==0 ppp=tf(ppp,zer); else ppp=tf(ppp,onn); end;
+pointer=ppp;
+while !(tf(pointer,pointer)==1) pointer=tf(tf(pointer,pointer),pointer); end;
+pointer=critloc[pointer];
+push!(coin,pointer);
+end;
+pop!(coin);
+revcoin=reverse(coin);
+max=0;
+revmax=[];
+for ii in 1:length(revcoin)
+if revcoin[ii]>max max=revcoin[ii]; push!(revmax,revcoin[ii]); end;
+end;
+push!(output,vcat(reverse(revmax),[revimage[i][length(revimage[i])]]));
+end;
+rr=output[1][1];
+for a in output
+if rr==0 a[length(a)]=a[length(a)]+1;
+else a[length(a)]=2-a[length(a)]; end;
+end;
+shorten(output);
+return output;
+end;
+
