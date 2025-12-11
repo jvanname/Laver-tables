@@ -908,7 +908,7 @@ return ultralist;
 end;
 
 
-function makefactortree(zer,onn,table)
+function makeprefactortree(zer,onn,table)
 tf=makefunction(table);
 revimage=reverse(makeimage([zer,onn,table]));
 critlist=critfind(table);
@@ -943,6 +943,10 @@ for a in output
 if rr==0 a[length(a)]=a[length(a)]+1;
 else a[length(a)]=2-a[length(a)]; end;
 end;
+return output; end;
+
+function makefactortree(zer,onn,table)
+output=makeprefactortree(zer,onn,table);
 shorten(output);
 return output;
 end;
