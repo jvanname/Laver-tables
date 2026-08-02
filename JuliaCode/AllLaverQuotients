@@ -1,1 +1,532 @@
 
+function makefunction(compressedtable)
+    n = length(compressedtable)
+    function tree(x, y)
+        if length(compressedtable[x]) == n
+            return compressedtable[x][y]
+        else
+            return compressedtable[x][compressedtable[length(compressedtable[x]) + 1][y]]
+        end
+    end
+    return tree
+end
+
+function critfind(table)
+    n = length(table)
+    critlist = []
+    tree = makefunction(table)
+    for i in 2:n
+        if tree(i, i) == 1
+            push!(critlist, i)
+        end
+    end
+    push!(critlist, 1)
+    return critlist
+end
+
+#joinpartition finds the least upper bound of two partitions aa,bb and tests whether the least upper bound is a subset of restriction.
+
+function joinpartition(aa,bb,restriction)
+dick=Dict([]);
+for i in 1:length(aa)
+for b in aa[i]
+dick[b]=i;
+end;
+end;
+while length(bb)>0
+current=pop!(bb);
+x=current[1];
+if haskey(dick,x)==false
+push!(aa,[x]);
+dick[x]=length(aa);
+end;
+for i in 2:length(current)
+y=current[i];
+if haskey(dick,y)==false
+dick[y]=dick[x]
+if false in map(v->restriction(v,y),aa[dick[x]])
+return false;
+end;
+push!(aa[dick[x]],y);
+continue;
+end;
+if dick[y]==dick[x] continue; end;
+list=aa[dick[y]];
+####### HERE WE NEED TO COMPARE TO DETERMINE WHETHER IT PASSES THE RESTRICTION.
+for zh in list
+if false in map(v->restriction(v,zh),aa[dick[x]])
+return false;
+end;
+end;
+append!(aa[dick[x]],list);
+dx=dick[x];
+dy=dick[y]
+for h in list
+dick[h]=dx;
+end;
+if dy<length(aa)
+list=pop!(aa);
+aa[dy]=list;
+for h in list
+dick[h]=dy;
+end;
+else
+pop!(aa);
+end;
+end;
+end;
+return true;
+end;
+
+
+#dick maps the elements in the partition to their blocks while partition is the set of blocks.
+
+function halfcongruencegen(mv,a,b,generators,restriction)
+aa=[[a,b]];
+bb=[[a,b]];
+dick=Dict([]);
+dick[a]=1;
+dick[b]=1;
+while length(bb)>0
+current=pop!(bb);
+for g in generators
+newblock=unique(map(v->mv(v,g),current));
+if length(newblock)==1 continue; end;
+if false in map(v->haskey(dick,v),newblock)
+push!(bb,newblock);
+continue;
+end;
+if length(unique(map(v->dick[v],newblock)))>1
+push!(bb,newblock);
+end;
+end;
+x=current[1];
+if haskey(dick,x)==false
+push!(aa,[x]);
+dick[x]=length(aa);
+end;
+for i in 2:length(current)
+y=current[i];
+if haskey(dick,y)==false
+dick[y]=dick[x]
+if false in map(v->restriction(v,y),aa[dick[x]])
+return false;
+end;
+push!(aa[dick[x]],y);
+continue;
+end;
+if dick[y]==dick[x] continue; end;
+list=aa[dick[y]];
+####### HERE WE NEED TO COMPARE TO DETERMINE WHETHER IT PASSES THE RESTRICTION.
+for zh in list
+if false in map(v->restriction(v,zh),aa[dick[x]])
+return false;
+end;
+end;
+append!(aa[dick[x]],list);
+dx=dick[x];
+dy=dick[y]
+for h in list
+dick[h]=dx;
+end;
+if dy<length(aa)
+list=pop!(aa);
+aa[dy]=list;
+for h in list
+dick[h]=dy;
+end;
+else
+pop!(aa);
+end;
+end;
+end;
+return aa;
+end;
+
+function supersort(aa)
+for bb in aa sort!(bb); end; sort!(aa);
+end;
+
+
+# Here, we will not bother to first remove non-atoms in the lattice. In other words, we will
+# NOTICE, THE CONGIDEALGENERATOR MIGHT BE REDUNDANT!
+function congidealgenerator(mv,blocks,generators,restriction)
+allcongruences=set([]);
+boundarycongruences=[];
+generatingcongruences=[];
+for part in blocks
+lp=length(part);
+for i in 1:lp
+for j in i+1:lp
+aa=halfcongruencegen(mv,part[i],part[j],generators,restriction);
+if aa==false continue; end;
+supersort(aa);
+if aa in allcongruences continue; end;
+push!(boundarycongruences,aa);
+push!(generatingcongruences,aa);
+push!(allcongruences,aa);
+end;
+end;
+end;
+
+while length(boundarycongruences)>0
+aa=pop!(boundarycongruences);
+for bb in generatingcongruences
+bbb=deepcopy(bb);
+aaa=deepcopy(aa);
+joinpartition(aaa,bbb,restriction)
+if aaa in allcongruences continue; end;
+push!(boundarycongruences,aaa);
+push!(allcongruences,aaa);
+end;
+end;
+return allcongruences;
+end;
+
+
+congruentmultigeneration(generators, table) = begin
+    local mlist,aa,pointarray,testlistcrit,testlist,zeroafter,testlistlength,sumlist,imagearray,ii,tablearray;
+    n = length(table)
+    mv = makefunction(table)
+    critlist = critfind(table)
+    gg = length(generators)
+    # I need to produce mlist and aa before I can use these quantities.
+    superlist = []
+    for imt in 1:n
+        for j in 1:length(critlist)
+            if mv(imt, critlist[j]) == 1
+                push!(superlist,j);
+                break
+            end
+        end
+    end
+    # I need to remember that superlength and supercrit are defined this way.
+    superlength = [0]
+    supercrit = [0]
+    testlistarray=[[]];
+
+    for imt in 2:n
+        aa = critlist[1 + superlist[imt]]
+        if aa > 1
+            push!(superlength,aa - 1);
+            push!(supercrit,aa);
+        else
+            push!(superlength, n);
+            push!(supercrit, n + 1);
+        end
+       push!(testlistarray,zeros(Int64,superlength[imt]));
+end
+    
+    superfunction(x, y) = begin
+        if x == 1000000000000 || y == 1000000000000
+            return 1000000000000
+        end
+        if x == 1
+            return y
+        end
+        
+        if y > n
+            for ik in 1:gg
+                if y <= sumlist[ik + 1]
+                    return superfunction(x, imagearray[ik][y - sumlist[ik] + 1])
+                end
+            end
+            if y == sumlist[length(sumlist)] + 1
+                return superfunction(x, ii)
+            end
+            println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE__off.by.one.error")
+        end
+        
+        if x <= n
+            return mv(x, y)
+        end
+        if x == n + 1
+            return y
+        end
+        for ik in 1:gg
+            if x <= sumlist[ik + 1]
+                qq = length(tablearray[ik][x - sumlist[ik] + 1]) + 1
+                ham = tablearray[ik][x - sumlist[ik] + 1][superfunction(qq, y)]
+                if ham <= n + 1
+                    return ham
+                else
+                    return ham + sumlist[ik] - n - 1
+                end
+            end
+        end
+        if x == sumlist[length(sumlist)] + 1
+            if testlist[superfunction(testlistcrit, y)]>0
+                return testlist[superfunction(testlistcrit, y)]
+            else
+                return 1000000000000
+            end
+        end
+        println("WARNING:ERROR. PLEASE FIX CODE.")
+    end
+    
+#    sanitycheck() = begin
+#        nnq = sumlist[length(sumlist)]
+#        for a in 1:nnq
+#            for b in 1:nnq
+#                for c in 1:nnq
+#                    if !(superfunction(a, superfunction(b, c)) == superfunction(superfunction(a, b), superfunction(a, c)))
+#                        while true
+#                            display("Warning: self-distributive failure. Error in code.")
+#                        end
+#                    end
+#                end
+#            end
+#        end
+#    end
+    
+   function testfunction()
+        for li in 1:gg
+            if mlist[li] > 1
+                if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == sumlist[li + 1])
+                    return false
+                end
+                push!(zeroafter,superfunction(testlistcrit, generators[li]));
+                testlist[superfunction(testlistcrit, generators[li])] = sumlist[li + 1];
+            elseif mlist[li] == 1
+                if aa[li] == 1
+                    if pointarray[li] == 0
+                        if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == n + 1)
+                            return false
+                        end
+                        push!(zeroafter,superfunction(testlistcrit, generators[li]));
+                        testlist[superfunction(testlistcrit, generators[li])] = n + 1
+                    elseif pointarray[li] == 1
+                        if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == 1)
+                            return false
+                        end
+                        push!(zeroafter,superfunction(testlistcrit, generators[li]));
+                        testlist[superfunction(testlistcrit, generators[li])] = 1
+                    end
+                elseif aa[li] > 1
+                    if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == mv(ii, generators[li]))
+                        return false
+                    end
+                    push!(zeroafter,superfunction(testlistcrit, generators[li]));
+                    testlist[superfunction(testlistcrit, generators[li])] = mv(ii, generators[li])
+                end
+            end
+        end
+        
+        for kk in reverse(2:testlistlength)
+            for li in 1:gg
+                aar = superfunction(superfunction(sumlist[length(sumlist)] + 1, kk), superfunction(sumlist[length(sumlist)] + 1, generators[li]))
+                if aar == false
+                    return false
+                end
+                if testlist[superfunction(kk, generators[li])]>0 && !(testlist[superfunction(kk, generators[li])] == aar)
+                    return false
+                end
+                push!(zeroafter,superfunction(kk, generators[li]));
+                testlist[superfunction(kk, generators[li])] = aar
+            end
+        end
+        
+        if !(testlist[1] == 1)
+            return false
+        end
+        
+        if superfunction(sumlist[length(sumlist)] + 1, ii) == 1
+            return false
+        end
+        
+        return true
+    end
+    # I need to edit the following line. I cannot push anything onto Any[1:n]. I need something pushable. 
+    mastertable =[ [ [ [ 1 ], Any[collect(1 : n)], 0 ], [ [ 1 ], Any[collect(1 : n)], 1 ] ] ]
+        
+    for iii in 2:n
+# This is the wrong way to solve the problem, but I am too tired trying to figure out the correct way to do this so that ii can be accessed within testfunction()
+        ii=iii;
+        push!(mastertable,[]);
+        if mv(ii, ii) == 1
+            push!(mastertable[ii],[[1], Any[collect(1:n)], 1]);
+        end
+        
+        aa = []
+        for jj in 1:gg
+            push!(aa,mv(ii, generators[jj]));
+        end
+        # SHOULD BE. I THINK THERE IS AN ERROR HERE. cart:=Cartesian(List(aa,v->[1..Length(mastertable[v])]));
+        cart =  collect(Iterators.product([1:length(mastertable[aa[v]]) for v in 1:gg]...))
+        for tup in cart
+            cardarray = [mastertable[aa[v]][tup[v]] for v in 1:gg]
+            imagearray = [v[1] for v in cardarray]
+            tablearray = [v[2] for v in cardarray]
+            pointarray = [v[3] for v in cardarray]
+            mlist = [length(imagearray[v]) for v in 1:gg]
+            
+            sumlist = [n + 1]
+            
+            for iz in 1:gg
+                push!(sumlist,sumlist[iz] + mlist[iz] - 1);
+            end
+            zeroafter=[];
+            testlist = testlistarray[ii]
+            testlistlength = superlength[ii]
+            testlistcrit = supercrit[ii]
+            test = testfunction()
+            if test
+                imagespace = copy(imagearray[1])
+                for kz in 2:gg
+                    for is in 2:length(imagearray[kz])
+                        push!(imagespace, imagearray[kz][is])
+                    end
+                end
+                
+                tablespace = copy(tablearray[1])
+                
+                for kz in 2:gg
+                    for is in 2:length(tablearray[kz])
+                        quart = copy(tablearray[kz][is])
+                        for js in 1:length(quart)
+                            if quart[js] > n + 1
+                                quart[js] = quart[js] + sumlist[kz] - n - 1
+                            end
+                        end
+                        push!(tablespace, quart)
+                    end
+                end
+                
+                if superfunction(sumlist[length(sumlist)] + 1, critlist[superlist[ii]]) == 1
+                    while length(testlist) >= critlist[superlist[ii]]
+                        pop!(testlist)
+                    end
+                end
+                
+                push!(imagespace, ii)
+                push!(tablespace, deepcopy(testlist))
+                push!(mastertable[ii], [imagespace, tablespace, 0])
+                testlistarray[ii]=zeros(Int64,superlength[ii]);
+                # we need to restore testlist reservoir.
+            else
+            for aa in zeroafter testlist[aa]=0; end;
+if sum(testlist)>0 while true display("E"); end; end;
+            # we need to zero out the mess we have made.
+            end
+        end
+    end
+    
+    return [mastertable[v] for v in generators]
+end
+
+function congruentmultiextendtable(type, generators, table, extension)
+    n = length(table)
+    mix = []
+    newtable = deepcopy(table)
+    finalcritlist = critfind(table)
+    gg = length(generators)
+    push!(finalcritlist, n+1)
+    mv = makefunction(table)
+    newgenerators = []
+
+    cardarray = [extension[v][type[v]] for v in 1:gg]
+    imagearray = [cardarray[v][1] for v in 1:gg]
+    tablearray = [cardarray[v][2] for v in 1:gg]
+    pointarray = [cardarray[v][3] for v in 1:gg]
+    mlist = [length(imagearray[v]) for v in 1:gg]
+    sumlist = [n+1]
+    for iz in 1:gg
+        push!(sumlist,sumlist[iz] + mlist[iz] - 1);
+    end
+
+    imagespace = deepcopy(imagearray[1])
+    for kz in 2:gg
+        for is in 2:length(imagearray[kz])
+            push!(imagespace, imagearray[kz][is])
+        end
+    end
+
+    tablespace = deepcopy(tablearray[1])
+    for kz in 2:gg
+        for is in 2:length(tablearray[kz])
+            quart = deepcopy(tablearray[kz][is])
+            for js in 1:length(quart)
+                if quart[js] > n+1
+                    quart[js] = quart[js] + sumlist[kz] - n - 1
+                end
+            end
+            push!(tablespace, quart)
+        end
+    end
+    append!(newtable, tablespace)
+# THERE IS AN ERROR HERE. I CANNOT PUSH.
+    for a in finalcritlist
+        if a > 1
+            for b in imagespace
+                push!(newtable[a], newtable[a][b])
+            end
+        end
+    end
+    append!(newtable[1], n+1:n+length(imagespace))
+
+    for i in 1:gg
+        if mlist[i] > 1
+            push!(newgenerators,sumlist[i+1]);
+        else
+            if generators[i] > 1
+                push!(newgenerators,generators[i]);
+            else
+                if pointarray[i] == 0
+                    push!(newgenerators,n+1);
+                elseif pointarray[i] == 1
+                    push!(newgenerators,1);
+                end
+            end
+        end
+    end
+
+    return [newgenerators, newtable]
+end
+
+function congruentfindimproper(generators, table, ext)
+    n = length(table)
+    improper = []
+
+    for i in 1:length(ext)
+        for j in 1:length(ext[i])
+            imagecheck = ext[i][j][1]
+            tablecheck = ext[i][j][2]
+            pointcheck = ext[i][j][3]
+            cont = false
+
+            for iz in 2:length(tablecheck)
+                if n+1 in tablecheck[iz]
+                    cont = true
+                end
+            end
+
+            if generators[i] == 1 && pointcheck == 0
+                cont = true
+            end
+
+            if cont continue; end;
+
+                push!(improper, j)
+                break
+            end
+        end
+    return Tuple(improper);
+end
+
+function congruentallmultiextensions(generators, table)
+    ext = congruentmultigeneration(generators, table)
+    cart = collect(Iterators.product([1:length(v) for v in ext]...))
+    improper = congruentfindimproper(generators, table, ext)
+    output = []
+
+    for tup in cart
+        if tup == improper
+            continue
+        end
+        push!(output, congruentmultiextendtable(tup, generators, table, ext))
+    end
+
+    return output
+end
+
+
