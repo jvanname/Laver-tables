@@ -85,6 +85,38 @@ return aa;
 # Should I do supersort?
 end;
 
+function buildquotienttable(table,imagespace,tablespace,blocks)
+n=length(table);
+m=length(imagespace);
+unionblocks=[];
+for a in blocks append!(unionblocks,a);
+end;
+unionblockslist=zeros(Int64,m+n);
+for x in unionblocks
+unionblockslist[x]=1;
+end;
+invlegend=map(v->[v],1:n+1);
+for i in n+2:n+m
+if unionblockslist[i]==0 
+push!(invlegend,[i]);
+point+=1;
+end;
+end;
+for a in blocks
+push!(invlegend,a);
+end;
+legend=zeros(Int64,m+n);
+for i in 1:length(invlegend)
+for a in invlegend[i]
+legend[a]=i;
+end;
+end;
+firstinvlegend=map(v->v[1],invlegend);
+newimagespace=map(v->imagespace[v],firstinvlegend);
+newtablespace=map(v->map(w->legend[v],tablespace[v]),firstinvlegend);
+return [newimagespace,newtablespace,1];
+end;
+
 
 #dick maps the elements in the partition to their blocks while partition is the set of blocks.
 #Um. For the half congruence generator, we need to check whether 
@@ -456,6 +488,8 @@ end
                 
                 push!(imagespace, ii)
                 push!(tablespace, deepcopy(testlist))
+### Here is where we need to compute the congruence lattice and then add all quotient algebras
+
                 push!(mastertable[ii], [imagespace, tablespace, 0])
                 testlistarray[ii]=zeros(Int64,superlength[ii]);
                 # we need to restore testlist reservoir.
