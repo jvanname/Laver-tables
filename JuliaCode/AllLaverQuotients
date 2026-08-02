@@ -216,9 +216,6 @@ congruentmultigeneration(generators, table) = begin
         end
        push!(testlistarray,zeros(Int64,superlength[imt]));
 end
-
-
-
     superfunction(x, y) = begin
         if x == 1000000000000 || y == 1000000000000
             return 1000000000000
