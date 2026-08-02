@@ -330,17 +330,12 @@ return congruences;
 end;
 
 
-
-function newtestfunction()
+function testfunction()
 congo=[];
-
-end;
-
-   function testfunction()
         for li in 1:gg
             if mlist[li] > 1
                 if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == sumlist[li + 1])
-                    return false
+                    push!(congo,[testlist[superfunction(testlistcrit, generators[li])],sumlist[li + 1]]);
                 end
                 push!(zeroafter,superfunction(testlistcrit, generators[li]));
                 testlist[superfunction(testlistcrit, generators[li])] = sumlist[li + 1];
@@ -348,7 +343,7 @@ end;
                 if aa[li] == 1
                     if pointarray[li] == 0
                         if testlist[superfunction(testlistcrit, generators[li])]>0 && !(testlist[superfunction(testlistcrit, generators[li])] == n + 1)
-                            return false
+                            return false 
                         end
                         push!(zeroafter,superfunction(testlistcrit, generators[li]));
                         testlist[superfunction(testlistcrit, generators[li])] = n + 1
@@ -376,7 +371,7 @@ end;
                     return false
                 end
                 if testlist[superfunction(kk, generators[li])]>0 && !(testlist[superfunction(kk, generators[li])] == aar)
-                    return false
+                    push!(congo,[testlist[superfunction(kk, generators[li])],aar]);
                 end
                 push!(zeroafter,superfunction(kk, generators[li]));
                 testlist[superfunction(kk, generators[li])] = aar
@@ -390,10 +385,11 @@ end;
         if superfunction(sumlist[length(sumlist)] + 1, ii) == 1
             return false
         end
-        
-        return true
+### I will change the code eventually. This is just a temporary change.
+return length(congo)==0;        
     end
-    # I need to edit the following line. I cannot push anything onto Any[1:n]. I need something pushable. 
+
+# I need to edit the following line. I cannot push anything onto Any[1:n]. I need something pushable. 
     mastertable =[ [ [ [ 1 ], Any[collect(1 : n)], 0 ], [ [ 1 ], Any[collect(1 : n)], 1 ] ] ]
         
     for iii in 2:n
