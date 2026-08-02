@@ -99,7 +99,6 @@ invlegend=map(v->[v],1:n+1);
 for i in n+2:n+m
 if unionblockslist[i]==0 
 push!(invlegend,[i]);
-point+=1;
 end;
 end;
 for a in blocks
