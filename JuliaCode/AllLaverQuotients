@@ -185,13 +185,13 @@ end;
 
 
 congruentmultigeneration(generators, table) = begin
-    local mlist,aa,pointarray,testlistcrit,testlist,zeroafter,testlistlength,sumlist,imagearray,ii,tablearray;
-    n = length(table)
-    mv = makefunction(table)
-    critlist = critfind(table)
-    gg = length(generators)
+local mlist,aa,pointarray,testlistcrit,testlist,zeroafter,testlistlength,sumlist,imagearray,ii,tablearray;
+n = length(table)
+mv = makefunction(table)
+critlist = critfind(table)
+gg = length(generators)
     # I need to produce mlist and aa before I can use these quantities.
-    superlist = []
+superlist = []
     for imt in 1:n
         for j in 1:length(critlist)
             if mv(imt, critlist[j]) == 1
@@ -199,13 +199,13 @@ congruentmultigeneration(generators, table) = begin
                 break
             end
         end
-    end
+end
     # I need to remember that superlength and supercrit are defined this way.
-    superlength = [0]
-    supercrit = [0]
-    testlistarray=[[]];
+superlength = [0]
+supercrit = [0]
+testlistarray=[[]];
 
-    for imt in 2:n
+for imt in 2:n
         aa = critlist[1 + superlist[imt]]
         if aa > 1
             push!(superlength,aa - 1);
@@ -216,7 +216,7 @@ congruentmultigeneration(generators, table) = begin
         end
        push!(testlistarray,zeros(Int64,superlength[imt]));
 end
-    superfunction(x, y) = begin
+superfunction(x, y) = begin
         if x == 1000000000000 || y == 1000000000000
             return 1000000000000
         end
@@ -261,7 +261,7 @@ end
             end
         end
         println("WARNING:ERROR. PLEASE FIX CODE.")
-    end
+end
     
 #    sanitycheck() = begin
 #        nnq = sumlist[length(sumlist)]
