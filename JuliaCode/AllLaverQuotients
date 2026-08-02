@@ -381,7 +381,7 @@ congo=[];
             return false
         end
 ### I will change the code eventually. This is just a temporary change.
-return length(congo)==0;        
+return congo;        
 end
 
 # I need to edit the following line. I cannot push anything onto Any[1:n]. I need something pushable. 
@@ -417,8 +417,8 @@ end
             testlist = testlistarray[ii]
             testlistlength = superlength[ii]
             testlistcrit = supercrit[ii]
-            test = testfunction()
-            if test
+            test = testfunction();
+            if length(test)==0
                 imagespace = copy(imagearray[1])
                 for kz in 2:gg
                     for is in 2:length(imagearray[kz])
