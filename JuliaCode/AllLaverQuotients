@@ -489,7 +489,7 @@ end
 ### Here is where we need to compute the congruence lattice and then add all quotient algebras
 
 blocks=[];
-imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
+###imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
 
                 push!(mastertable[ii], [imagespace, tablespace, 0])
                 testlistarray[ii]=zeros(Int64,superlength[ii]);
