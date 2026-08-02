@@ -78,6 +78,13 @@ end;
 return true;
 end;
 
+function buildpartition(bb,restriction)
+aa=[];
+joinpartition(aa,bb,restriction);
+return aa;
+# Should I do supersort?
+end;
+
 
 #dick maps the elements in the partition to their blocks while partition is the set of blocks.
 #Um. For the half congruence generator, we need to check whether 
