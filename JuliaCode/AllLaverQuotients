@@ -114,9 +114,8 @@ end;
 firstinvlegend=map(v->v[1],invlegend);
 newimagespace=map(v->imagespace[v],firstinvlegend);
 newtablespace=map(v->map(w->legend[v],tablespace[v]),firstinvlegend);
-return [newimagespace,newtablespace,1];
+return [newimagespace,newtablespace,0];
 end;
-
 
 #dick maps the elements in the partition to their blocks while partition is the set of blocks.
 #Um. For the half congruence generator, we need to check whether 
