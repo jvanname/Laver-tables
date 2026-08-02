@@ -80,7 +80,7 @@ end;
 
 
 #dick maps the elements in the partition to their blocks while partition is the set of blocks.
-
+#Um. For the half congruence generator, we need to check whether 
 function halfcongruencegen(mv,a,b,generators,restriction)
 aa=[[a,b]];
 bb=[[a,b]];
@@ -286,11 +286,12 @@ end;
 end;
 
 function restriction(x,y)
+if x==y return true; end;
 nx=blocknumber(x);
-if nx==0 return true; end;
+if nx==0 return false; end;
 ny=blocknumber(y);
-if !(nx==ny) return true; end;
-return x==y;
+if ny==0 return false; end;
+return !(nx==ny); 
 end;
 
 function makecongruences()
