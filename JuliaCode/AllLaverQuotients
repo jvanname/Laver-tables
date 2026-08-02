@@ -111,9 +111,11 @@ legend[a]=i;
 end;
 end;
 firstinvlegend=map(v->v[1],invlegend);
+#Um. I need to start at n+1 instead of at 1.
 newimagespace=map(v->imagespace[v],firstinvlegend);
 newtablespace=map(v->map(w->legend[v],tablespace[v]),firstinvlegend);
-return [newimagespace,newtablespace,0];
+return [];
+#return [newimagespace,newtablespace,0];
 end;
 
 #dick maps the elements in the partition to their blocks while partition is the set of blocks.
