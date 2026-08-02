@@ -328,8 +328,6 @@ end;
 end;
 return congruences;
 end;
-
-
 function testfunction()
 congo=[];
         for li in 1:gg
@@ -362,8 +360,7 @@ congo=[];
                     testlist[superfunction(testlistcrit, generators[li])] = mv(ii, generators[li])
                 end
             end
-        end
-        
+        end        
         for kk in reverse(2:testlistlength)
             for li in 1:gg
                 aar = superfunction(superfunction(sumlist[length(sumlist)] + 1, kk), superfunction(sumlist[length(sumlist)] + 1, generators[li]))
@@ -376,18 +373,16 @@ congo=[];
                 push!(zeroafter,superfunction(kk, generators[li]));
                 testlist[superfunction(kk, generators[li])] = aar
             end
-        end
-        
+        end        
         if !(testlist[1] == 1)
             return false
-        end
-        
+        end        
         if superfunction(sumlist[length(sumlist)] + 1, ii) == 1
             return false
         end
 ### I will change the code eventually. This is just a temporary change.
 return length(congo)==0;        
-    end
+end
 
 # I need to edit the following line. I cannot push anything onto Any[1:n]. I need something pushable. 
     mastertable =[ [ [ [ 1 ], Any[collect(1 : n)], 0 ], [ [ 1 ], Any[collect(1 : n)], 1 ] ] ]
