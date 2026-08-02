@@ -216,7 +216,9 @@ congruentmultigeneration(generators, table) = begin
         end
        push!(testlistarray,zeros(Int64,superlength[imt]));
 end
-    
+
+
+
     superfunction(x, y) = begin
         if x == 1000000000000 || y == 1000000000000
             return 1000000000000
@@ -278,7 +280,58 @@ end
 #            end
 #        end
 #    end
-    
+
+function blocknumber(x)
+for ik in 1:gg+1
+if x<=sumlist[ik] return ik-1; 
+end;
+end;
+end;
+
+function restriction(x,y)
+nx=blocknumber(x);
+if nx==0 return true; end;
+ny=blocknumber(y);
+if !(nx==ny) return true; end;
+return x==y;
+end;
+
+function makecongruences()
+# I need to make sure that the variables are global. I don't know. 
+atoms=[];
+tar=map(v->superfunction(n+1,v),1:sumlist[length(sumlist)]);
+invtar=map(v->[],1:n);
+for i in n+2:sumlist[length(sumlist)]
+push!(invtar[tar[i]],i);
+end;
+for i in 2:n
+for a in invtar[i]
+for b in invtar[i]
+partition=halfcongruencegen(superfunction,a,b,generators,restriction)
+if partition==false continue; end;
+push!(atoms,partition);
+end;
+end;
+end;
+# I AM NOT DONE WITH THIS YET.
+congruences=[[]];
+congruenceset=Set([[]])
+boundary=[[]];
+while length(boundary)>0
+current=pop!(boundary);
+for aa in atoms
+part=joinpartition(current,aa,restriction);
+if part==false continue; end;
+part=sort(map(sort,part));
+if !(part in coungruentset)
+push!(congruences,part);
+push!(boundary,part);
+end;
+end;
+end;
+return congruences;
+end;
+
    function testfunction()
         for li in 1:gg
             if mlist[li] > 1
