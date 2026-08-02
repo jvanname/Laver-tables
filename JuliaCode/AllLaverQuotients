@@ -329,6 +329,13 @@ end;
 return congruences;
 end;
 
+
+
+function newtestfunction()
+congo=[];
+
+end;
+
    function testfunction()
         for li in 1:gg
             if mlist[li] > 1
