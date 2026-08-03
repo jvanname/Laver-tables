@@ -80,7 +80,8 @@ end;
 
 function buildpartition(bb,restriction)
 aa=[];
-joinpartition(aa,bb,restriction);
+aar=joinpartition(aa,deepcopy(bb),restriction);
+if !aar return false; end;
 return aa;
 # Should I do supersort?
 end;
@@ -492,6 +493,8 @@ end
                 push!(imagespace, ii)
                 push!(tablespace, deepcopy(testlist))
 ### Here is where we need to compute the congruence lattice and then add all quotient algebras
+
+
 
 allcongruences=[[]];
 for blocks in allcongruences
