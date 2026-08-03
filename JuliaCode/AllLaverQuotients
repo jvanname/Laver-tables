@@ -115,10 +115,16 @@ end;
 end;
 firstinvlegend=map(v->v[1],invlegend);
 #Um. I need to start at n+1 instead of at 1.
+
+
 newimagespace=map(v->imagespace[v],firstinvlegend);
-newtablespace=map(v->map(w->legend[v],tablespace[v]),firstinvlegend);
-return [];
-#return [newimagespace,newtablespace,0];
+newtablespace=map(v->tablespace[v],firstinvlegend);
+for a in newtablespace
+for i in 1:length(a)
+if a[i]>n a[i]=legend[a[i]-n]+n; display("E"); end;
+end;
+end;
+return [newimagespace,newtablespace,0];
 end;
 
 #dick maps the elements in the partition to their blocks while partition is the set of blocks.
