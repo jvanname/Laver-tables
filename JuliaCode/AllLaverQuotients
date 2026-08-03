@@ -86,25 +86,28 @@ return aa;
 end;
 
 function buildquotienttable(table,imagespace,tablespace,blocks)
+return true;
 n=length(table);
 m=length(imagespace);
 unionblocks=[];
 for a in blocks append!(unionblocks,a);
 end;
-unionblockslist=zeros(Int64,m+n);
+#The least element in unionblocks must be at least n+2 because the first n elements are fixed.
+#In here, I will have to subtract n and add n everywhere. Hopefully, it won't cause any problems. At least I can easily test it.
+unionblockslist=zeros(Int64,m);
 for x in unionblocks
-unionblockslist[x]=1;
+unionblockslist[x-n]=1;
 end;
-invlegend=map(v->[v],1:n+1);
-for i in n+2:n+m
+invlegend=[[1]];
+for i in 2:m
 if unionblockslist[i]==0 
 push!(invlegend,[i]);
 end;
 end;
 for a in blocks
-push!(invlegend,a);
+push!(invlegend,a-fill(n,length(a)));
 end;
-legend=zeros(Int64,m+n);
+legend=zeros(Int64,m);
 for i in 1:length(invlegend)
 for a in invlegend[i]
 legend[a]=i;
