@@ -493,10 +493,11 @@ end
                 push!(tablespace, deepcopy(testlist))
 ### Here is where we need to compute the congruence lattice and then add all quotient algebras
 
-blocks=[];
+allcongruences=[[]];
+for blocks in allcongruences
 imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
-
                 push!(mastertable[ii], imagetablespace)
+end;
                 testlistarray[ii]=zeros(Int64,superlength[ii]);
                 # we need to restore testlist reservoir.
             else
