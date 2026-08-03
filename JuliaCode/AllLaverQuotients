@@ -86,14 +86,11 @@ return aa;
 end;
 
 function buildquotienttable(table,imagespace,tablespace,blocks)
-return true;
 n=length(table);
 m=length(imagespace);
 unionblocks=[];
 for a in blocks append!(unionblocks,a);
 end;
-#The least element in unionblocks must be at least n+2 because the first n elements are fixed.
-#In here, I will have to subtract n and add n everywhere. Hopefully, it won't cause any problems. At least I can easily test it.
 unionblockslist=zeros(Int64,m);
 for x in unionblocks
 unionblockslist[x-n]=1;
@@ -114,14 +111,11 @@ legend[a]=i;
 end;
 end;
 firstinvlegend=map(v->v[1],invlegend);
-#Um. I need to start at n+1 instead of at 1.
-
-
 newimagespace=map(v->imagespace[v],firstinvlegend);
 newtablespace=map(v->tablespace[v],firstinvlegend);
 for a in newtablespace
 for i in 1:length(a)
-if a[i]>n a[i]=legend[a[i]-n]+n; display("E"); end;
+if a[i]>n a[i]=legend[a[i]-n]+n; end;
 end;
 end;
 return [newimagespace,newtablespace,0];
@@ -502,7 +496,7 @@ end
 blocks=[];
 imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
 
-                push!(mastertable[ii], [imagespace, tablespace, 0])
+                push!(mastertable[ii], imagetablespace)
                 testlistarray[ii]=zeros(Int64,superlength[ii]);
                 # we need to restore testlist reservoir.
             else
