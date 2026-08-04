@@ -193,7 +193,7 @@ end;
 
 # Here, we will not bother to first remove non-atoms in the lattice. In other words, we will
 # NOTICE, THE CONGIDEALGENERATOR MIGHT BE REDUNDANT!
-function congidealgenerator(mv,blocks,generators,restriction)
+function congidealgenerator(mv,blocks,generators,restriction,minimalcongruence)
 allcongruences=set([]);
 boundarycongruences=[];
 generatingcongruences=[];
@@ -202,6 +202,7 @@ lp=length(part);
 for i in 1:lp
 for j in i+1:lp
 aa=halfcongruencegen(mv,part[i],part[j],generators,restriction);
+joinpartition(aa,minimalcongruence,restriction);
 if aa==false continue; end;
 supersort(aa);
 if aa in allcongruences continue; end;
@@ -461,9 +462,10 @@ end
             testlist = testlistarray[ii]
             testlistlength = superlength[ii]
             testlistcrit = supercrit[ii]
-            test = testfunction();
-            if length(test)==0
-                imagespace = copy(imagearray[1])
+            congo = testfunction();
+            if !(congo==false)
+
+            imagespace = copy(imagearray[1])
                 for kz in 2:gg
                     for is in 2:length(imagearray[kz])
                         push!(imagespace, imagearray[kz][is])
