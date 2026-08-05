@@ -193,11 +193,11 @@ end;
 
 # Here, we will not bother to first remove non-atoms in the lattice. In other words, we will
 # NOTICE, THE CONGIDEALGENERATOR MIGHT BE REDUNDANT!
-function congidealgenerator(mv,blocks,generators,restriction,minimalcongruence)
+function congidealgenerator(mv,blocklist,generators,restriction,minimalcongruence)
 allcongruences=set([]);
 boundarycongruences=[];
 generatingcongruences=[];
-for part in blocks
+for part in blocklist
 lp=length(part);
 for i in 1:lp
 for j in i+1:lp
