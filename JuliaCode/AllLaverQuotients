@@ -496,7 +496,7 @@ end
                 push!(tablespace, deepcopy(testlist))
 ### Here is where we need to compute the congruence lattice and then add all quotient algebras
 
-
+congidealgenerator(mv,blocks,generators,restriction,congo);
 
 allcongruences=[[]];
 for blocks in allcongruences
