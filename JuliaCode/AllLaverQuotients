@@ -427,6 +427,7 @@ congo=[];
             return false
         end
 ### I will change the code eventually. This is just a temporary change.
+if length(congo)>0 display(congo); end;
 return congo;        
 end
 
@@ -496,10 +497,10 @@ end
                 push!(imagespace, ii)
                 push!(tablespace, deepcopy(testlist))
 ### Here is where we need to compute the congruence lattice and then add all quotient algebras
-blocklist=map(v->[],1:n);
-for k in n+2:sumlist[length(sumlist)]
-push!(blocklist[imagearray[k-n]],k);
-end;
+#blocklist=map(v->[],1:n);
+#for k in n+2:sumlist[length(sumlist)]
+#push!(blocklist[imagearray[k-n]],k);
+#end;
 #congidealgenerator(mv,blocklist,generators,restriction,congo);
 
 allcongruences=[[]];
