@@ -561,8 +561,8 @@ blocklist=map(v->[],1:n);
 for k in n+2:sumlist[length(sumlist)]
 push!(blocklist[imagespace[k-n]],k);
 end;
-congidealgenerator(mv,blocklist,generators,restriction,congo);
-
+manycongruences=congidealgenerator(mv,blocklist,generators,restriction,congo);
+display(manycongruences);
 allcongruences=[[]];
 for blocks in allcongruences
 imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
