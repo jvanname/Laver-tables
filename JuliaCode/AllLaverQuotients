@@ -197,7 +197,6 @@ function congidealgenerator(mv,blocklist,generators,restriction,minimalcongruenc
 allcongruences=Set([]);
 boundarycongruences=[];
 generatingcongruences=[];
-return "Remove Later";
 for part in blocklist
 lp=length(part);
 for i in 1:lp
