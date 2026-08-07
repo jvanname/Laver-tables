@@ -559,9 +559,9 @@ end
 ### Here is where we need to compute the congruence lattice and then add all quotient algebras
 blocklist=map(v->[],1:n);
 for k in n+2:sumlist[length(sumlist)]
-push!(blocklist[imagearray[k-n]],k);
+push!(blocklist[imagespace[k-n]],k);
 end;
-#congidealgenerator(mv,blocklist,generators,restriction,congo);
+congidealgenerator(mv,blocklist,generators,restriction,congo);
 
 allcongruences=[[]];
 for blocks in allcongruences
