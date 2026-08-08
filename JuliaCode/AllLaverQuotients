@@ -360,7 +360,7 @@ congruences=[[]];
 congruenceset=Set([[]])
 boundary=[[]];
 while length(boundary)>0
-display([length(boundary),length(congruences)]);
+#display([length(boundary),length(congruences)]);
 current=pop!(boundary);
 for aa in atoms
 part=deepcopy(current);
@@ -369,6 +369,7 @@ if !tt continue; end;
 supersort(part);
 if !(part in congruenceset)
 push!(congruences,part);
+push!(congruenceset,part);
 push!(boundary,part);
 end;
 end;
@@ -559,10 +560,10 @@ end
                 push!(imagespace, ii)
                 push!(tablespace, deepcopy(testlist))
 ### Here is where we need to compute the congruence lattice and then add all quotient algebras
-blocklist=map(v->[],1:n);
-for k in n+2:sumlist[length(sumlist)]
-push!(blocklist[imagespace[k-n]],k);
-end;
+#blocklist=map(v->[],1:n);
+#for k in n+2:sumlist[length(sumlist)]
+#push!(blocklist[imagespace[k-n]],k);
+#end;
 #display(blocklist);
 #manycongruences=congidealgenerator(mv,blocklist,generators,restriction,congo);
 makecongruences()
