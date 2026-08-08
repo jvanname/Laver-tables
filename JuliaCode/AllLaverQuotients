@@ -568,10 +568,11 @@ end
 #display(blocklist);
 #manycongruences=congidealgenerator(mv,blocklist,generators,restriction,congo);
 #display(manycongruences);
-allcongruences=[[]];
-congruences=makecongruences();
-#I NEED TO DELETE THE FOLLOWING LINES SINCE THEY ARE UNNECESSARY.
-display("WARNING: INEFFICIENT TABLE BEING CREATED");
+#allcongruences=[[]];
+allcongruences=makecongruences();
+#=
+#############I NEED TO DELETE THE FOLLOWING LINES SINCE THEY ARE UNNECESSARY.
+##############display("WARNING: INEFFICIENT TABLE BEING CREATED");
 congy=rand(congruences);
 vak=sumlist[length(sumlist)] + 1
 mat=zeros(Int,vak,vak);
@@ -597,6 +598,7 @@ end;
 end;
 #I VERIFIED THAT THE CONGRUENCES ARE ACTUALLY CONGRUENCES.
 display(ii);
+=#
 for blocks in allcongruences
 imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
                 push!(mastertable[ii], imagetablespace)
