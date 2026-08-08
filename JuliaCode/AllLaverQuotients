@@ -351,6 +351,7 @@ for a in invtar[i]
 for b in invtar[i]
 partition=halfcongruencegen(superfunction,a,b,generators,restriction)
 if partition==false continue; end;
+supersort(atoms);
 push!(atoms,partition);
 end;
 end;
@@ -566,9 +567,36 @@ end
 #end;
 #display(blocklist);
 #manycongruences=congidealgenerator(mv,blocklist,generators,restriction,congo);
-makecongruences()
 #display(manycongruences);
 allcongruences=[[]];
+congruences=makecongruences();
+#I NEED TO DELETE THE FOLLOWING LINES SINCE THEY ARE UNNECESSARY.
+display("WARNING: INEFFICIENT TABLE BEING CREATED");
+congy=rand(congruences);
+vak=sumlist[length(sumlist)] + 1
+mat=zeros(Int,vak,vak);
+for i in 1:vak
+mat[i,i]=1;
+end;
+for p in congy
+for a in p
+for b in p
+mat[a,b]=1;
+end;
+end;
+end;
+for p in congy
+for a in p
+for b in p
+for c in 1:vak
+display(mat[superfunction(c,a),superfunction(c,b)]);
+display(mat[superfunction(a,c),superfunction(b,c)]);
+end;
+end;
+end;
+end;
+#I VERIFIED THAT THE CONGRUENCES ARE ACTUALLY CONGRUENCES.
+display(ii);
 for blocks in allcongruences
 imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
                 push!(mastertable[ii], imagetablespace)
@@ -577,6 +605,7 @@ end;
                 # we need to restore testlist reservoir.
             else
             for aa in zeroafter testlist[aa]=0; end;
+
 if sum(testlist)>0 while true display("E"); end; end;
             # we need to zero out the mess we have made.
             end
