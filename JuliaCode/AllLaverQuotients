@@ -202,8 +202,8 @@ lp=length(part);
 for i in 1:lp
 for j in i+1:lp
 aa=halfcongruencegen(mv,part[i],part[j],generators,restriction);
-joinpartition(aa,minimalcongruence,restriction);
-if aa==false continue; end;
+qq=joinpartition(aa,deepcopy(minimalcongruence),restriction);
+if !qq continue; end;
 supersort(aa);
 if aa in allcongruences continue; end;
 push!(boundarycongruences,aa);
@@ -360,12 +360,14 @@ congruences=[[]];
 congruenceset=Set([[]])
 boundary=[[]];
 while length(boundary)>0
+display([length(boundary),length(congruences)]);
 current=pop!(boundary);
 for aa in atoms
-part=joinpartition(current,aa,restriction);
-if part==false continue; end;
-part=sort(map(sort,part));
-if !(part in coungruentset)
+part=deepcopy(current);
+tt=joinpartition(current,aa,restriction);
+if !tt continue; end;
+supersort(part);
+if !(part in congruenceset)
 push!(congruences,part);
 push!(boundary,part);
 end;
@@ -373,6 +375,7 @@ end;
 end;
 return congruences;
 end;
+
 #=
 function testfunction()
 congo=[];
@@ -560,8 +563,10 @@ blocklist=map(v->[],1:n);
 for k in n+2:sumlist[length(sumlist)]
 push!(blocklist[imagespace[k-n]],k);
 end;
-manycongruences=congidealgenerator(mv,blocklist,generators,restriction,congo);
-display(manycongruences);
+#display(blocklist);
+#manycongruences=congidealgenerator(mv,blocklist,generators,restriction,congo);
+makecongruences()
+#display(manycongruences);
 allcongruences=[[]];
 for blocks in allcongruences
 imagetablespace=buildquotienttable(table,imagespace,tablespace,blocks);
