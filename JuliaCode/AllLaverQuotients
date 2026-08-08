@@ -86,6 +86,7 @@ return aa;
 # Should I do supersort?
 end;
 
+#WARNING: BUILDQUOTIENTTABLE DOES NOT RESPECT THE INHERENT PARTIAL ORDERING! I NEED TO REPLACE IT!
 function buildquotienttable(table,imagespace,tablespace,blocks)
 n=length(table);
 m=length(imagespace);
