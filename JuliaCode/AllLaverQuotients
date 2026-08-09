@@ -87,16 +87,41 @@ return aa;
 end;
 
 #WARNING: BUILDQUOTIENTTABLE DOES NOT RESPECT THE INHERENT PARTIAL ORDERING! I NEED TO REPLACE IT!
+#HMM. IT SEEMS LIKE I NEED TO USE IMAGE SPACE FOR THE ORDERING SO THAT I CAN CONSTRUCT THE PARTIAL ORDERING WITH IT.
 function buildquotienttable(table,imagespace,tablespace,blocks)
 n=length(table);
 m=length(imagespace);
-unionblocks=[];
-for a in blocks append!(unionblocks,a);
-end;
+#Unionblocks seems useless. I need to fix it.
 unionblockslist=zeros(Int64,m);
-for x in unionblocks
-unionblockslist[x-n]=1;
+#Actually, unionblocks could give not just the presence of the blockbut also tell us 
+#Yea. The following line is no good. I need to fix it.
+for i in 1:length(blocks)
+for a in blocks[i]
+unionblockslist[a-n]=i;
 end;
+end;
+invimagespace=map(v->[],1:n);
+for i in 1:m
+push!(invimagespace[imagespace[i]],i);
+end;
+concatinvimagespace=[];
+for a in invimagespace
+push!(concatinvimagespace,a);
+end;
+#concatinvimagespace is the linear ordering that we want to preserve.
+invlegend=[];
+for a in concatinvimagespace
+if unionblockslist[a]==0
+push!(invlegend,[a]);
+else
+iih=unionblockslist[a];
+push!(invlegend,blocks[iih]);
+for inq in blocks[iih]
+unionblockslist[inq-n]=i;
+end;
+end;
+end;
+####
 invlegend=[[1]];
 for i in 2:m
 if unionblockslist[i]==0 
