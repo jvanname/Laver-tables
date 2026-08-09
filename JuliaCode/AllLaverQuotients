@@ -122,15 +122,15 @@ end;
 end;
 end;
 ####
-invlegend=[[1]];
-for i in 2:m
-if unionblockslist[i]==0 
-push!(invlegend,[i]);
-end;
-end;
-for a in blocks
-push!(invlegend,a-fill(n,length(a)));
-end;
+#invlegend=[[1]];
+#for i in 2:m
+#if unionblockslist[i]==0 
+#push!(invlegend,[i]);
+#end;
+#end;
+#for a in blocks
+#push!(invlegend,a-fill(n,length(a)));
+#end;
 legend=zeros(Int64,m);
 for i in 1:length(invlegend)
 for a in invlegend[i]
