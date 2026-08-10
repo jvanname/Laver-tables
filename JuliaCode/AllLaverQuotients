@@ -106,7 +106,7 @@ push!(invimagespace[imagespace[i]],i);
 end;
 concatinvimagespace=[];
 for a in invimagespace
-push!(concatinvimagespace,a);
+append!(concatinvimagespace,a);
 end;
 #concatinvimagespace is the linear ordering that we want to preserve.
 invlegend=[];
