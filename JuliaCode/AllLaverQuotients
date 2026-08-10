@@ -89,6 +89,15 @@ end;
 #WARNING: BUILDQUOTIENTTABLE DOES NOT RESPECT THE INHERENT PARTIAL ORDERING! I NEED TO REPLACE IT!
 #HMM. IT SEEMS LIKE I NEED TO USE IMAGE SPACE FOR THE ORDERING SO THAT I CAN CONSTRUCT THE PARTIAL ORDERING WITH IT.
 function buildquotienttable(table,imagespace,tablespace,blocks)
+#display("TTTTTTTT");
+#show(table);
+#display("E");
+#show(imagespace);
+#display("E");
+#show(tablespace);
+#display("E");
+#show(blocks);
+#display("E");
 n=length(table);
 m=length(imagespace);
 #Unionblocks seems useless. I need to fix it.
@@ -117,7 +126,7 @@ else
 iih=unionblockslist[a];
 push!(invlegend,blocks[iih]);
 for inq in blocks[iih]
-unionblockslist[inq-n]=i;
+unionblockslist[inq-n]=iih;
 end;
 end;
 end;
